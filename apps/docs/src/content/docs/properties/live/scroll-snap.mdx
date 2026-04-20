@@ -1,0 +1,89 @@
+---
+title: "scroll snap"
+---
+
+# scroll snap
+
+controls snap points when scrolling a container
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		live: {
+			scroll: {
+				snap: {
+					DEFAULT: {
+						property: "scroll-snap-type: <v><i>;",
+						values: {
+							x: {
+								DEFAULT: "x",
+								active: "x mandatory",
+								lazy: "x proximity",
+							},
+							y: {
+								DEFAULT: "y",
+								active: "y mandatory",
+								lazy: "y proximity",
+							},
+							both: {
+								DEFAULT: "both",
+								active: "both mandatory",
+								lazy: "both proximity",
+							},
+							block: {
+								DEFAULT: "block",
+								active: "block mandatory",
+								lazy: "block proximity",
+							},
+							inline: {
+								DEFAULT: "inline",
+								active: "inline mandatory",
+								lazy: "inline proximity",
+							},
+						},
+					},
+
+					align: {
+						property: "scroll-snap-align: <v><i>;",
+						values: {
+							start: "start",
+							center: "center",
+							end: "end",
+							none: "none",
+							// can add two values here for x and y
+							// https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-align#syntax
+						},
+					},
+
+					stop: {
+						property: "scroll-snap-stop: <v><i>;",
+						values: {
+							normal: "normal",
+							always: "always",
+						},
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

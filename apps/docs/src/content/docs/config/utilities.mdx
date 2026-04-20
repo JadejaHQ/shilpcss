@@ -1,0 +1,346 @@
+---
+title: "Utilities"
+---
+
+# Utilities
+
+A **utility** is the smallest styling word inside an intent.
+
+If intent defines _where something belongs_, utility defines _what exactly to
+apply_.
+
+---
+
+<section>
+
+## What Happens After Intent Is Found
+
+From the [Intents Config Page](/docs/config/intents) we know that, Shilp CSS
+extracts **intent-name and list of utilities**.
+
+Example:
+
+```css title="style.css"
+.any-class {
+	@layout is-flex overflow-y-auto;
+	@text color-orange-600 thick-600;
+}
+```
+
+Here:
+
+1. Layout intent
+   - Intent name: `layout`
+   - Utilities: `is-flex`, `overflow-y-auto`
+2. Text intent
+   - Intent name: `text`
+   - Utilities: `color-orange-600`, `thick-600`
+
+It processes each utility individually and each utility becomes a real CSS rule.
+
+</section>
+
+<section>
+
+## Utility Object
+
+For every utility, Shilp CSS creates a utility object with it's information.
+
+For example, intent `@space -ml-1/2!;` is splits into the two parts:
+
+- Intent name: `space`
+- Utilities: `-ml-1/2!`
+
+Utility further splits into:
+
+- `raw`: `-ml-1/2!`
+- `value`: `ml-1/2`
+- `negative`: `true`
+- `variant`: `undefined`
+- `important`: `true`
+
+Let’s understand each part.
+
+### raw
+
+At first, the entire string is stored as it is. The `raw` value is kept mainly
+for error reporting.
+
+Now utility object becomes:
+
+```js
+const utility = {
+	raw: "-ml-1/2!",
+};
+```
+
+### value
+
+At first, it will be same as `raw` string. later while extracting other parts,
+it will be updated.
+
+Now utility object becomes:
+
+```js
+const utility = {
+	raw: "-ml-1/2!",
+	value: "-ml-1/2!",
+};
+```
+
+### negative
+
+If the utility starts with `-`, it means negative value.
+
+Now utility object becomes:
+
+```js
+const utility = {
+	raw: "-ml-1/2!",
+	value: "ml-1/2!",
+	negative: true,
+};
+```
+
+<Alert variant="info">
+
+Have you noticed, the `-` is removed from `value`.
+
+</Alert>
+
+Example:
+
+- `@space ml-1/2`; → `margin-left: 50%;`
+- `@space -ml-1/2`; → `margin-left: -50%;`
+
+### important
+
+If utility ends with `!`, it means `!important.`
+
+Now utility object becomes:
+
+```js
+const utility = {
+	raw: "-ml-1/2!",
+	value: "ml-1/2",
+	negative: true,
+	important: true,
+};
+```
+
+<Alert variant="info">
+
+Have you noticed, the `!` is removed from `value`.
+
+</Alert>
+
+Example:
+
+- `@space ml-1/2`; → `margin-left: 50%;`
+- `@space ml-1/2!`; → `margin-left: 50% !important;`
+
+### variant
+
+If utility includes `/`, the **first slash** defines a variant.
+
+For example `@text color-orange-600/80;` splits into:
+
+- Value: `"color-orange-600"` → color
+- Variant:`"80"` → opacity
+
+For our example `@space -ml-1/2!;`, now utility object becomes:
+
+```js
+const utility = {
+	raw: "-ml-1/2!",
+	value: "ml-1/2",
+	negative: true,
+	important: true,
+	variant: undefined,
+};
+```
+
+#### Important Behaviouor
+
+Variant behavior only works, if the
+[Properties Config](/docs/config/properties#variant) explicitly enables it.
+
+**If not enabled**: <br /> Then `/2` in `@space -ml-1/2!;` is part of the
+utility value (fraction), not a variant.
+
+**If enabled**: <br /> Then only the first `/` is considered. Any slash `/`
+after the first one is ignored.
+
+| Utility                           | Variant |
+| --------------------------------- | ------- |
+| `color-orange-600/80`             | `"80"`  |
+| `color-orange-600/80/lorem/ipsum` | `"80"`  |
+
+Now, this will output `color: oklch(64.6% 0.222 41.116 / 0.8);`.
+
+<Alert variant="info">
+
+Variant need to be handled **per property** configuration. It is not automatic.
+
+`variant: true` is effective for **color values** only (modifies
+`opacity`).<br />Other values don't have any logic to handle the variant.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Tokens
+
+After raw utility splits and utility object is created, the `utility.value` is
+further split by `-`. This is called tokens.
+
+| Utility            | Tokens                       |
+| ------------------ | ---------------------------- |
+| `ml-1/2`           | `["ml", "1/2"]`              |
+| `color-orange-600` | `["color", "orange", "600"]` |
+
+These tokens are used to traverse the property configuration.
+
+### Property Tokens vs Value Tokens
+
+From `shilpConfig.properties[intentName]`, Shilp CSS Algorithm walks through
+nested objects using tokens.
+
+While traversing nested objects, if it reach to an object, which has `property`
+key, then this object is called **property config**.
+
+Tokens used to reach **property config** is called as **Property Tokens** and
+the remaining tokens are called **Value Tokens**.
+
+For `ml-1/2`:
+
+| Token Type | Tokens    |
+| ---------- | --------- |
+| Property   | `["ml"]`  |
+| Value      | `["1/2"]` |
+
+For `color-orange-600`:
+
+| Token Type | Tokens              |
+| ---------- | ------------------- |
+| Property   | `["color"]`         |
+| Value      | `["orange", "600"]` |
+
+For `overflow-x-auto`:
+
+| Token Type | Tokens              |
+| ---------- | ------------------- |
+| Property   | `["overflow", "x"]` |
+| Value      | `["auto"]`          |
+
+At this point, we know the exact css property for the particular utility.
+
+### Role of DEFAULT Key
+
+If a token is not found at current level, Shilp CSS first checks for `DEFAULT`
+key.
+
+Example config:
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		//
+		layout: {
+			//
+			overflow: {
+				//
+				DEFAULT: {
+					property: "overflow: <v><i>;",
+					values: {
+						auto: "auto",
+						hidden: "hidden",
+						// other values
+					},
+				},
+
+				x: {
+					property: "overflow-x: <v><i>;",
+					values: {
+						// same values as oveflow.DEFAULT
+					},
+				},
+
+				y: {
+					property: "overflow-y: <v><i>;",
+					values: {
+						// same values as oveflow.DEFAULT
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This enables:
+
+- `@layout overflow-hidden;` → `overflow: hidden;`
+- `@layout overflow-y-auto;` → `overflow-y: auto;`
+
+Instead of:
+
+- `@layout overflow-DEFAULT-hidden;` → `overflow: hidden;`
+
+It lets you skip that extra token, while keeping structure flexible inside
+config. you don’t need to write `-DEFAULT`.
+
+</section>
+
+<section>
+
+## When Errors Happen
+
+An error is thrown, if property config or property values not found with tokens.
+
+<Alert variant="info">
+
+Error handling will be improved in future versions.
+
+In some setups (especially Next.js + webpack), this may interupt the development
+environment. If that happens, restart your dev environment.
+
+</Alert>
+
+</section>
+
+<section>
+
+## High-Level Utilities Processing
+
+Unlike `shilpConfig.intents`, utilities do not have their own config key.
+
+There is no `shilpConfig.utilities`. They are purely derived from
+`shilpConfig.properties`.
+
+Every utility exists because:
+
+1. An intent exists
+2. A property exists under that intent
+3. Values are defined for that property
+
+Now, at this point we have:
+
+- Intent name
+- Property config
+- Value tokens
+- Negative flag
+- Important flag
+- Variant (if enabled and also exist in utility)
+
+At this stage, utility processing is done.
+
+Further processing is handled by the [Properties](/docs/config/properties).
+
+</section>

@@ -1,0 +1,77 @@
+/* ================================================================================================
+	FOOTER
+================================================================================================ */
+
+.footer__wrapper {
+	@flex shrink-0;
+
+	/* keep this here to increase specificity over `.container` styles */
+	footer {
+		@bg color-primary;
+		@text color-primary-fg;
+		@layout is-flex;
+		@flex flow-col items-center;
+		@space gap-8 py-4;
+
+		@theme dark {
+			@bg color-primary/80;
+		}
+
+		@childs any {
+			@state focus {
+				@live outline-color-white;
+			}
+		}
+	}
+}
+
+/* ============================================================================================= */
+
+/* ============================================================================================= */
+
+.footer__quote {
+	@text size-lg align-x-center case-upper family-display thick-500 gap-lg gap-word-xl;
+
+	@screen lg {
+		@text size-xl;
+	}
+}
+
+/* ============================================================================================= */
+
+.footer__socials {
+	@layout is-flex;
+	@flex items-center justify-center;
+
+	.separator {
+		@flex shrink-0;
+		@bg color-primary-fg;
+		@space mx-8;
+	}
+
+	.social {
+		@state hover {
+			@motion safe {
+				@animate exit zoom-out-110 flow-ease mode-forward;
+			}
+		}
+
+		svg {
+			@size is-8;
+		}
+	}
+}
+
+/* ============================================================================================= */
+
+.footer__copyright {
+	@text gap-lg align-x-center;
+
+	a {
+		@text line-is-under line-offset-4 line-thick-2;
+
+		@state hover {
+			@text line-thick-4;
+		}
+	}
+}

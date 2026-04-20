@@ -1,0 +1,420 @@
+---
+title: "base.css"
+---
+
+# base.css
+
+`base.css` defines the **default visual styles**.
+
+Unlike `variables.css`, which defines variables, this file **applies those
+variables to real CSS properties**.
+
+In simple terms:
+
+- `variables.css` → defines variables and its compositions
+- `base.css` → applies them to the UI
+
+These styles provide a **sensible baseline** so that most interfaces look
+consistent without requiring immediate customization.
+
+---
+
+<section>
+
+## What This File Does
+
+It establishes **global defaults**. So, that the UI immediately reflects the
+design system.
+
+It defines things like:
+
+- Page colors
+- Typography defaults
+- Heading hierarchy
+- Interactive element behavior
+- And so on...
+
+As most of the defaults uses CSS variables, the entire appearance can be
+customized **without modifying this file** (_mostly_).
+
+</section>
+
+<section>
+
+## What This File Changes
+
+The table below highlights the Shilp CSS default basee styles.
+
+| Area                 | What it does                                               | Why it exists                                          |
+| -------------------- | ---------------------------------------------------------- | ------------------------------------------------------ |
+| Default border color | Sets `border-color: oklch(var(--border))` for all elements | Ensures borders follow the design system automatically |
+| Page colors          | Applies `--bg` and `--fg` to `body`                        | Connects the color system to the actual page           |
+| Body font            | Uses `var(--font-body)` for the page                       | Applies the font system defined in `variables.css`     |
+| Text selection       | Styles `::selection` using primary colors                  | Keeps selection colors aligned with the design system  |
+| Interactive elements | Sets `line-height: 1` for buttons and links                | Prevents inconsistent vertical spacing                 |
+| Heading fonts        | Uses `var(--font-display)` for headings                    | Separates display typography from body text            |
+| Heading weights      | Uses `600` for `h1–h2` and `500` for `h3–h6`               | Creates a clear hierarchy                              |
+| Heading sizes        | Uses `--h1` → `--h6` variables                             | Keeps typography globally configurable                 |
+| Code fonts           | Applies `var(--font-code)` to code elements                | Ensures consistent monospaced rendering                |
+
+These changes create a predictable baseline so your styles behave the same
+across browsers.
+
+</section>
+
+<section>
+
+## Examples
+
+<Alert variant="info">
+
+Examples shown in the sections below, include only partial styles for clarity.
+See the complete file in [reset.css Reference](#resetcss-reference).
+
+</Alert>
+
+### Default Colors
+
+Examples below shows all default base colors.
+
+#### Page Colors
+
+```css title="Default colors for page"
+body {
+	background-color: var(--bg);
+	color: var(--fg);
+}
+```
+
+These variables represent **color roles, not literal colors**.
+
+In dark mode, these values change automatically through the files:
+
+- [colors-dark.css](/docs/default-styles/colors-dark)
+- [colors-dark-flip-base.css](/docs/default-styles/colors-dark-flip-base)
+- OR your overrides for above files
+
+This means the base styles **do not need to know about dark mode**.
+
+#### Border Color
+
+All elements receive a border color:
+
+```css title="Default border color"
+*,
+*::before,
+*::after {
+	border-color: oklch(var(--border));
+}
+```
+
+However this rule **does not create borders**. It only sets the color if a
+border already exists.
+
+Example: `border: 1px solid;`
+
+This allows utilities or components to define borders while keeping colors
+consistent with the design system.
+
+#### Text Selection Colors
+
+```css title="Text selection colors"
+::selection {
+	background-color: oklch(var(--primary));
+	color: oklch(var(--primary-fg));
+}
+```
+
+These variables represent **brand colors, not literal colors**.
+
+### Font Family
+
+Examples below shows all the default font families.
+
+This variable already includes **user fonts** and **fallback fonts**.
+
+This ensures **readable text even if web fonts fail to load**.
+
+#### Body Font
+
+The `body` element uses the composed font stack:
+
+```css title="Body font usage"
+body {
+	font-family: var(--font-body);
+}
+```
+
+#### Display Font
+
+Headings use the composed font stack:
+
+```css title="Display font usage"
+:where(h1, h2, h3, h4, h5, h6) {
+	font-family: var(--font-display);
+}
+```
+
+#### Code Font
+
+Code-related elements use the code font stack. This keeps developer-oriented
+content visually distinct.
+
+```css title="Code font usage"
+code,
+kbd,
+samp,
+pre {
+	font-family: var(--font-code);
+}
+```
+
+### Heading Scales
+
+Headings establish a consistent hierarchy.
+
+Sizes are defined using variables from `--h1` to `--h6`.
+
+These are applied directly:
+
+```css title="Exmaple usage of heading scale"
+h1 {
+	font-size: var(--h1);
+}
+```
+
+This makes typography **globally adjustable**.
+
+<Alert variant="info">
+
+It uses `clamp` to adjust the size as per viewport.
+
+See:
+[variables.css Reference](/docs/default-styles/variables#variablescss-reference).
+
+</Alert>
+
+</section>
+
+<section>
+
+## Customization
+
+You can override any variable in your own styles.
+
+In most cases, customization should happen through **variables**, not style
+rules.
+
+Example:
+
+```css title="override-base.css"
+/* set default border color to element, if it has border */
+*,
+*::before,
+*::after {
+	/* border-color: oklch(var(--border)); */
+	border-color: oklch(var(--fg));
+}
+
+/* set default selection colors. */
+::selection {
+	/* background-color: oklch(var(--primary)); */
+	background-color: oklch(var(--accent));
+
+	/* color: oklch(var(--primary-fg)); */
+	color: oklch(var(--accent-fg));
+}
+```
+
+This approach updates the entire system consistently.
+
+See:
+[Modifying Default Styles](/docs/default-styles/overview#modifying-default-styles).
+
+</section>
+
+<section>
+
+## When You May Need Overrides
+
+You might override base styles when:
+
+1. building a highly opinionated design system
+2. changing heading structure
+3. modifying global typography rules
+4. adjusting default interactive element behavior
+
+</section>
+
+<section>
+
+## base.css Reference
+
+<Alert>
+
+If any part of this file feels difficult to understand, copy the snippet and
+paste it into [ChatGPT](https://chatgpt.com) and ask it to explain the code in
+simple words.
+
+</Alert>
+
+```css title="base.css"
+/*
+
+Shilp CSS Base Styles
+
+Purpose:
+Apply default visual styles using the design system and establish global UI
+defaults.
+
+This file sets baseline styles for:
+
+- Page colors
+- Typography defaults
+- Heading hierarchy
+- Interactive element behavior
+- And so on...
+
+The goal is to provide sensible defaults styles and  most values are driven by CSS variables so the appearance can be customized
+without rewriting the styles (mostly).
+
+Customization:
+Override variables in your own styles to change behavior globally.
+
+Documentation:
+https://shilpcss.com/docs/default-styles/base
+
+*/
+
+/* ============================================================================================= */
+
+.purge-ignore-start {
+	all: unset;
+}
+
+/* ============================================================================================= */
+
+/* ================================================================================================
+	DEFAULT BORDER COLOR
+================================================================================================ */
+
+/* set default border color to element, if it has border */
+*,
+*::before,
+*::after,
+input:where([type="file"]):where(
+		::file-selector-button,
+		::-webkit-file-upload-button
+	) {
+	border-color: oklch(var(--border));
+}
+
+/* ================================================================================================
+	DEFAULT BODY COLORS AND FONT
+================================================================================================ */
+
+/*
+1. set default colors.
+2. set default font family.
+*/
+body {
+	background-color: oklch(var(--bg)); /* 1 */
+	color: oklch(var(--fg)); /* 1 */
+	font-family: var(--font-body); /* 2 */
+}
+
+/* ================================================================================================
+	DEFAULT TEXT SELECTION COLORS
+================================================================================================ */
+
+/* set default colors. */
+::selection {
+	background-color: oklch(var(--primary));
+	color: oklch(var(--primary-fg));
+}
+
+/* ================================================================================================
+	DEFAULT BUTTONS & LINKS STYLES
+================================================================================================ */
+
+/* reset line height to prevent unconsistent vertical spacing */
+a,
+button,
+:where([role="button"]),
+:where(input, button):where([type="button"], [type="reset"], [type="submit"]),
+input:where([type="file"]):where(
+		::file-selector-button,
+		::-webkit-file-upload-button
+	) {
+	line-height: 1;
+}
+
+/* ================================================================================================
+	DEFAULT HEADINGS STYLES
+================================================================================================ */
+/*
+1. set default font family
+2. set sensible line height
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-display); /* 1 */
+	line-height: 1.5; /* 2 */
+}
+
+/* set sensible font weights */
+h1,
+h2 {
+	font-weight: 600;
+}
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 500;
+}
+
+/* set font dynamic sizes */
+h1 {
+	font-size: var(--h1);
+}
+h2 {
+	font-size: var(--h2);
+}
+h3 {
+	font-size: var(--h3);
+}
+h4 {
+	font-size: var(--h4);
+}
+h5 {
+	font-size: var(--h5);
+}
+h6 {
+	font-size: var(--h6);
+}
+
+/* ================================================================================================
+	DEFAULT CODE FONTS
+================================================================================================ */
+
+code,
+kbd,
+samp,
+pre {
+	font-family: var(--font-code);
+}
+
+/* ============================================================================================= */
+
+.purge-ignore-end {
+	all: unset;
+}
+```
+
+</section>
+````

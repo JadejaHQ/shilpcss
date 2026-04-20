@@ -1,0 +1,41 @@
+/*
+	Author: necatimertmetin
+	Link: https://uiverse.io/necatimertmetin/quiet-bulldog-16
+*/
+
+.zzzz {
+	@position is-absolute;
+	@text size-xl;
+
+	will-change: transform, opacity;
+
+	@childs direct {
+		@motion safe {
+			animation-name: animate-zzzz;
+			@animate duration-2000 flow-warp loop-infinite;
+		}
+	}
+
+	@childs nth("2") {
+		@animate delay-500;
+	}
+
+	@childs nth("3") {
+		@animate delay-1000;
+	}
+
+	@childs nth("4") {
+		@animate delay-1500;
+	}
+}
+
+@keyframes animate-zzzz {
+	0% {
+		transform: translate(0, 0) rotate(0deg);
+		opacity: 1;
+	}
+	100% {
+		transform: translate(80px, -100px) rotate(22deg);
+		opacity: 0;
+	}
+}

@@ -1,0 +1,53 @@
+---
+title: "@form Mixin"
+---
+
+# @form Mixin
+
+form-related state selectors
+
+<Alert variant="info">
+
+This page contains only the **mixins configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	target: "react",
+
+	mixins: {
+		form: {
+			variants: {
+				checked: "&:checked",
+				// indeterminate: "&:indeterminate",
+				// default: "&:default",
+				// optional: "&:optional",
+				required: "&:required",
+				valid: "&:valid",
+				invalid: "&:invalid",
+				// "in-range": "&:in-range",
+				// "out-of-range": "&:out-of-range",
+				// "placeholder-visible": "&:placeholder-shown",
+				// "auto-fill": "&:autofill",	// NOTE: supported via webkit
+				"read-only": "&:read-only",
+
+				// pseudo
+				file: "&::file-selector-button",
+				placeholder: "&::placeholder",
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

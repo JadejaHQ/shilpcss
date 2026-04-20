@@ -1,0 +1,7 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@space",
+	"title": "space intent",
+	"items": ["gap", "margin", "padding"]
+}

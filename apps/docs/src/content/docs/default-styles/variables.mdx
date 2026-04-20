@@ -1,0 +1,577 @@
+---
+title: "variables.css"
+---
+
+# variables.css
+
+`variables.css` defines the core **variables used by Shilp CSS**. These
+variables act as the **internal state layer** for many utilities.
+
+Instead of writing final CSS properties directly, many utilities **update these
+variables**. The final property is then composed from them.
+
+This design prevents utilities from overwriting each other and allows multiple
+utilities to combine safely.
+
+---
+
+<section>
+
+## Two Layers of Variables
+
+The file defines variables in two layers.
+
+### 1. Base Variables
+
+Variables defined on `html, :host { ... }` represent **the raw pieces of
+state**.
+
+Example:
+
+```css title="Base variables"
+html,
+:host {
+	--radius: 4px; /* absolute value (px) */
+
+	--in-sdw: ; /* `inset` box shadow */
+	--b-sdw: 0 0 #0000; /* default box shadow */
+	--b-sdw-clr: #0000; /* default box shadow color */
+}
+```
+
+They may start empty and utilities populate them later.
+
+### 2. Composed Variables
+
+Variables defined on `*, *::before, *::after { ... }` composes multiple state
+variables into final usable values.
+
+Example:
+
+```css title="Composed variables"
+*,
+*::before,
+*::after {
+	/* box shadow */
+	--bx-sdw: var(--in-sdw) var(--b-sdw);
+
+	/* variants */
+	--b-sdw-2xs: 0 1px var(--b-sdw-clr);
+	--b-sdw-xs: 0 1px 2px 0 var(--b-sdw-clr);
+	--b-sdw-sm: 0 1px 3px 0 var(--b-sdw-clr), 0 1px 2px -1px var(--b-sdw-clr);
+}
+```
+
+### Usage Example
+
+```css
+/* intent */
+@layout shadow-xs shadow-inset shadow-color-orange-600;
+
+/* output */
+box-shadow: var(--bx-sdw);
+--b-sdw: var(--b-sdw-xs);
+--in-sdw: inset;
+--b-sdw-clr: oklch(64.6% 0.222 41.116);
+
+/* processing */
+--in-sdw: inset;
+--b-sdw-clr: oklch(64.6% 0.222 41.116);
+--b-sdw-xs: 0 1px 2px 0 var(--b-sdw-clr);
+--b-sdw: var(--b-sdw-xs);
+--bx-sdw: var(--in-sdw) var(--b-sdw);
+box-shadow: var(--bx-sdw);
+
+/* computed output */
+box-shadow: inset 0 1px 2px 0 oklch(64.6% 0.222 41.116);
+```
+
+</section>
+
+<section>
+
+## Systems Built on Top of These Variables
+
+Many utilities rely on the variables defined in this file to compose their final
+CSS properties.
+
+Each system is documented in detail in the **properties documentation**.
+
+| System          | Description                                                                                              | Documentation                                              |
+| --------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Typography      | Composes `font-size` using `clamp` to maintain consistent typography.                                    | [Font Size](/docs/properties/text/size)                    |
+| Font Family     | Composes `font-family` using variables to ensure fallback fonts always exist, even when user fonts fail. | [Font Family](/docs/properties/text/family)                |
+| Border Radius   | Componses `border-radius` using single base variable with `calc` to derive mutiple radius sizes          | [Border Radius](/docs/properties/border/rounded)           |
+| Transform       | Composes `transform` using translate, scale, rotate, etc operations.                                     | [Transform](/docs/proeprties/adjust)                       |
+| Box Shadow      | Composes `box-shadow` using size, color, and inset.                                                      | [Box Shadow](/docs/properties/layout/shadow)               |
+| Text Shadow     | Composes `text-shadow` using size and color.                                                             | [Text Shadow](/docs/properties/text/shadow)                |
+| Drop Shadow     | Composes `filter` based `drop-shadow` using size and color.                                              | [Drop Shadow](/docs/properties/filter/shadow)              |
+| Backdrop Shadow | Similar to `drop-shadow` but applied through `backdrop-filter`.                                          | [Backdrop Shadow](/docs/properties/filter/backdrop-shadow) |
+
+</section>
+
+<section>
+
+## Why This Architecture Exists
+
+The main purpose of `variables.css` is composition. Many visual styles are made
+from **multiple parts**.
+
+Instead of writing the full CSS value every time, Shilp CSS builds those values
+from smaller pieces using re-usable CSS variables.
+
+Utilities update **individual parts**, and the final property is composed from
+them.
+
+### About Property Overrides
+
+One benefit of this architecture is that utilities no longer overwrite each
+other when working on the **same CSS property**.
+
+However, avoiding property conflicts is **only a side effect** of the
+composition system.
+
+The main design goal is **building complex CSS values from smaller reusable
+parts**.
+
+### When Composition Is Not Used
+
+Some CSS properties also accept multi-part values (for example `filter`,
+`backdrop-filter`, `gradients`).
+
+Because these are used less frequently and their values vary widely, Shilp CSS
+does not manage them through composition variables.
+
+Instead, Shilp CSS recommends to define complete values using the
+[`preset-*` Property Writing Pattern](/docs/best-practices/property-config-patterns#preset--utility-multi-part-value).
+
+</section>
+
+<section>
+
+## Understand Architecture by Examples
+
+Let's understand the composition architecture by examples.
+
+### Font Families
+
+Web fonts may **load late or fail completely** due to network issues, blocking,
+or privacy settings.
+
+To ensure text remains readable, every font should have a **reliable fallback
+stack**.
+
+```css title="Font families composition"
+/* intent */
+@text font-body;
+
+/* output */
+font-family: var(--font-body);
+
+/* =====================================
+	Condition 1 - User font not available
+===================================== */
+
+/* processing */
+--fallback-font-body:
+	ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+	"Segoe UI Symbol", "Noto Color Emoji";
+--user-font-body: var(--fallback-font-body);
+--font-body: var(--user-font-body), (--fallback-font-body);
+font-family: var(--font-body);
+
+/* computed output */
+font-family:
+	ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+	"Segoe UI Symbol", "Noto Color Emoji";
+
+/* ========================================
+	Condition 2 - User font available (Inter)
+======================================== */
+
+/* processing */
+--fallback-font-body:
+	ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+	"Segoe UI Symbol", "Noto Color Emoji";
+--user-font-body: "Inter";
+--font-body: var(--user-font-body), (--fallback-font-body);
+font-family: var(--font-body);
+
+/* computed output */
+font-family:
+	"Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+	"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+```
+
+This guarantees that **fallback fonts always exist**, even when user fonts fail.
+These variables contain **system-safe font stacks**.
+
+See: [Font Families](/docs/properties/text/family)
+
+### Transform
+
+A transform value can contain many operations: `translate`, `rotate`, `scale`,
+etc
+
+Instead of writing the entire transform property each time, Shilp CSS stores
+each part in a variable. Utilities update only the piece they control.
+
+```css title="Transform composition"
+/* intent */
+@adjust preset move-4 rotate-45;
+
+/* output */
+transform: var(--trsfm);
+--mv: translate(1rem, 1rem);
+--rtt: rotate(45deg, 45deg);
+
+/* processing */
+--mv: translate(1rem, 1rem);
+--mv-x: ;
+--mv-y: ;
+--mv-z: ;
+--skw: ;
+--skw-x: ;
+--skw-y: ;
+--scl: ;
+--scl-x: ;
+--scl-y: ;
+--scl-z: ;
+--rtt: rotate(45deg, 45deg);
+--rtt-x: ;
+--rtt-y: ;
+--rtt-z: ;
+--dst: ;
+
+--trsfm: var(--mv) var(--skw) var(--scl) var(--rtt) var(--mv-x) var(--mv-y)
+	var(--mv-z) var(--skw-x) var(--skw-y) var(--scl-x) var(--scl-y) var(--scl-z)
+	var(--rtt-x) var(--rtt-y) var(--rtt-z) var(--dst);
+
+transform: var(--trsfm);
+
+/* computed output */
+transform: translate(1rem, 1rem) rotate(45deg, 45deg);
+```
+
+This architecture allows multiple utilities to **compose a final style
+together** instead of replacing each other.
+
+See: [Adjust Intent](/docs/properties/adjust)
+
+</section>
+
+<section>
+
+## Customization
+
+You can override any variable in your own styles.
+
+Example:
+
+```css title="override-variables.css"
+html,
+:host {
+	/* */
+
+	/* --user-font-body: var(--fallback-font-body); */
+	--user-font-body: "Inter";
+
+	/* --radius: 4px; */
+	--radius: 6px;
+}
+```
+
+Because components and utilities rely on variables, the entire UI will update
+automatically.
+
+See:
+[Modifying Default Styles](/docs/default-styles/overview#modifying-default-styles).
+
+</section>
+
+<section>
+
+## Note on @supports with OKLCH
+
+The file contains a commented example using `@supports` with `oklch(...)`.
+
+This pattern can be used to enable features only when the browser supports OKLCH
+colors.
+
+```css title="variables.css"
+@supports (color: oklch(0% 0 0)) {
+	html,
+	:host {
+		--grdnt-gmt: in oklch;
+	}
+}
+```
+
+However, this pattern does not work when `shilpConfig.colorFormat: "rgb"` is
+enabled.
+
+See:
+[Important Note For RGB Format](/docs/config/shilp-config-file#important-note-for-rgb-format)
+
+</section>
+
+<section>
+
+## variables.css Reference
+
+<Alert>
+
+If any part of this file feels difficult to understand, copy the snippet and
+paste it into [ChatGPT](https://chatgpt.com) and ask it to explain the code in
+simple words.
+
+</Alert>
+
+```css title="variables.css"
+/*
+
+Shilp CSS Core Variables
+
+Purpose:
+Provide CSS variables used by utilities to build complex styles such
+as fonts, shadows, transforms, typography, etc.
+
+Instead of writing final CSS properties directly, many utilities update these
+variables. Final properties are composed from them.
+
+This prevents utilities from overriding each other and allows multiple utilities
+to combine safely.
+
+Customization:
+Override variables in your own styles to change behavior globally.
+
+Documentation:
+https://shilpcss.com/docs/default-styles/variables
+
+*/
+
+/* ============================================================================================= */
+
+.purge-ignore-start {
+	all: unset;
+}
+
+/* ============================================================================================= */
+
+/* ================================================================================================
+	BASE VARIABLES - HTML, HOST
+================================================================================================ */
+
+/* Define CSS variables with optional value */
+html,
+:host {
+	/* */
+
+	/* ==============================================================================================
+		FONT FAMILIES
+	============================================================================================== */
+
+	--fallback-font-display:
+		ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+	--fallback-font-body:
+		ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+		"Segoe UI Symbol", "Noto Color Emoji";
+	--fallback-font-code:
+		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+		"Courier New", monospace;
+
+	--user-font-display: var(--fallback-font-display);
+	--user-font-body: var(--fallback-font-body);
+	--user-font-code: var(--fallback-font-code);
+
+	/* ==============================================================================================
+		FONT SIZES
+	============================================================================================== */
+
+	/* NOTE:
+	  not using rem values here, when zoomed or provided higher values of base font size,
+		this will render the font's very large.
+		if you still want scaling or repsonsiveness, overwrite this with rem counterparts.
+	*/
+
+	--h1: clamp(32px, 5vw, 48px);
+	--h2: clamp(28px, 4vw, 36px);
+	--h3: clamp(22px, 3vw, 28px);
+	--h4: clamp(18px, 2vw, 22px);
+	--h5: 18px;
+	--h6: 16px;
+
+	/* for base font size 16 px = 1 rem
+	--h1: clamp(2rem, 5vw, 3rem);
+	--h2: clamp(1.75rem, 4vw, 2.25rem);
+	--h3: clamp(1.375rem, 3vw, 1.75rem);
+	--h4: clamp(1.125rem, 2vw, 1.375rem);
+	--h5: 1.125rem;
+	--h6: 1rem;
+	*/
+
+	/* ==============================================================================================
+		BORDER RADIUS
+	============================================================================================== */
+
+	--radius: 4px; /* absolute value (px) */
+
+	/* ==============================================================================================
+		SHADOWS
+	============================================================================================== */
+
+	/* Box Shadow */
+	--in-sdw: ; /* inset */
+	--b-sdw: 0 0 #0000;
+	--b-sdw-clr: #0000;
+
+	/* Text Shadow */
+	--t-sdw-clr: #0000;
+
+	/* Drop Shadow */
+	--d-sdw-clr: #0000;
+
+	/* Backdrop Shadow */
+	--bd-sdw-clr: #0000;
+
+	/* ==============================================================================================
+		TRANSFORM
+	============================================================================================== */
+
+	/* translate */
+	--mv: ;
+	--mv-x: ;
+	--mv-y: ;
+	--mv-z: ;
+	/* skew */
+	--skw: ;
+	--skw-x: ;
+	--skw-y: ;
+	/* scale */
+	--scl: ;
+	--scl-x: ;
+	--scl-y: ;
+	--scl-z: ;
+	/* rotate */
+	--rtt: ;
+	--rtt-x: ;
+	--rtt-y: ;
+	--rtt-z: ;
+	/* distance / perspective */
+	--dst: ;
+}
+
+/* ================================================================================================
+	COMPOSITION VARIABLES - GLOBAL
+================================================================================================ */
+
+/* Define CSS variables composition */
+*,
+*::before,
+*::after,
+input:where([type="file"]):where(
+		::file-selector-button,
+		::-webkit-file-upload-button
+	) {
+	/* */
+
+	/* ==============================================================================================
+		FONT FAMILIES
+	============================================================================================== */
+
+	--font-display: var(--user-font-display), var(--fallback-font-display);
+	--font-body: var(--user-font-body), var(--fallback-font-body);
+	--font-code: var(--user-font-code), var(--fallback-font-code);
+
+	/* ==============================================================================================
+		BOX SHADOW
+	============================================================================================== */
+
+	--bx-sdw: var(--in-sdw) var(--b-sdw);
+
+	/* variants */
+	--b-sdw-2xs: 0 1px var(--b-sdw-clr);
+	--b-sdw-xs: 0 1px 2px 0 var(--b-sdw-clr);
+	--b-sdw-sm: 0 1px 3px 0 var(--b-sdw-clr), 0 1px 2px -1px var(--b-sdw-clr);
+	--b-sdw-md: 0 4px 6px -1px var(--b-sdw-clr), 0 2px 4px -2px var(--b-sdw-clr);
+	--b-sdw-lg:
+		0 10px 15px -3px var(--b-sdw-clr), 0 4px 6px -4px var(--b-sdw-clr);
+	--b-sdw-xl:
+		0 20px 25px -5px var(--b-sdw-clr), 0 8px 10px -6px var(--b-sdw-clr);
+	--b-sdw-2xl: 0 25px 50px -12px var(--b-sdw-clr);
+
+	/* ==============================================================================================
+		TEXT SHADOW
+	============================================================================================== */
+
+	/* variants */
+	--t-sdw-2xs: 0 1px 0 var(--t-sdw-clr);
+	--t-sdw-xs: 0 1px 1px var(--t-sdw-clr);
+	--t-sdw-sm: 0 1px 0 var(--t-sdw-clr), 0 1px 1px var(--t-sdw-clr);
+	--t-sdw-md: 0 1px 1px var(--t-sdw-clr), 0 1px 2px var(--t-sdw-clr);
+	--t-sdw-lg: 0 1px 2px var(--t-sdw-clr), 0 3px 2px var(--t-sdw-clr);
+
+	/* ==============================================================================================
+		DROP SHADOW
+	============================================================================================== */
+
+	/* variants */
+	--d-sdw-xs: 0 1px 1px var(--d-sdw-clr);
+	--d-sdw-sm: 0 1px 2px var(--d-sdw-clr);
+	--d-sdw-md: 0 3px 3px var(--d-sdw-clr);
+	--d-sdw-lg: 0 4px 4px var(--d-sdw-clr);
+	--d-sdw-xl: 0 9px 7px var(--d-sdw-clr);
+	--d-sdw-2xl: 0 25px 25px var(--d-sdw-clr);
+
+	/* ==============================================================================================
+		BACKDROP SHADOWS
+	============================================================================================== */
+
+	/* variants */
+	--bd-sdw-xs: 0 1px 1px var(--bd-sdw-clr);
+	--bd-sdw-sm: 0 1px 2px var(--bd-sdw-clr);
+	--bd-sdw-md: 0 3px 3px var(--bd-sdw-clr);
+	--bd-sdw-lg: 0 4px 4px var(--bd-sdw-clr);
+	--bd-sdw-xl: 0 9px 7px var(--bd-sdw-clr);
+	--bd-sdw-2xl: 0 25px 25px var(--bd-sdw-clr);
+
+	/* ==============================================================================================
+		TRANSFORM
+	============================================================================================== */
+
+	--trsfm: var(--mv) var(--skw) var(--scl) var(--rtt) var(--mv-x) var(--mv-y)
+		var(--mv-z) var(--skw-x) var(--skw-y) var(--scl-x) var(--scl-y) var(--scl-z)
+		var(--rtt-x) var(--rtt-y) var(--rtt-z) var(--dst);
+}
+
+/* ================================================================================================
+	SUPPORTS
+================================================================================================ */
+
+/* NOTE:
+   This pattern does NOT work if `config.colorFormat: "rgb"` is enabled.
+
+	 The conversion process replaces `oklch` with `rgb`, so
+	 `@supports (color: oklch(...)) { ... }` will becomes
+	 `@supports (color: rgb(...)) { ... }` and conditions will no longer behave as
+	 expected.
+*/
+
+/* Gradient Gamut */
+/*
+@supports (color: oklch(0% 0 0)) {
+	html,
+	:host {
+		--grdnt-gmt: in oklch;
+	}
+}
+*/
+
+/* ============================================================================================= */
+
+.purge-ignore-end {
+	all: unset;
+}
+```
+
+</section>

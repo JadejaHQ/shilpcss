@@ -1,0 +1,42 @@
+---
+title: "align"
+---
+
+# align
+
+sets marker inside or outside list item
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		list: {
+			align: {
+				property: "list-style-position: <v><i>;",
+				values: {
+					marker: "inside",
+					text: "outside",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

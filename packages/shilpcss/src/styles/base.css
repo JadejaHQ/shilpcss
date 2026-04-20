@@ -1,0 +1,155 @@
+/*
+
+Shilp CSS Base Styles
+
+Purpose:
+Apply default visual styles using the design system and establish global UI
+defaults.
+
+This file sets baseline styles for:
+
+- Page colors
+- Typography defaults
+- Heading hierarchy
+- Interactive element behavior
+- And so on...
+
+The goal is to provide sensible defaults styles and  most values are driven by CSS variables so the appearance can be customized
+without rewriting the styles (mostly).
+
+Customization:
+Override variables in your own styles to change behavior globally.
+
+Documentation:
+https://shilpcss.com/docs/default-styles/base
+
+*/
+
+/* ============================================================================================= */
+
+.purge-ignore-start {
+	all: unset;
+}
+
+/* ============================================================================================= */
+
+/* ================================================================================================
+	DEFAULT BORDER COLOR
+================================================================================================ */
+
+/* set default border color to element, if it has border */
+*,
+*::before,
+*::after,
+input:where([type="file"]):where(
+		::file-selector-button,
+		::-webkit-file-upload-button
+	) {
+	border-color: oklch(var(--border));
+}
+
+/* ================================================================================================
+	DEFAULT BODY COLORS AND FONT
+================================================================================================ */
+
+/*
+1. set default colors.
+2. set default font family.
+*/
+body {
+	background-color: oklch(var(--bg)); /* 1 */
+	color: oklch(var(--fg)); /* 1 */
+	font-family: var(--font-body); /* 2 */
+}
+
+/* ================================================================================================
+	DEFAULT TEXT SELECTION COLORS
+================================================================================================ */
+
+/* set default colors. */
+::selection {
+	background-color: oklch(var(--primary));
+	color: oklch(var(--primary-fg));
+}
+
+/* ================================================================================================
+	DEFAULT BUTTONS & LINKS STYLES
+================================================================================================ */
+
+/* reset line height to prevent unconsistent vertical spacing */
+a,
+button,
+:where([role="button"]),
+:where(input, button):where([type="button"], [type="reset"], [type="submit"]),
+input:where([type="file"]):where(
+		::file-selector-button,
+		::-webkit-file-upload-button
+	) {
+	line-height: 1;
+}
+
+/* ================================================================================================
+	DEFAULT HEADINGS STYLES
+================================================================================================ */
+/*
+1. set default font family
+2. set sensible line height
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-display); /* 1 */
+	line-height: 1.5; /* 2 */
+}
+
+/* set sensible font weights */
+h1,
+h2 {
+	font-weight: 600;
+}
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 500;
+}
+
+/* set font dynamic sizes */
+h1 {
+	font-size: var(--h1);
+}
+h2 {
+	font-size: var(--h2);
+}
+h3 {
+	font-size: var(--h3);
+}
+h4 {
+	font-size: var(--h4);
+}
+h5 {
+	font-size: var(--h5);
+}
+h6 {
+	font-size: var(--h6);
+}
+
+/* ================================================================================================
+	DEFAULT CODE FONTS
+================================================================================================ */
+
+code,
+kbd,
+samp,
+pre {
+	font-family: var(--font-code);
+}
+
+/* ============================================================================================= */
+
+.purge-ignore-end {
+	all: unset;
+}

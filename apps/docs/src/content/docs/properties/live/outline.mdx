@@ -1,0 +1,75 @@
+---
+title: "outline"
+---
+
+# outline
+
+draws a line around an element without affecting layout
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		live: {
+			outline: {
+				DEFAULT: {
+					property: "outline: <v><i>;",
+					values: {
+						0: 0,
+					},
+				},
+
+				thick: {
+					property: "outline-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {
+						DEFAULT: "thick",
+						thin: "thin",
+						medium: "medium",
+					},
+				},
+
+				style: {
+					property: "outline-style: <v><i>;",
+					themeKey: "style",
+					values: {},
+				},
+
+				color: {
+					property: "outline-color: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+
+				offset: {
+					property: "outline-offset: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

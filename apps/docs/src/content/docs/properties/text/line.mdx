@@ -1,0 +1,86 @@
+---
+title: "line"
+---
+
+# line
+
+controls text column sizing algorithm
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			line: {
+				is: {
+					property: "text-decoration-line: <v><i>;",
+					values: {
+						under: "underline",
+						over: "overline",
+						strike: "line-through",
+						none: "none",
+					},
+				},
+
+				thick: {
+					property: "text-decoration-thickness: <v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {
+						auto: "auto",
+						as: {
+							text: "from-font",
+						},
+					},
+				},
+
+				style: {
+					property: "text-decoration-style: <v><i>;",
+					values: {
+						solid: "solid",
+						double: "double",
+						dotted: "dotted",
+						dashed: "dashed",
+						wavy: "wavy",
+					},
+				},
+
+				color: {
+					property: "text-decoration-color: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+
+				offset: {
+					property: "text-underline-offset: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {
+						auto: "auto",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

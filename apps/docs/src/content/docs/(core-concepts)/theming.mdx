@@ -1,0 +1,108 @@
+---
+title: "Theming"
+---
+
+# Theming
+
+Theming in Shilp CSS is **not just about colors**. It is about defining **design
+tokens**, that shape how your system _looks and feels_.
+
+Design tokens are not decoration. They are **system primitives**. They define
+your **design language**.
+
+---
+
+<section>
+
+## System Primitives
+
+| System Primitive | Description                                   | Documentation                                                                |
+| ---------------- | --------------------------------------------- | ---------------------------------------------------------------------------- |
+| Colors           | Brand & semantic colors, Color roles          | [Built For Theming](/docs/colors#built-for-theming)                          |
+| Border radius    | Uses single `--radius` to build radius scales | [Border Radius Scales](/docs/properties/border/rounded#border-radius-scales) |
+| Font families    | Composed font families with safe fallback     | [Font Families](/docs/properties/text/family#font-families)                  |
+
+</section>
+
+<section>
+
+## What Is Static vs Dynamic
+
+Shilp CSS is **static by design**.
+
+Static:
+
+- Utilities
+- Class names
+- Token structure
+- Config mapping
+
+Dynamic:
+
+- CSS variable values only
+
+You always know:
+
+1. Which tokens exist
+2. Which utilities exist
+3. What the system expects
+
+Only the values may change.
+
+</section>
+
+<section>
+
+## Default Styles
+
+Shilp CSS includes **opinionated default styles**.
+
+These defaults are designed to:
+
+- Reduce boilerplate
+- Keep typography consistent
+- Provide sensible base theming
+- You can override everything
+
+See: [Default Styles](/docs/default-styles)
+
+</section>
+
+<section>
+
+## Dynamic Values from Backend
+
+Shilp CSS has **no runtime logic**.
+
+However, dynamic values are still possible via CSS variables.
+
+Steps:
+
+1. Predefine tokens in theme configuration
+2. Use them via utilities or inline theme function
+3. When API responds, update CSS variables on `html` and/or `:host`
+
+Example:
+
+```js title="dynamic-design-tokens.js"
+document.documentElement.style.setProperty("--primary", apiRes.colors.primary);
+```
+
+<Alert variant="info">
+
+Use only raw `oklch` value (`L% C H`).
+
+- Correct: `apiRes.colors.primary = "64.6% 0.222 41.116";`
+- Bad: `apiRes.colors.primary = "oklch(64.6% 0.222 41.116)";`
+
+</Alert>
+
+### Important
+
+- The variable name must exist beforehand (and with optional default value)
+- Utilities are compiled statically
+- Only values change at runtime
+
+This keeps the system predictable.
+
+</section>

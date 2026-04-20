@@ -1,0 +1,718 @@
+---
+title: "Theme"
+---
+
+# Theme
+
+A **theme** is a structured dataset built on top of values.
+
+If values are _raw primitives_ and properties _consume values_, then **theme
+organizes values so they can be reused consistently**.
+
+Theme is not CSS. Theme is data.
+
+---
+
+<section>
+
+## Values and Theme
+
+From the [Values Config](/docs/config/values) page, we know:
+
+- What value resolvers are
+- How built-in resolvers work
+- How to add custom resolvers
+- How resolve is used inside property config
+
+Theme builds on top of that system.
+
+</section>
+
+<section>
+
+## What Theme Is Used For
+
+Theme has two primary purposes:
+
+### 1. Provide Structured Datasets For Properties
+
+Properties can reference theme using: `propertyConfig.themeKey`
+
+Example:
+
+```js title="Text color property config"
+const propertyConfig = {
+	property: "color: <v><i>;",
+	resolve: "color",
+	themeKey: "colors",
+	variant: true,
+	values: {},
+};
+```
+
+Here, `themeKey: "colors"` tells property:
+
+- Use `shilpConfig.theme.colors`
+- Deep merge it with `shilpConfig.theme.globalValues`
+- Then deep merge`propertyConfig.values` with the earlier result
+
+Theme becomes the source of truth.
+
+### 2. Provide Inline Theme Function
+
+Theme also allows custom CSS to **reuse** structured values.
+
+Example:
+
+```css title="Inline theme function used for gradient"
+background-image: linear-gradient(
+	oklch(theme(colors-orange-400)),
+	oklch(theme(colors-orange-600))
+);
+```
+
+This uses the same dataset that are used by utilities with
+`propertyConfig.themekey`.
+
+</section>
+
+<section>
+
+## Customization
+
+<Alert variant="info">
+
+List of [Available Internal Theme Dataset](#available-built-in-theme-dataset) is
+at the bottom of this page.
+
+</Alert>
+
+### Override Theme
+
+<Alert variant="danger">
+
+Direct override is **NOT RECOMMENDED**.
+
+Internal properties, mixins and components depend heavily on the default theme.
+
+Replacing it completely may break internal behavior.
+
+</Alert>
+
+```js title="Override theme"
+const shilpConfig = {
+	source: "react",
+
+	// internal defaults
+	values: { ... },
+
+	theme: (values) => {
+		return { ... };
+	}
+	// OR
+	// theme: { ... }
+};
+
+export default shilpConfig;
+```
+
+### Extend Theme
+
+This is **RECOMMENDED** way to modify theme.
+
+```js title="Extend theme"
+const shilpConfig = {
+	source: "react",
+
+	// internal defaults
+	values: { ... },
+	theme: { ... },
+
+	extend: {
+		theme: (values /* shilpConfig.values */, inBuiltTheme /* shilpConfig.theme */) => {
+			return { ... };
+		}
+		// OR
+		// theme: { ... }
+	}
+};
+
+export default shilpConfig;
+```
+
+Extend:
+
+- Deep merges into internal theme
+- Keeps built-in structure intact
+- Is safer
+
+</section>
+
+<section>
+
+## Inline Theme Function
+
+You can use inline `theme(...)` function, anywhere a value is expected.
+
+There are two ways to write it, depending on how much control you need.
+
+### 1. Get Raw Value
+
+Example: <br /> `color: theme(colors-orange-600);` →
+`color: 64.6% 0.222 41.116;`
+
+This is raw OKLCH value.
+
+You must wrap it manually: <br /> `color: oklch(theme(colors-orange-600));` →
+`color: oklch(64.6% 0.222 41.116);`
+
+With opacity: <br /> `color: oklch(theme(colors-orange-600) / 0.8);` →
+`color: oklch(64.6% 0.222 41.116 / 0.8);`
+
+### 2. Get Fully Composed Value
+
+Use resolver prefix: <br /> `color: theme(color|colors-orange-600);` →
+`color: oklch(64.6% 0.222 41.116);`
+
+Syntax: `theme(<resolver>|<theme-tokens>)`
+
+If resolver not provided, then `"default"` resolver is used.
+
+Resolvers are located at `shilpConfig.valueResolvers`. This is the same resolver
+system used by properties.
+
+#### Variant Support
+
+`variant` is handled by value resolvers and as we can provide resolver to inline
+theme, variant is also supported the same way as with utilities.
+
+Example: <br /> `color: theme(color|colors-orange-600/80);` →
+`color: oklch(64.6% 0.222 41.116 / 0.8);`
+
+Here, `variant` must be explicitely enabled at **resolver level**:
+
+```js
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		inlineTheme: {
+			color: {
+				variant: true,
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+Important difference:
+
+- For properties → variant enabled per property
+- For inline theme → variant enabled per resolver
+
+If you need different behavior → create and use a new resolver.
+
+</section>
+
+<section>
+
+## Inline Theme Configuration
+
+Inline theme config lives at `shilpConfig.inlineTheme`.
+
+```js title="Inline theme config"
+const shilpConfig = {
+	source: "react",
+
+	// internal defaults
+	inlineTheme: { ... },
+
+	extend: {
+		inlineTheme: {
+			color: {
+				variant: true
+			}
+		}
+	}
+};
+
+export default shilpConfig;
+```
+
+Inline theme config keys **must match** resolver names.
+
+There is no nested structure like `shilpConfig.theme`. It is flat.
+
+### Customize Inline Theme Resolver
+
+```js title="Create custom inline theme"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		//
+		valueResolver: {
+			myResolver: (options) {
+				// custom resolver logic
+				return resolvedValue;
+			},
+		},
+
+		//
+		inlineTheme: {
+			myResolver: {
+				// myResolver's argument: `options.inlineThemeConfig`
+			},
+		},
+	},
+};
+export default shilpConfig;
+```
+
+#### Avilable Options
+
+See: [Custom Value Resolver](/docs/config/value#custom-resolver)
+
+<Alert variant="info">
+
+For inline theme `options.propertyConfig` will be undefined and
+`options.inlineThemeConfig` will be available.
+
+</Alert>
+
+<Alert variant="danger">
+
+DO NOT MUTATE THESE OPTIONS.
+
+</Alert>
+
+#### Expected Output
+
+In return it expects a string containing valid CSS value.
+
+</section>
+
+<section>
+
+## Inline Theme Processing
+
+Inline theme is processed during build generation. There is no runtime
+evaluation.
+
+From [Quick Overview](/docs/quick-overview) page, we know:
+
+- Shilp CSS internally uses SCSS for few features
+- How Shilp CSS parses the `.css` files
+
+Inline theme processing happens twice:
+
+### 1. Before SCSS Compilation
+
+There might be custom css written using inline theme function.
+
+Because, `SCSS` can not understand `theme(...)` function's custom structure, it
+will throw error during compilation.
+
+To avoid this case, Shilp CSS scans and resolves inline theme functions early
+and outputs plain css value.
+
+### 2. After Full Shilp CSS Is Processed
+
+There are use-cases where inline theme function is used to build property value:
+
+- Gradients
+- Complex properties
+- Animation composition
+- and many others...
+
+As inline theme function is not resolved during runtime, if not processed at
+this stage, browser would not undertand this and styles were not applied.
+
+For the above scenarios, Inline theme processing happens twice.
+
+### How It Is Detected
+
+Inline theme matches this pattern `theme(<resolver>|<theme-tokens>)`.
+Technically it is RegExp pattern
+`/theme\((?:([a-zA-Z]+)\|)?([a-zA-Z0-9.\/-]+)\)/g`.
+
+Examples are:
+
+- `theme(screens-md)`
+- `theme(time-200)`
+- `theme(color|colors-orange-600)`
+- `theme(color|colors-orange-600/80)`
+
+<Alert variant="warning">
+
+`!important` flag (with `!` at end) is not supported inside inline theme.
+
+You must write it manually or create a new resolver and use it.
+
+</Alert>
+
+### How It Resolves
+
+For example: `theme(color|colors-orange-600/80)`
+
+If inline theme function exists, then Shilp CSS split it into two parts:
+
+1. Resolver function (if exist)
+   - Resolver: `"color"`
+   - If not defined, then `"default"` resolver is used
+
+2. Theme value tokens
+   - Utility like structure: `"colors-orange-600"`
+   - Value tokens: `["colors", "orange", "600"]`
+   - Variant: `"80"`
+
+This will then matched against `shilpConfig.theme` and
+`shilpConfig.valueResolvers` to resolve the value.
+
+#### High-Level Resolver Steps
+
+1. Extract resolver (if exist)
+2. Extract value tokens
+3. Create `utility` object
+4. Split `utility.value` by `-`
+5. Traverse `shilpConfig.theme`
+6. Apply resolver from `shilpConfig.valueResolvers`
+7. Return final resolved value
+
+This is similar to utility value resolution.
+
+#### Differences With Property Tokens
+
+- No property tokens
+- Values come from `shilpConfig.theme` instead of `propertyConfig.values`
+- Resolver works at theme value level
+- Variant is applied at resovler level
+
+</section>
+
+<section>
+
+## Theme Values Validation
+
+Currently limited validation exists.
+
+### screens
+
+Location: `shilpConfig.theme.screens`
+
+It:
+
+- Must use `px` unit
+- Other units throw error
+
+This ensures predictable media queries.
+
+</section>
+
+<section>
+
+## High-Level Theme Processing
+
+At the beginning of processing:
+
+1. Internal defaults are created and loaded
+   - theme loaded at `shilpConfig.theme`
+   - inline theme config loaded at `shilpConfig.inlineTheme`
+2. Root-level definitions override them completely (if provided)
+   - theme at `shilpConfig.theme`
+   - inline theme at `shilpConfig.inlineTheme`
+   - This is not recommended. Avoid this
+3. Extend configs are deep merged
+   - `shilpConfig.extend.theme` deep merged with `shilpConfig.theme`
+   - `shilpConfig.extend.inlineTheme` deep merged with `shilpConfig.inlineTheme`
+
+Now full **theme dataset** and **inline theme config** is available.
+
+At this stage, theme generation is done.
+
+</section>
+
+<section>
+
+## Available Built-in Theme Dataset
+
+Theme is the structured layer that makes Shilp CSS scalable.
+
+It connects: **Values**, **Properties** and **Custom CSS**
+
+```js title="Theme dataset"
+const shilpConfig = {
+	source: "react",
+
+	// internal defaults
+	values: { ... },
+	valueResolvers: { ... },
+
+	inlineTheme: {
+		color: {
+			variant: true
+		}
+	}
+
+	theme: (values /* shilpConfig.values */) => {
+		return {
+			//
+
+			/* =====================================
+				Mixins config data
+			===================================== */
+
+			screens: {
+				xs: "375px",
+				sm: "640px",
+				md: "768px",
+				lg: "1024px",
+				xl: "1280px",
+				mac: "1440px",
+				max: "1920px",
+			},
+
+			/* =====================================
+				Components config data
+			===================================== */
+
+			container: {
+				align: "center",
+				display: "block",
+
+				// max-width = breakpoint - 2 * spacing
+				spacing: {
+					sm: "40px",
+					md: "48px",
+					lg: "56px",
+					xl: "60px",
+					mac: "80px",
+					max: "240px",
+				},
+
+				// horizontal padding
+				innerPadding: {
+					DEFAULT: "16px",
+					xs: "24px",
+				},
+			},
+
+			/* =====================================
+				Flat values
+			===================================== */
+			globalValues: values.globalValues,
+			angles: values.angles,
+			blend: values.blend,
+			flow: values.flow,
+			time: values.time,
+
+			/* =====================================
+				Grouped values
+			===================================== */
+
+			// numbers
+			numbers: values.numbers?.DEFAULT,
+			fractions: values.numbers?.fractions,
+			percentages: values.numbers?.percentages,
+
+			// spacing
+			spacing: {
+				...values.spacing?.percentages,
+				...values.spacing?.pixels,
+			},
+			spacingPercentages: values.spacing?.percentages,
+			spacingPixels: values.spacing?.pixels,
+
+			// border
+			radius: values.border?.radius,
+			style: values.border?.style,
+			thickness: values.border?.thickness,
+
+			// filter
+			blur: values.filter?.blur,
+
+			// flex-grid
+			amount: values.flexGrid?.gridAmount,
+			order: values.flexGrid?.order,
+			range: values.flexGrid?.gridRange,
+			span: values.flexGrid?.gridSpan,
+
+			/* =====================================
+				Colors
+			===================================== */
+
+			colors: {
+				// 1. white, black, transparent, currentColor
+				// 2. Tailwind colors with color scales
+				// 3. HTML named colors
+				...values.colors,
+
+				// color roles
+				bg: "var(--bg)",
+				fg: "var(--fg)",
+				border: "var(--border)",
+				muted: {
+					DEFAULT: "var(--muted)",
+					fg: "var(--muted-fg)",
+				},
+				surface: {
+					DEFAULT: "var(--surface)",
+					fg: "var(--surface-fg)",
+				},
+
+				// brand colors
+				primary: {
+					DEFAULT: "var(--primary)",
+					fg: {
+						DEFAULT: "var(--primary-fg)",
+						alt: "var(--primary-fg-alt)",
+					},
+					50: "var(--primary-50)",
+					100: "var(--primary-100)",
+					200: "var(--primary-200)",
+					300: "var(--primary-300)",
+					400: "var(--primary-400)",
+					500: "var(--primary-500)",
+					600: "var(--primary-600)",
+					700: "var(--primary-700)",
+					800: "var(--primary-800)",
+					900: "var(--primary-900)",
+					950: "var(--primary-950)",
+				},
+				secondary: {
+					DEFAULT: "var(--secondary)",
+					fg: {
+						DEFAULT: "var(--secondary-fg)",
+						alt: "var(--secondary-fg-alt)",
+					},
+					50: "var(--secondary-50)",
+					100: "var(--secondary-100)",
+					200: "var(--secondary-200)",
+					300: "var(--secondary-300)",
+					400: "var(--secondary-400)",
+					500: "var(--secondary-500)",
+					600: "var(--secondary-600)",
+					700: "var(--secondary-700)",
+					800: "var(--secondary-800)",
+					900: "var(--secondary-900)",
+					950: "var(--secondary-950)",
+				},
+				accent: {
+					DEFAULT: "var(--accent)",
+					fg: {
+						DEFAULT: "var(--accent-fg)",
+						alt: "var(--accent-fg-alt)",
+					},
+					50: "var(--accent-50)",
+					100: "var(--accent-100)",
+					200: "var(--accent-200)",
+					300: "var(--accent-300)",
+					400: "var(--accent-400)",
+					500: "var(--accent-500)",
+					600: "var(--accent-600)",
+					700: "var(--accent-700)",
+					800: "var(--accent-800)",
+					900: "var(--accent-900)",
+					950: "var(--accent-950)",
+				},
+
+				// semantic colors
+				base: {
+					DEFAULT: "var(--base)",
+					fg: {
+						DEFAULT: "var(--base-fg)",
+						alt: "var(--base-fg-alt)",
+					},
+					50: "var(--base-50)",
+					100: "var(--base-100)",
+					200: "var(--base-200)",
+					300: "var(--base-300)",
+					400: "var(--base-400)",
+					500: "var(--base-500)",
+					600: "var(--base-600)",
+					700: "var(--base-700)",
+					800: "var(--base-800)",
+					900: "var(--base-900)",
+					950: "var(--base-950)",
+				},
+				success: {
+					DEFAULT: "var(--success)",
+					fg: {
+						DEFAULT: "var(--success-fg)",
+						alt: "var(--success-fg-alt)",
+					},
+					50: "var(--success-50)",
+					100: "var(--success-100)",
+					200: "var(--success-200)",
+					300: "var(--success-300)",
+					400: "var(--success-400)",
+					500: "var(--success-500)",
+					600: "var(--success-600)",
+					700: "var(--success-700)",
+					800: "var(--success-800)",
+					900: "var(--success-900)",
+					950: "var(--success-950)",
+				},
+				warning: {
+					DEFAULT: "var(--warning)",
+					fg: {
+						DEFAULT: "var(--warning-fg)",
+						alt: "var(--warning-fg-alt)",
+					},
+					50: "var(--warning-50)",
+					100: "var(--warning-100)",
+					200: "var(--warning-200)",
+					300: "var(--warning-300)",
+					400: "var(--warning-400)",
+					500: "var(--warning-500)",
+					600: "var(--warning-600)",
+					700: "var(--warning-700)",
+					800: "var(--warning-800)",
+					900: "var(--warning-900)",
+					950: "var(--warning-950)",
+				},
+				danger: {
+					DEFAULT: "var(--danger)",
+					fg: {
+						DEFAULT: "var(--danger-fg)",
+						alt: "var(--danger-fg-alt)",
+					},
+					50: "var(--danger-50)",
+					100: "var(--danger-100)",
+					200: "var(--danger-200)",
+					300: "var(--danger-300)",
+					400: "var(--danger-400)",
+					500: "var(--danger-500)",
+					600: "var(--danger-600)",
+					700: "var(--danger-700)",
+					800: "var(--danger-800)",
+					900: "var(--danger-900)",
+					950: "var(--danger-950)",
+				},
+				info: {
+					DEFAULT: "var(--info)",
+					fg: {
+						DEFAULT: "var(--info-fg)",
+						alt: "var(--info-fg-alt)",
+					},
+					50: "var(--info-50)",
+					100: "var(--info-100)",
+					200: "var(--info-200)",
+					300: "var(--info-300)",
+					400: "var(--info-400)",
+					500: "var(--info-500)",
+					600: "var(--info-600)",
+					700: "var(--info-700)",
+					800: "var(--info-800)",
+					900: "var(--info-900)",
+					950: "var(--info-950)",
+				},
+			},
+		}
+	}
+}
+```
+
+</section>

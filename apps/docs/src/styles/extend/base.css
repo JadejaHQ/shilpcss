@@ -1,0 +1,80 @@
+/* ================================================================================================
+	BASE STYLES  (extends base.css)
+================================================================================================ */
+
+/*
+
+*/
+
+/* ================================================================================================
+	TYPOGRAPY
+================================================================================================ */
+
+/* increase default letter spacing */
+body {
+	@text gap;
+}
+
+/* set max characters */
+p {
+	max-width: 65ch;
+	@text break-word h-lg;
+}
+
+/* set active links hover style */
+a {
+	@data is("active") {
+		@text color-accent;
+
+		@theme dark {
+			@text color-accent-400;
+		}
+	}
+}
+
+/* set font weight */
+strong,
+b {
+	@text thick-600;
+}
+
+/* prevent from selecting button text */
+button {
+	@live select-none;
+}
+
+kbd,
+code:not(.code-block code) {
+	@bg color-base-200;
+	@text color-secondary size-sm thick-500 h-normal space-nowrap;
+	@size min-5 h-fit w-fit max-w-full;
+	@layout is-inline-flex overflow-x-auto;
+	@flex items-center;
+	@border rounded thick;
+	@space px-2 pb-1.5 pt-1;
+
+	@theme dark {
+		@text color-secondary-400;
+	}
+}
+
+/* set blockquote styles */
+blockquote {
+	@border thick-left-4;
+	@space pl-6 py-2 my-8;
+	@text size-h3 family-display gap-lg gap-word-xl;
+}
+
+/* ================================================================================================
+	DEFAULT SVG STYLE
+================================================================================================ */
+
+svg {
+	@flex shrink-0;
+	@live events-none;
+	@size is-5;
+
+	@match not("[fill]") {
+		@svg fill-current;
+	}
+}

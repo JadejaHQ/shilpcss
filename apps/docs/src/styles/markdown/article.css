@@ -1,0 +1,53 @@
+/* ================================================================================================
+  ARTICLE HEADINGS - HOVER (#)
+================================================================================================ */
+
+article {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@state hover {
+			@position is-relative;
+			@live cursor-pointer;
+
+			@self before {
+				content: "#";
+
+				@position is-absolute;
+				@text size-inherit;
+				@space -ml-8;
+			}
+
+			@text line-is-under line-offset-4 line-color-primary line-thick-4;
+		}
+	}
+
+	h2 {
+		@state hover {
+			@self before {
+				@space -ml-7;
+			}
+		}
+	}
+
+	h3 {
+		@state hover {
+			@self before {
+				@space -ml-6;
+			}
+		}
+	}
+
+	h4,
+	h5,
+	h6 {
+		@state hover {
+			@self before {
+				@space -ml-5;
+			}
+		}
+	}
+}

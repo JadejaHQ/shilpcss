@@ -1,0 +1,7 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@list",
+	"title": "list intent",
+	"items": ["align", "marker"]
+}

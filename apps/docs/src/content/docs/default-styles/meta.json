@@ -1,0 +1,42 @@
+{
+	"label": "default styles",
+	"items": [
+		{
+			"name": "index",
+			"label": "Overview",
+			"title": "default styles overview"
+		},
+		{
+			"name": "reset",
+			"label": "reset.css"
+		},
+		{
+			"name": "colors",
+			"label": "colors.css"
+		},
+		{
+			"name": "colors-dark",
+			"label": "colors-dark.css"
+		},
+		{
+			"name": "colors-dark-flip-base",
+			"label": "colors-dark-flip-base.css"
+		},
+		{
+			"name": "variables",
+			"label": "variables.css"
+		},
+		{
+			"name": "base",
+			"label": "base.css"
+		},
+		{
+			"name": "animate",
+			"label": "animate.css"
+		},
+		{
+			"name": "components",
+			"label": "components.css"
+		}
+	]
+}

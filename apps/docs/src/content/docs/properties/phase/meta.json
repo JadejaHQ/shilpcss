@@ -1,0 +1,7 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@phase",
+	"title": "phase intent",
+	"items": ["delay", "duration", "flow", "for", "preset"]
+}

@@ -1,0 +1,594 @@
+---
+title: "Property Config Patterns"
+---
+
+# Property Config Patterns
+
+There is no single way to write a property config. Depending on your use case,
+you may structure it differently.
+
+---
+
+<section>
+
+## Quick Overview
+
+Below is a quick overview of various property config patterns.
+
+| Index | Pattern                                                     | Description                                                                                             | Reference                                                          |
+| ----- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| 1     | One Utility, One Property                                   | One utility generates one CSS property with one resolved value                                          | [Read](#one-utility-one-property)                                  |
+| 2     | One Utility, Multiple Properties, Same Value                | One utility applies the same resolved value to multiple CSS properties                                  | [Read](#one-utility-multiple-properties-same-value)                |
+| 3     | One Utility, Multiple Properties, May Have Different Values | One utility outputs multiple CSS properties which may have different values, using `special: true` flag | [Read](#one-utility-multiple-properties-may-have-different-values) |
+| 4     | Single Word Utility                                         | A single word utility, using `DEFAULT` key                                                              | [Read](#single-word-utility)                                       |
+| 5     | One Utility, Multiple Variants                              | Nested property structure allows extended variations like axis or direction                             | [Read](#one-utility-multiple-variants)                             |
+| 6     | `preset-*` Utility, Shorthand + Individual                  | Provide a complete shorthand preset while allowing individual utilities                                 | [Read](#preset--utility-shorthand--individual)                     |
+| 7     | `preset-*` Utility, Multi-Part Value                        | Explicitly group multi-part combinations to avoid unpredictable value stacking                          | [Read](#preset--utility-multi-part-value)                          |
+| 8     | Multiple Utilities With CSS Variables                       | Use utilities to control CSS variables and compose the final property indirectly                        | [Read](#multiple-utilities-with-css-variables)                     |
+
+</section>
+
+<section>
+
+## One Utility, One Property
+
+One utility maps to one CSS property. This is the regular and most used pattern.
+
+| Input               | Output                      |
+| ------------------- | --------------------------- |
+| `@layout is-flex;`  | `display: flex;`            |
+| `@layout is-flex!;` | `display: flex !important;` |
+| `@space -ml-4;`     | `margin-left: -1rem;`       |
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			is: {
+				property: "display: <v><i>",
+				values: {
+					hidden: "none",
+					flex: "flex",
+				},
+			},
+		},
+		space: {
+			ml: {
+				property: "margin-left: <n><v><i>;",
+				resolve: "spacing",
+				values: {
+					0: "0px",
+					1: "4px",
+					4: "16px",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This is the default structure most properties use.
+
+</section>
+
+<section>
+
+## One Utility, Multiple Properties, Same Value
+
+Sometimes one utility should apply multiple properties, but all resolve to the
+same value.
+
+| Input                | Output                                                                  |
+| -------------------- | ----------------------------------------------------------------------- |
+| `@space mx-4;`       | `margin-left: 1rem;`<br />`margin-right: 1rem;`                         |
+| `@space -mx-4!;`     | `margin-left: -1rem !important;`<br />`margin-right: -1rem !important;` |
+| `@border thick-x-4;` | `border-left-width: 0.25rem;`<br />`border-right-width: 0.25rem;`       |
+
+```js title="shilp.config.js"
+const shilpConfig = {
+  source: "react",
+
+  properties: {
+    space: {
+      mx: {
+				property: `
+						margin-left: <n><v><i>;
+						margin-right: <n><v><i>;
+				`,
+				values: {
+						0: "0px",
+						px: "1px",
+						"0.5": "2px"
+						1: "4px"
+				}
+      },
+    },
+    border: {
+      thick: {
+				x: {
+					property: `
+						border-left-width: <v><i>;
+						border-right-width: <v><i>;
+					`,
+					values: {
+						0: "0px",
+						1: "1px",
+						2: "2px"
+						4: "4px"
+					}
+				}
+      },
+    },
+  },
+};
+
+export default shilpConfig;
+```
+
+Here `<v>` resolves once and is reused in all properties.
+
+</section>
+
+<section>
+
+## One Utility, Multiple Properties, May Have Different Values
+
+The regular structure does not allow multiple properties with different values.
+
+For that use `special: true`, and this changes how the property is processed.
+
+| Input                       | Output                                                                                                           |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `@text overflow-truncate;`  | `overflow: hidden;`<br />`text-overflow: ellipsis;`<br />`white-space: nowrap;`                                  |
+| `@text overflow-truncate!;` | `overflow: hidden !important;`<br />`text-overflow: ellipsis !important;`<br />`white-space: nowrap !important;` |
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			overflow: {
+				truncate: {
+					property: "<v>",
+					special: true,
+					values: {
+						DEFAULT: `
+							overflow: hidden<i>;
+							text-overflow: ellipsis<i>;
+							white-space: nowrap<i>;
+						`,
+						unset: `
+							overflow: unset<i>;
+							text-overflow: unset<i>;
+							white-space: unset<i>;
+            `,
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+Important notes:
+
+- `propertyConfig.property` must only contain `<v>`
+- `propertyConfig.values` must include all CSS properties
+- You can also use inline `theme(...)` for any property value
+- Each property rule must end with `;`
+- `<i>` must be present inside `propertyConfig.values`
+- **Global values** are _NOT merged_
+- `propertyConfig.themeKey` is _NOT merged automatically_
+
+Use `special: true` only when normal structure cannot express your case.
+
+</section>
+
+<section>
+
+## Single Word Utility
+
+One word utility can be set using `DEFAULT` key. It skips extra tokens.
+
+| Input            | Output                            |
+| ---------------- | --------------------------------- |
+| `@layout show;`  | `visibility: visible;`            |
+| `@layout show!;` | `visibility: visible !important;` |
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			show: {
+				property: "visibility: <v><i>;",
+				values: {
+					DEFAULT: "visible",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>
+
+<section>
+
+## One Utility, Multiple Variants
+
+You can extend property structure using nested objects.
+
+| Input                        | Output                         |
+| ---------------------------- | ------------------------------ |
+| `@layout overflow-hidden;`   | `overflow: hidden;`            |
+| `@layout overflow-hidden!;`  | `overflow: hidden !important;` |
+| `@layout overflow-x-hidden;` | `overflow-x: hidden;`          |
+| `@layout overflow-y-auto;`   | `overflow-y: auto;`            |
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			overflow: {
+				DEFAULT: {
+					property: "overflow: <v><i>;",
+					values: {
+						auto: "auto",
+						hidden: "hidden",
+						// other values
+					},
+				},
+
+				x: {
+					property: "overflow-x: <v><i>;",
+					values: {
+						// values same as overflow.DEFAULT
+					},
+				},
+
+				y: {
+					property: "overflow-y: <v><i>;",
+					values: {
+						// values same as overflow.DEFAULT
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This structure keeps utilities predictable and expandable.
+
+</section>
+
+<section>
+
+## preset-\* Utility, Shorthand + Individual
+
+Some CSS features supports **full shorthand property** and also **individual
+sub-properties**.
+
+For example: `animation`, `transition`, `flex`
+
+For this, you can combine a **preset utility** with detailed individual
+utilities.
+
+1. Shorthand preset:
+
+| Input                      | Output                                                  |
+| -------------------------- | ------------------------------------------------------- |
+| `@animate preset-spin;`    | `animation: spin 1s linear infinite;`                   |
+| `@animate preset-wiggle!;` | `animation: wiggle 1s ease-in-out infinite !important;` |
+| `@flex preset-1;`          | `flex: 1 1 0%;`                                         |
+
+2. Individual:
+
+| Input                     | Output                                     |
+| ------------------------- | ------------------------------------------ |
+| `@animate duration-300;`  | `animation-duration: 0.3s;`                |
+| `@animate duration-300!;` | `animation-duration: 0.3s !important;`     |
+| `@flex shrink-0! grow;`   | `flex-shrink: 0 !important; flex-grow: 1;` |
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		animate: {
+			preset: {
+				property: "animation: <v><i>;",
+				values: {
+					none: "none",
+					spin: "spin 1s linear infinite",
+					ping: `ping 1s theme(flow-ease-out) infinite`,
+					pulse: `pulse 2s theme(flow-pulse) infinite`,
+					bounce: "bounce 1s infinite",
+					wiggle: "wiggle 1s theme(flow-ease-in-out) infinite",
+				},
+			},
+
+			duration: {
+				property: "animation-duration: <v><i>;",
+				themeKey: "time",
+				values: {
+					auto: "auto",
+				},
+			},
+		},
+		flex: {
+			grow: {
+				property: "flex-grow: <v><i>;",
+				values: {
+					DEFAULT: 1,
+					0: 0,
+				},
+			},
+			preset: {
+				property: "flex: <v><i>;",
+				values: {
+					// flex: [grow] [shrink] [basis];
+					1: "1 1 0%",
+					auto: "1 1 auto",
+					initial: "0 1 auto",
+					none: "none",
+				},
+			},
+			shrink: {
+				property: "flex-shrink: <v><i>;",
+				values: {
+					DEFAULT: 1,
+					0: 0,
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>
+
+<section>
+
+## preset-\* Utility, Multi-Part Value
+
+Some CSS properties accepts **multiple parts in a single value**.
+
+For example: `transform`, `filter`, `backdrop-filter`
+
+By default, Shilp CSS treats each utility as a **single-part value**. That means
+`@filter blur-sm bright-125;` → `filter: brightness(1.25);`.
+
+The previous value is overridden. This is intentional.
+
+Most CSS properties in real-world usage do not require multi-part composition.
+Overriding is predictable and simpler.
+
+### When You Need Multi-Part Values
+
+For properties like `filter` or `transform`, multiple parts are sometimes
+necessary.
+
+Instead of allowing random accumulation of values, Shilp CSS recommends using
+`preset-*`.
+
+This makes combinations explicit and predictable.
+
+1. Multi-Part:
+
+| Input                        | Output (unexpected)         |
+| ---------------------------- | --------------------------- |
+| `@filter blur-sm bright-125` | `filter: brightness(1.25);` |
+
+2. Preset:
+
+| Input                  | Output (expected)                          |
+| ---------------------- | ------------------------------------------ |
+| `@filter peset-ipsum;` | `filter: blur(0.125rem) brightness(1.25);` |
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		filter: {
+			blur: {
+				property: "filter: blur(<v>)<i>;",
+				resolve: "spacing",
+				themeKey: "blur",
+				values: {},
+			},
+			bright: {
+				property: "filter: brightness(<v>)<i>;",
+				themeKey: "fractions",
+				values: {},
+			},
+			preset: {
+				property: "filter: <v><i>;",
+				values: {
+					// filter: [blur] [brightness] [contrast] [drop-shadow] [grayscale] [hue-rotate] [invert] [opacity] [saturate] [sepia];
+					ipsum: "blur(theme(blur-sm)) bright(theme(fractions-125))",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>
+
+<section>
+
+## Multiple Utilities With CSS Variables
+
+Some CSS systems are easier to manage using **CSS variables as building
+blocks**.
+
+For example: `box-shadow`, `text-shadow`, `transform`, `filter`
+
+Instead of generating a full final value in one utility, we can:
+
+- Use utilities to update CSS variables
+- Use another utility to apply the final property
+
+This keeps things composable and predictable.
+
+```css title="shadow.css"
+*,
+::before,
+::after {
+	/* Box Shadow ================================================================================ */
+
+	--in-sdw: ; /* inset shadow */
+	--b-sdw: ;
+	--bx-sdw: var(--in-sdw) var(--b-sdw, 0 0 #0000);
+
+	/* variants */
+	--b-sdw-clr: ;
+	--b-sdw-xs: 0 1px 2px 0 var(--b-sdw-clr, #0000);
+	--b-sdw-sm:
+		0 1px 3px 0 var(--b-sdw-clr, #0000), 0 1px 2px -1px var(--b-sdw-clr, #0000);
+
+	/* Text Shadow =============================================================================== */
+
+	/* variants */
+	--t-sdw-clr: ;
+	--t-sdw-xs: 0 1px 1px var(--t-sdw-clr, #0000);
+	--t-sdw-sm:
+		0 1px 0 var(--t-sdw-clr, #0000), 0 1px 1px var(--t-sdw-clr, #0000);
+}
+```
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			shadow: {
+				DEFAULT: {
+					property: "<v>",
+					special: true,
+					values: {
+						none: `
+              box-shadow: 0 0 #0000<i>;
+              --b-sdw: initial<i>;
+            `,
+						xs: `
+              box-shadow: var(--bx-sdw)<i>;
+              --b-sdw: var(--b-sdw-xs)<i>;
+            `,
+						sm: `
+              box-shadow: var(--bx-sdw)<i>;
+              --b-sdw: var(--b-sdw-sm)<i>;
+            `,
+						DEFAULT: `
+              box-shadow: var(--bx-sdw)<i>;
+              --b-sdw: var(--b-sdw-sm)<i>;
+            `,
+					},
+				},
+
+				inset: {
+					property: "--in-sdw: <v><i>;",
+					values: {
+						DEFAULT: "inset",
+						none: "unset",
+					},
+				},
+
+				color: {
+					property: "--b-sdw-clr: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+			},
+		},
+
+		text: {
+			shadow: {
+				DEFAULT: {
+					property: "text-shadow: <v><i>;",
+					values: {
+						none: "0 0 #0000",
+						xs: "var(--t-sdw-xs)",
+						sm: "var(--t-sdw-sm)",
+						DEFAULT: "var(--t-sdw-sm)",
+					},
+				},
+
+				color: {
+					property: "--t-sdw-clr: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+```css title="Inset box shadow"
+/* Intent */
+.any-class {
+	@layout shadow-xs shadow-inset shadow-color-orange-600/10;
+}
+
+/* Output */
+.any-class {
+	--b-sdw-clr: oklch(64.6% 0.222 41.116 / 0.1);
+	--b-sdw: var(--b-sdw-xs); /* 0 1px 2px 0 var(--b-sdw-clr, #0000) */
+	--in-sdw: inset;
+	box-shadow: var(--bx-sdw); /* var(--in-sdw) var(--b-sdw, 0 0 #0000) */
+}
+
+/* Computed property */
+.any-class {
+	box-shadow: inset 0 1px 2px 0 oklch(64.6% 0.222 41.116 / 0.1);
+}
+```
+
+```css title="text shadow"
+/* Intent */
+.any-class {
+	@text shadow-xs shadow-colore-orange-600/10;
+}
+
+/* Output */
+.any-class {
+	--t-sdw-clr: oklch(64.6% 0.222 41.116 / 0.1);
+	text-shadow: var(--t-sdw-xs); /* 0 1px 1px var(--t-sdw-clr, #0000) */
+}
+
+/* Computed property */
+.any-class {
+	text-shadow: 0 1px 1px oklch(64.6% 0.222 41.116 / 0.1);
+}
+```
+
+</section>

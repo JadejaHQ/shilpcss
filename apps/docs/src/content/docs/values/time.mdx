@@ -1,0 +1,103 @@
+---
+title: "Time Dataset"
+---
+
+# Time Dataset
+
+The **Time dataset** defines **time tokens** used for transition and animation
+timing.
+
+---
+
+<section>
+
+## Location
+
+Resolved location: `shilpConfig.values.time` <br /> Theme location:
+`shilpConfig.theme.time`
+
+</section>
+
+<section>
+
+## Usage
+
+| Intent                 | Theme Key | Description           |
+| ---------------------- | --------- | --------------------- |
+| `@phase delay-*;`      | `"time"`  | Transition delay time |
+| `@phase duration-*;`   | `"time"`  | Transition time       |
+| `@animate delay-*;`    | `"time"`  | Animation delay time  |
+| `@animate duration-*;` | `"time"`  | Animation time        |
+
+These utilities read values from the theme, which is built from this dataset.
+
+</section>
+
+<section>
+
+## Dataset Structure
+
+The dataset is a **simple key–value map** of time tokens to CSS values.
+
+It includes values from `0s` to `2s`.
+
+See: [Time Dataset Reference](#time-dataset-reference)
+
+</section>
+
+<section>
+
+## Customizing the Dataset
+
+You can extend or override this dataset in your config.
+
+```js title="Customize time dataset"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		values: {
+			time: {
+				2500: "2.5s",
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This will make additional time tokens available through the theme system.
+
+</section>
+
+<section>
+
+## Time Dataset Reference
+
+```js title="Time Dataset"
+const time = {
+	0: "0s",
+	50: "0.05s",
+	100: "0.1s",
+	150: "0.15s",
+	200: "0.2s",
+	250: "0.25s",
+	300: "0.3s",
+	350: "0.35s",
+	400: "0.4s",
+	500: "0.5s",
+	600: "0.6s",
+	700: "0.7s",
+	750: "0.75s",
+	800: "0.8s",
+	900: "0.9s",
+	1000: "1s",
+	1500: "1.5s",
+	2000: "2s",
+};
+
+export default time;
+```
+
+</section>

@@ -1,0 +1,19 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"dangerouslyDisablePackageManagerCheck": true,
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": [".next/**", "!.next/cache/**", "!.next/dev/**", "dist/**"]
+		},
+		"dev": {
+			"dependsOn": ["^build"],
+			"cache": false,
+			"persistent": true
+		},
+		"publish-it": {
+			"dependsOn": ["build"],
+			"cache": false
+		}
+	}
+}

@@ -1,0 +1,71 @@
+name: "Feature Request"
+description: Suggest a new feature or improvement for ShilpCSS
+title: "[feat]: "
+labels: ["area: request"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to create a feature request!
+
+        Please search open/closed issues before submitting, as the issue may have already been reported/addressed.
+
+        If this is the new one, then please describe the idea clearly.
+
+  - type: markdown
+    attributes:
+      value: |
+        If you aren't sure about this, please open a discussion instead:
+        - [Ideas Discussion](https://github.com/JadejaHQ/shilpcss/discussions/new?category=ideas)
+
+  - type: textarea
+    id: desctiption
+    attributes:
+      label: Feature description
+      description: Tell us about your feature request
+      placeholder: "I think this feature would be great because..."
+      value: "Describe your feature request..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How should this feature work?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any other approaches you considered?
+    validation:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Links, references, or examples
+    validation:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Before submitting
+      description:
+        By submitting this issue, you agree to follow our [Contributing
+        Guidelines](https://github.com/JadejaHQ/shilpcss/blob/main/CONTRIBUTING.md).
+      options:
+        - label: I've made research efforts and searched the documentation
+          required: true
+        - label: I've searched for existing issues
+          required: true
+        - label:
+            I understand that this will be closed if it doesn't meet the above
+            criteria
+          required: true

@@ -1,0 +1,182 @@
+---
+title: "components.css"
+---
+
+# components.css
+
+`components.css` provides a small set of **ready-to-use component classes**
+shipped with Shilp CSS.
+
+Unlike utilities, these are **normal CSS classes** meant to be used directly in
+markup.
+
+Examples:
+
+- `.container--center`
+- `.limit-lines`
+- `.screen-reader`
+
+These components solve **common layout and accessibility patterns** that are
+reused across many projects.
+
+---
+
+<section>
+
+## Why These Components Exist
+
+Shilp CSS encourages writing styles inside `.css` using intents and utilities.
+
+However, some patterns appear so frequently that writing them repeatedly creates
+unnecessary work.
+
+These patterns are therefore provided as **pre-built components**. They can be
+used immediately without writing additional CSS.
+
+</section>
+
+<section>
+
+## How This File Works
+
+The file itself does not contain component styles directly. Instead it imports
+individual component files.
+
+```css title="components.css"
+@import "./components/limit-lines.css";
+@import "./components/screen-reader.css";
+@import "./components/container.css";
+
+/* import("shilpcss-dynamic-components"); */
+```
+
+This structure allows:
+
+- easier to maintain
+- importing individual components
+- extended by dynamic components generated from the config
+
+The comment at the bottom is used internally by Shilp CSS to **inject
+dynamically generated components**.
+
+See: [Components Config](/docs/config/components)
+
+</section>
+
+<section>
+
+## Importing Individual Components
+
+You can import only the components you need.
+
+Example: `@import "shilpcss/styles/components/container.css";`
+
+<Alert variant="warning">
+
+if importing individual components, include
+`/* import("shilpcss-dynamic-components"); */` to inject dynamically generated
+components.
+
+</Alert>
+
+See: [components.css Reference](#componentscss-reference)
+
+</section>
+
+<section>
+
+## Built-in Components
+
+The table below highlights the Shilp CSS default components.
+
+| Component     | Description                                                           | Documentation                               |
+| ------------- | --------------------------------------------------------------------- | ------------------------------------------- |
+| Container     | A component for fixing an element's width to the current breakpoint   | [Container](/docs/components/container)     |
+| Limit Lines   | Limits text to a fixed number of lines                                | [Limit Lines](/docs/components/limit-lines) |
+| Screen Reader | Helps hide content visually while keeping it accessible for assistive |
+| technologies  | [Screen Reader](/docs/components/screen-reader)                       |
+
+</section>
+
+<section>
+
+## When To Use Components
+
+Use components when:
+
+- the pattern is reused across multiple places
+- the behavior is generic
+- the implementation would otherwise be repeated frequently
+
+For more complex UI patterns, it is usually better to write styles directly.
+
+</section>
+
+<section>
+
+## Customization
+
+You can override in your own styles.
+
+See:
+[Modifying Default Styles](/docs/default-styles/overview#modifying-default-styles).
+
+</section>
+
+<section>
+
+## components.css Reference
+
+<Alert>
+
+If any part of this file feels difficult to understand, copy the snippet and
+paste it into [ChatGPT](https://chatgpt.com) and ask it to explain the code in
+simple words.
+
+</Alert>
+
+```css title="components.css"
+/*
+
+Shilp CSS Default Components
+
+Purpose:
+Provide a small set of commonly used reusable component classes.
+
+Components are regular CSS classes meant for direct usage in markup.
+They solve recurring layout and accessibility patterns.
+
+Static components are imported from individual files.
+Dynamic components generated from the config are appended during processing.
+
+Includes:
+- container
+- line clamping
+- screen-reader accessibility helpers
+- dynamic components generated from shilpConfig.components
+- and many more...
+
+Customization:
+Override in your own styles to change behavior globally.
+
+Documentation:
+https://shilp.dev/docs/default-styles/components
+
+*/
+
+/* ================================================================================================
+	STATICALLY DEFINED COMPONENTS IMPORTS
+================================================================================================ */
+
+@import "./components/limit-lines.css";
+@import "./components/screen-reader.css";
+@import "./components/container.css";
+
+/* ================================================================================================
+	DYNAMICALLY GENERATED COMPONENTS PLACEHOLDER
+================================================================================================ */
+
+/* import("shilpcss-dynamic-components"); */
+```
+
+</section>

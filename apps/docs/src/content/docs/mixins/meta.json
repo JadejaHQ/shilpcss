@@ -1,0 +1,23 @@
+{
+	"label": "mixins",
+	"items": [
+		{
+			"name": "index",
+			"label": "Overview",
+			"title": "mixins overview"
+		},
+		{ "name": "aria", "label": "@aria", "title": "aria mixin" },
+		{ "name": "childs", "label": "@childs", "title": "childs mixin" },
+		{ "name": "data", "label": "@data", "title": "data mixin" },
+		{ "name": "env", "label": "@env", "title": "env mixin" },
+		{ "name": "form", "label": "@form", "title": "form mixin" },
+		{ "name": "match", "label": "@match", "title": "match mixin" },
+		{ "name": "motion", "label": "@motion", "title": "motion mixin" },
+		{ "name": "screen", "label": "@screen", "title": "screen mixin" },
+		{ "name": "self", "label": "@self", "title": "self mixin" },
+		{ "name": "siblings", "label": "@siblings", "title": "siblings mixin" },
+		{ "name": "state", "label": "@state", "title": "state mixin" },
+		{ "name": "text", "label": "@text", "title": "text mixin" },
+		{ "name": "theme", "label": "@theme", "title": "theme mixin" }
+	]
+}

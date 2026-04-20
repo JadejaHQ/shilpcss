@@ -1,0 +1,43 @@
+/* ================================================================================================
+	DOCS TOC
+================================================================================================ */
+
+.toc {
+	li {
+		@space py-0.5;
+
+		@position is-relative;
+
+		/* data-level added for h3-h6 */
+		@data is("level") {
+			@space pl-4;
+
+			@self before {
+				content: "-";
+
+				@position is-absolute top-5;
+				@adjust preset -move-y-1/2 -move-x-1.5;
+			}
+		}
+
+		@data is("level='4'") {
+			@space pl-8;
+
+			@self before {
+				content: "--";
+
+				@space -ml-4;
+			}
+		}
+
+		&:is([data-level="5"], [data-level="6"]) {
+			@space pl-12;
+
+			@self before {
+				content: "---";
+
+				@space -ml-8;
+			}
+		}
+	}
+}

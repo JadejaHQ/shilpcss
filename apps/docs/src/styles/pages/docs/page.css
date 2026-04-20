@@ -1,0 +1,97 @@
+/* ================================================================================================
+	DOCS CONTENT WRAPPER
+================================================================================================ */
+
+.content__wrapper {
+	/* fill the available space */
+	@flex grow;
+
+	@layout is-flex;
+	@flex flow-col;
+	/*
+		parent is `flex` or `grid`, all childs will be `min-width: auto;`
+		setting `min-width: 0;` will solve the overflow issue.
+	*/
+	@size min-w-0;
+}
+
+/* ================================================================================================
+	DOCS MAIN
+================================================================================================ */
+
+.content__wrapper main {
+	/* fill the available space */
+	@flex grow;
+
+	@layout is-flex overflow-x-hidden;
+	@flex flow-col;
+	@space px-4 pb-8;
+
+	padding-top: var(--docs-main-pt, 0px);
+
+	@screen md {
+		@space px-6;
+	}
+
+	@screen xl {
+		@space mx-8 px-0;
+
+		article {
+			@space px-8;
+		}
+	}
+}
+
+/* ================================================================================================
+	DOCS ARTICLE
+================================================================================================ */
+
+.content__wrapper article {
+	/* fill the available space */
+	@flex grow;
+
+	@space pb-8;
+	@layout overflow-x-hidden;
+}
+
+.page__neighbours {
+	@space my-6 gap-4;
+	@layout is-flex;
+	@flex flow-col;
+	@text case-capitalize;
+
+	@screen md {
+		@flex flow-row items-center;
+
+		.next-btn {
+			@space ml-auto;
+		}
+	}
+
+	@screen xl {
+		@space px-8;
+	}
+}
+
+/* ================================================================================================
+  DANGER: LIMIT THIS TO FEW, AS THIS WILL LEAD TO HIGHER CSS SIZE.
+================================================================================================ */
+
+/*
+  you can specifically target any element on any page.
+*/
+
+/* styling table column */
+[data-path="/docs/config"] {
+	#how-to-understand-the-config {
+		@siblings match(".table") {
+			thead tr,
+			tbody tr {
+				@childs first {
+					@size min-w-20;
+					@text align-x-center;
+				}
+			}
+		}
+	}
+}

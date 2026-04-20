@@ -1,0 +1,26 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@text",
+	"title": "text intent",
+	"items": [
+		"align",
+		"break",
+		"case",
+		"color",
+		"content",
+		"family",
+		"gap",
+		"line-height",
+		"line",
+		"lines",
+		"move",
+		"nums",
+		"overflow",
+		"shadow",
+		"size",
+		"space",
+		"style",
+		"thick"
+	]
+}

@@ -1,0 +1,163 @@
+/*
+
+Shilp CSS Motion System
+
+Purpose:
+Provide timing functions, transition groups, and animation keyframes used by
+motion utilities.
+
+This file enables composable animations through CSS variables. Utilities update
+animation state variables while shared keyframes generate the final animation.
+
+Includes:
+- timing function variables
+- transition property groups
+- enter / exit animation system
+- animation presets
+
+Customization:
+Override variables in your own styles to change behavior globally.
+
+Documentation:
+https://shilpcss.com/docs/default-styles/animate
+
+*/
+
+/* ============================================================================================= */
+
+.purge-ignore-start {
+	all: unset;
+}
+
+/* ============================================================================================= */
+
+/* ================================================================================================
+	BASE VARIABLES - HTML, HOST
+================================================================================================ */
+
+/* Define CSS variables with optional value */
+html,
+:host {
+	/* */
+
+	/* ==============================================================================================
+		TIMING FUNCTIONS
+	============================================================================================== */
+
+	--ease: cubic-bezier(0.7, 0.3, 0.5, 0.8);
+	--ease-in: cubic-bezier(0.4, 0, 1, 1);
+	--ease-out: cubic-bezier(0, 0, 0.2, 1);
+	--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+	--ease-warp: cubic-bezier(0.9, 0.15, 0.1, 0.9);
+	--ease-pulse: cubic-bezier(0.4, 0, 0.6, 1);
+
+	/* ==============================================================================================
+		TRANSITION PROPERTIES
+	============================================================================================== */
+
+	/* colors */
+	--trnst-clrs:
+		color, background-color, border-color, text-decoration-color, fill, stroke;
+	/* filters */
+	--trnst-fltrs: filter, -webkit-backdrop-filter, backdrop-filter;
+	/* properties */
+	--trnst-pprts:
+		var(--trnst-clrs), opacity, box-shadow, transform, var(--trnst-fltrs);
+
+	/* ==============================================================================================
+		ANIMATION
+	============================================================================================== */
+
+	/* enter */
+	--entr-opct: ;
+	--entr-scl: ;
+	--entr-rtt: ;
+	--entr-mv-x: ;
+	--entr-mv-y: ;
+	/* exit */
+	--ext-opct: ;
+	--ext-scl: ;
+	--ext-rtt: ;
+	--ext-mv-x: ;
+	--ext-mv-y: ;
+}
+
+/* ================================================================================================
+	ENTER / EXIT ANIMATION KEYFRAMES
+================================================================================================ */
+
+@keyframes enter {
+	from {
+		opacity: var(--entr-opct);
+		/* transform: translate3d(var(--entr-trslt-x), var(--entr-trslt-y), 0)
+			scale3d(var(--entr-scl), var(--entr-scl), var(--entr-scl))
+			rotate(var(--entr-rtt)); */
+		translate: var(--entr-mv-x) var(--entr-mv-y) 0;
+		scale: var(--entr-scl) var(--entr-scl) var(--entr-scl);
+		rotate: var(--entr-rtt);
+	}
+}
+
+@keyframes exit {
+	to {
+		opacity: var(--ext-opct);
+		/* transform: translate3d(var(--ext-mv-x), var(--ext-mv-y), 0)
+			scale3d(var(--ext-scl), var(--ext-scl), var(--ext-scl))
+			rotate(var(--ext-rtt)); */
+		translate: var(--ext-mv-x) var(--ext-mv-y) 0;
+		scale: var(--ext-scl) var(--ext-scl) var(--ext-scl);
+		rotate: var(--ext-rtt);
+	}
+}
+
+/* ================================================================================================
+	ANIMATION PRESET KEYFRAMES
+================================================================================================ */
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes ping {
+	75%,
+	100% {
+		transform: scale(2);
+		opacity: 0;
+	}
+}
+
+@keyframes pulse {
+	50% {
+		opacity: 0.5;
+	}
+}
+
+@keyframes bounce {
+	0%,
+	100% {
+		transform: translateY(-25%);
+		animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+	}
+	50% {
+		transform: none;
+		animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+	}
+}
+
+@keyframes wiggle {
+	0%,
+	100% {
+		transform: rotate(-3deg);
+	}
+	50% {
+		transform: rotate(3deg);
+	}
+}
+
+/* ============================================================================================= */
+
+.purge-ignore-end {
+	all: unset;
+}

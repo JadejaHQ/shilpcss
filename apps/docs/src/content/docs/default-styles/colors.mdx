@@ -1,0 +1,473 @@
+---
+title: "colors.css"
+---
+
+# colors.css
+
+`colors.css` defines the color design system for Shilp CSS.
+
+Instead of hardcoding colors inside components or utilities, Shilp CSS exposes
+them as **CSS variables**. These variables are derived from the internal theme
+dataset.
+
+This allows colors to be:
+
+1. reused across the entire application
+2. customized easily
+3. switched for dark mode
+4. overridden per project
+
+All variables are defined on `html` and `:host`. So, they work both in normal
+documents and **Shadow DOM** environments.
+
+---
+
+<section>
+
+## How Colors Defined
+
+Colors are defined using the
+[Inline Theme Function](/docs/config/theme#inline-theme-function).
+
+Example:
+
+```css
+html,
+:host {
+	--primary-600: theme(colors-orange-600);
+}
+```
+
+This pulls a value from the theme color dataset and resolves it during the
+build.
+
+Example output: `--primary-600: 64.6% 0.222 41.116;`
+
+Because of this:
+
+1. color values stay consistent
+2. you can change colors from the theme config
+3. dark mode can override variables safely
+
+</section>
+
+<section>
+
+## Color Roles
+
+Shilp CSS does not expose only raw colors, It also defines **color roles** which
+represent the meaning of a color in the interface.
+
+| Role           | Purpose                                  |
+| -------------- | ---------------------------------------- |
+| `--bg`         | Background color                         |
+| `--fg`         | Contrast text color for background color |
+| `--muted`      | Muted color                              |
+| `--muted-fg`   | Contrast text color for muted color      |
+| `--surface`    | Surface color                            |
+| `--surface-fg` | Contrast text color for surface color    |
+| `--border`     | Border color                             |
+
+Example:
+
+```css
+html,
+:host {
+	--bg: theme(colors-base-50);
+	--fg: theme(colors-base-950);
+	--border: theme(colors-base-300);
+}
+```
+
+This keeps styling **organized instead of scattered**.
+
+For example:
+
+```css title="card.css"
+.card {
+	background-color: var(--surface);
+	color: var(--surface-fg);
+	border-color: var(--border);
+}
+```
+
+This prevents writing raw colors everywhere.
+
+</section>
+
+<section>
+
+## Color Groups
+
+Shilp CSS includes several color groups used across UI systems.
+
+| Group         | Category       | Description                               |
+| ------------- | -------------- | ----------------------------------------- |
+| `--primary`   | Brand color    | Visual identity colors                    |
+| `--secondary` | Brand color    | Supporting UI elements                    |
+| `--accent`    | Brand color    | Highlights or interaction feedback        |
+| `--base`      | Semantic color | Neutral palette used across the interface |
+| `--success`   | Semantic color | Success state                             |
+| `--info`      | Semantic color | Information state                         |
+| `--warning`   | Semantic Color | Warning state                             |
+| `--danger`    | Semantic color | Danger state                              |
+
+Every color group contains several colors. We can understand those colors with
+the example of **primary** color group. The similar colors exist in other
+groups.
+
+| Variable           | Description                                               |
+| ------------------ | --------------------------------------------------------- |
+| `--primary`        | The main color of group                                   |
+| `--primary-fg`     | Contrast text color on primary (darker scales)            |
+| `--primary-fg-alt` | Alternate contrast text color on primary (lighter scales) |
+| `--primary-50`     | Primary color scale 1 (lightest color)                    |
+| `--primary-100`    | Primary color scale 2                                     |
+| `--primary-200`    | Primary color scale 3                                     |
+| `--primary-300`    | Primary color scale 4                                     |
+| `--primary-400`    | Primary color scale 5                                     |
+| `--primary-500`    | Primary color scale 6 (base color)                        |
+| `--primary-600`    | Primary color scale 7 (Shilp CSS color)                   |
+| `--primary-700`    | Primary color scale 8                                     |
+| `--primary-800`    | Primary color scale 9                                     |
+| `--primary-900`    | Primary color scale 10                                    |
+| `--primary-950`    | Primary color scale 11 (darkest color)                    |
+
+This allows predictable usage inside utilities like:
+
+```css
+.any-class {
+	@bg color-primary-100;
+	@text color-primary-fg-alt;
+}
+```
+
+</section>
+
+<section>
+
+## Dark Mode
+
+`colors.css` only defines the **light theme**.
+
+Dark theme variables are provided in separate files:
+
+- [colors-dark.css](/docs/default-styles/colors-dark)
+- [colors-dark-flip-base.css](/docs/default-styles/colors-dark-flip-base)
+
+This keeps the **color system consistent** while allowing theme switching.
+
+</section>
+
+<section>
+
+## Customization
+
+You can override any color variable in your own styles.
+
+Example:
+
+```css title="override-colors.css"
+html,
+:host {
+	/* --primary-fg: var(--white); */
+	--primary-fg: var(--base-50);
+
+	/* --border: var(--base-300); */
+	--border: var(--primary-400);
+}
+```
+
+Because components and utilities rely on variables, the entire UI will update
+automatically.
+
+See:
+[Modifying Default Styles](/docs/default-styles/overview#modifying-default-styles)
+
+</section>
+
+<section>
+
+## colors.css Reference
+
+<Alert>
+
+If any part of this file feels difficult to understand, copy the snippet and
+paste it into [ChatGPT](https://chatgpt.com) and ask it to explain the code in
+simple words.
+
+</Alert>
+
+```css title="colors.css"
+/*
+
+Shilp CSS Color System
+
+Purpose:
+Expose theme colors as CSS variables so they can be reused across components,
+utilities, and custom styles.
+
+All values are resolved from the theme dataset using the `theme(...)` function.
+
+Features:
+- color design stystem
+- full color scales
+- dark mode compatibility
+- easy overrides
+
+Documentation:
+https://shilpcss.com/docs/default-styles/colors
+
+*/
+
+/* ============================================================================================= */
+
+.purge-ignore-start {
+	all: unset;
+}
+
+/* ============================================================================================= */
+
+/* ================================================================================================
+	HTML, HOST
+================================================================================================ */
+
+/* Define CSS variables with optional value */
+html,
+:host {
+	/* */
+
+	/* ==============================================================================================
+		CONTRAST COLORS
+	============================================================================================== */
+
+	--white: theme(colors-white);
+	--black: theme(colors-black);
+
+	/* ==============================================================================================
+		MAIN BACKGROUND AND TEXT COLORS
+	============================================================================================== */
+
+	/* Background color */
+	--bg: var(--base-50);
+	/* Text color on background */
+	--fg: var(--base-950);
+
+	/* ==============================================================================================
+		MUTED COLORS
+	============================================================================================== */
+
+	/* Muted color */
+	--muted: var(--base-200);
+	/* Text color on muted */
+	--muted-fg: var(--base-600);
+
+	/* ==============================================================================================
+		SURFACE COLORS
+	============================================================================================== */
+
+	/* Surface color */
+	--surface: var(--white);
+	/* Text color on surface */
+	--surface-fg: var(--black);
+
+	/* ==============================================================================================
+		BORDER COLOR
+	============================================================================================== */
+
+	/* Border color */
+	--border: var(--base-300);
+
+	/* ==============================================================================================
+		PRIMARY COLORS
+	============================================================================================== */
+
+	/* Primary color */
+	--primary: var(--primary-600);
+	/* Text color on primary */
+	--primary-fg: var(--white);
+	/* Alternate text color on primary */
+	--primary-fg-alt: var(--black);
+	/* Primary color scales */
+	--primary-50: theme(colors-orange-50);
+	--primary-100: theme(colors-orange-100);
+	--primary-200: theme(colors-orange-200);
+	--primary-300: theme(colors-orange-300);
+	--primary-400: theme(colors-orange-400);
+	--primary-500: theme(colors-orange-500);
+	--primary-600: theme(colors-orange-600);
+	--primary-700: theme(colors-orange-700);
+	--primary-800: theme(colors-orange-800);
+	--primary-900: theme(colors-orange-900);
+	--primary-950: theme(colors-orange-950);
+
+	/* ==============================================================================================
+		SECONDARY COLORS
+	============================================================================================== */
+
+	/* Secondary color */
+	--secondary: var(--secondary-600);
+	/* Text color on secondary */
+	--secondary-fg: var(--white);
+	/* Alternate text color on secondary */
+	--secondary-fg-alt: var(--black);
+	/* Secondary color scales */
+	--secondary-50: theme(colors-green-50);
+	--secondary-100: theme(colors-green-100);
+	--secondary-200: theme(colors-green-200);
+	--secondary-300: theme(colors-green-300);
+	--secondary-400: theme(colors-green-400);
+	--secondary-500: theme(colors-green-500);
+	--secondary-600: theme(colors-green-600);
+	--secondary-700: theme(colors-green-700);
+	--secondary-800: theme(colors-green-800);
+	--secondary-900: theme(colors-green-900);
+	--secondary-950: theme(colors-green-950);
+
+	/* ==============================================================================================
+		ACCENT COLORS
+	============================================================================================== */
+
+	/* Accent color */
+	--accent: var(--accent-600);
+	/* Text color on accent */
+	--accent-fg: var(--white);
+	/* Alternate text color on accent */
+	--accent-fg-alt: var(--black);
+	/* Accent color scales */
+	--accent-50: theme(colors-blue-50);
+	--accent-100: theme(colors-blue-100);
+	--accent-200: theme(colors-blue-200);
+	--accent-300: theme(colors-blue-300);
+	--accent-400: theme(colors-blue-400);
+	--accent-500: theme(colors-blue-500);
+	--accent-600: theme(colors-blue-600);
+	--accent-700: theme(colors-blue-700);
+	--accent-800: theme(colors-blue-800);
+	--accent-900: theme(colors-blue-900);
+	--accent-950: theme(colors-blue-950);
+
+	/* ==============================================================================================
+		BASE COLORS
+	============================================================================================== */
+
+	/* Base (neutral) color */
+	--base: var(--base-600);
+	/* Text color on base (neutral) */
+	--base-fg: var(--base-50);
+	/* Alternate text color on base (neutral) */
+	--base-fg-alt: var(--base-950);
+	/* Base (neutral) color scales */
+	--base-50: theme(colors-slate-50);
+	--base-100: theme(colors-slate-100);
+	--base-200: theme(colors-slate-200);
+	--base-300: theme(colors-slate-300);
+	--base-400: theme(colors-slate-400);
+	--base-500: theme(colors-slate-500);
+	--base-600: theme(colors-slate-600);
+	--base-700: theme(colors-slate-700);
+	--base-800: theme(colors-slate-800);
+	--base-900: theme(colors-slate-900);
+	--base-950: theme(colors-slate-950);
+
+	/* ==============================================================================================
+		SUCCESS COLORS
+	============================================================================================== */
+
+	/* Success color */
+	--success: var(--success-600);
+	/* Text color on success */
+	--success-fg: var(--white);
+	/* Alternate text color on success */
+	--success-fg-alt: var(--black);
+	/* Success color scales */
+	--success-50: theme(colors-emerald-50);
+	--success-100: theme(colors-emerald-100);
+	--success-200: theme(colors-emerald-200);
+	--success-300: theme(colors-emerald-300);
+	--success-400: theme(colors-emerald-400);
+	--success-500: theme(colors-emerald-500);
+	--success-600: theme(colors-emerald-600);
+	--success-700: theme(colors-emerald-700);
+	--success-800: theme(colors-emerald-800);
+	--success-900: theme(colors-emerald-900);
+	--success-950: theme(colors-emerald-950);
+
+	/* ==============================================================================================
+		INFO COLORS
+	============================================================================================== */
+
+	/* Info color */
+	--info: var(--info-600);
+	/* Text color on info */
+	--info-fg: var(--white);
+	/* Alternate text color on info */
+	--info-fg-alt: var(--black);
+	/* Info color scales */
+	--info-50: theme(colors-sky-50);
+	--info-100: theme(colors-sky-100);
+	--info-200: theme(colors-sky-200);
+	--info-300: theme(colors-sky-300);
+	--info-400: theme(colors-sky-400);
+	--info-500: theme(colors-sky-500);
+	--info-600: theme(colors-sky-600);
+	--info-700: theme(colors-sky-700);
+	--info-800: theme(colors-sky-800);
+	--info-900: theme(colors-sky-900);
+	--info-950: theme(colors-sky-950);
+
+	/* ==============================================================================================
+		WARNING COLORS
+	============================================================================================== */
+
+	/* Warning color */
+	--warning: var(--warning-600);
+	/* Text color on warning */
+	--warning-fg: var(--white);
+	/* Alternate text color on warning */
+	--warning-fg-alt: var(--black);
+	/* Warning color scales */
+	--warning-50: theme(colors-amber-50);
+	--warning-100: theme(colors-amber-100);
+	--warning-200: theme(colors-amber-200);
+	--warning-300: theme(colors-amber-300);
+	--warning-400: theme(colors-amber-400);
+	--warning-500: theme(colors-amber-500);
+	--warning-600: theme(colors-amber-600);
+	--warning-700: theme(colors-amber-700);
+	--warning-800: theme(colors-amber-800);
+	--warning-900: theme(colors-amber-900);
+	--warning-950: theme(colors-amber-950);
+
+	/* ==============================================================================================
+		DANGER COLORS
+	============================================================================================== */
+
+	/* Danger color */
+	--danger: var(--danger-600);
+	/* Text color on danger */
+	--danger-fg: var(--white);
+	/* Alternet text color on danger */
+	--danger-fg-alt: var(--black);
+	/* Danger color scales */
+	--danger-50: theme(colors-rose-50);
+	--danger-100: theme(colors-rose-100);
+	--danger-200: theme(colors-rose-200);
+	--danger-300: theme(colors-rose-300);
+	--danger-400: theme(colors-rose-400);
+	--danger-500: theme(colors-rose-500);
+	--danger-600: theme(colors-rose-600);
+	--danger-700: theme(colors-rose-700);
+	--danger-800: theme(colors-rose-800);
+	--danger-900: theme(colors-rose-900);
+	--danger-950: theme(colors-rose-950);
+}
+
+/* ============================================================================================= */
+
+.purge-ignore-end {
+	all: unset;
+}
+```
+
+</section>

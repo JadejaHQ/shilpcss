@@ -1,0 +1,47 @@
+---
+title: "preset"
+---
+
+# preset
+
+`animation` property
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		animate: {
+			preset: {
+				property: "animation: <v><i>;",
+				values: {
+					// animation: name [duration] [flow] [delay] [loop] [path] [mode] [state];
+					none: "none",
+					spin: "spin 1s linear infinite",
+					ping: `ping 1s theme(flow-ease-out) infinite`,
+					pulse: `pulse 2s theme(flow-pulse) infinite`,
+					bounce: "bounce 1s infinite",
+					wiggle: "wiggle 1s theme(flow-ease-in-out) infinite",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

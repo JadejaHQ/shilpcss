@@ -1,0 +1,17 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@adjust",
+	"title": "adjust intent",
+	"items": [
+		"backside",
+		"distance",
+		"move",
+		"origin",
+		"preset",
+		"rotate",
+		"scale",
+		"shape",
+		"skew"
+	]
+}

@@ -1,0 +1,66 @@
+/* ================================================================================================
+	CODE BLOCK  (.code-block class OR ```)
+================================================================================================ */
+
+.code-block {
+	--code-padding: theme(spacing|spacing-1);
+	/* --radius is already used, scoping */
+	--code-radius: theme(radius-xl);
+
+	@bg color-gray-800;
+	@text color-gray-50;
+	@border thick color-gray-700;
+	@space my-12;
+	@layout is-flex;
+	@flex flow-col;
+
+	padding: var(--code-padding);
+	border-radius: var(--code-radius);
+}
+
+/* ================================================================================================
+	CODE BLOCK HEADER
+================================================================================================ */
+
+.code-block__header {
+	@border rounded-top-inherit;
+	@space px-2.5 pt-1 pb-2 gap-2;
+
+	@layout is-flex overflow-hidden;
+	@flex items-center justify-between;
+
+	span {
+		@layout overflow-x-auto;
+	}
+}
+
+/* ================================================================================================
+	CODE BLOCK BODY
+================================================================================================ */
+
+.code-block__body {
+	@bg color-gray-900;
+	@border thick color-gray-700;
+	@layout overflow-x-auto;
+	@space px-6 py-4;
+
+	border-radius: calc(var(--code-radius) - var(--code-padding));
+
+	pre {
+		@size w-fit;
+
+		code {
+			@text color-blue-400;
+
+			[data-lang="html"] & {
+				@text color-orange-600;
+			}
+			[data-lang="css"] & {
+				@text color-blue-400;
+			}
+			[data-lang="js"] & {
+				@text color-yellow-400;
+			}
+		}
+	}
+}

@@ -1,0 +1,115 @@
+---
+title: "Screen Reader Component"
+---
+
+# Screen Reader Component
+
+The **screen reader component** provides a simple way to **hide content visually
+while keeping it accessible to assistive technologies**.
+
+The content remains available to **screen readers and other assistive tools**,
+but is not visible on the screen.
+
+This pattern is commonly used to improve accessibility without affecting visual
+layout.
+
+---
+
+<section>
+
+## When to Use
+
+Use `.screen-reader` when content should be **read by assistive technologies but
+not displayed visually**.
+
+| Use Case                     | Example                                        |
+| ---------------------------- | ---------------------------------------------- |
+| Icon button label            | `<span class="screen-reader">Open menu</span>` |
+| Additional form instructions | Hidden helper text                             |
+| Accessible navigation text   | Screen-reader-only headings                    |
+
+Example:
+
+```html
+<button>
+	<svg><!-- icon --></svg>
+	<span class="screen-reader">open menu</span>
+</button>
+```
+
+A screen reader will read "**open menu**", but users will only see the icon.
+
+</section>
+
+<section>
+
+## How It Works
+
+The component hides content using a combination of CSS properties.
+
+See: [Classes Reference](#classes-reference)
+
+This approach ensures:
+
+- content is not visible
+- layout is not affected
+- assistive technologies can still read the content
+
+This technique is widely used in accessibility patterns.
+
+References:
+
+- [Invisible Content](https://webaim.org/techniques/css/invisiblecontent)
+- [Tailwind CSS v3 Screen Readers](https://v3.tailwindcss.com/docs/screen-readers)
+
+</section>
+
+<section>
+
+## Restore Visibility
+
+To restore normal visibility, use `.screen-reader--none`. It removes the hiding
+behavior.
+
+This returns the element to normal layout behavior.
+
+<Alert variant="danger">
+
+It may distorts the styles.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Classes Reference
+
+```css title="shilpcss/styles/components/screen-reader.css"
+/* https://webaim.org/techniques/css/invisiblecontent */
+/* https://v3.tailwindcss.com/docs/screen-readers */
+.screen-reader {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	border-width: 0;
+	clip-path: polygon(0 0);
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.screen-reader--none {
+	position: static;
+	width: auto;
+	height: auto;
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+	clip-path: none;
+	white-space: normal;
+}
+```
+
+</section>

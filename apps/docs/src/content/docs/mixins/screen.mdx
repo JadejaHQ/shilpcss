@@ -1,0 +1,66 @@
+---
+title: "@screen Mixin"
+---
+
+# @screen Mixin
+
+responsive breakpoints and media queries
+
+<Alert variant="info">
+
+This page contains only the **mixins configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Important Note
+
+<Alert variant="warning">
+
+If `mixinConfig.resolve` exists, Shilp CSS does not process
+`mixinConfig.variants`. You must handle variants inside your resolver
+explicitely.
+
+Example:
+
+the `@screen` mixin uses resolve, so variants from
+`shilpConfig.extend.mixins.screen.variants` are ignored.
+
+To overcome this, either provide a custom resolver or define a separate mixin.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Reference
+
+<Alert>
+
+See:
+[Working With Breakpoints](/docs/responsive-design#working-with-breakpoints)
+
+</Alert>
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	target: "react",
+
+	mixins: {
+		screen: {
+			resolve: () => {
+				/* see: /docs/responsive-design#working-with-breakpoints */
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

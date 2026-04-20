@@ -1,0 +1,121 @@
+---
+title: "scroll padding"
+---
+
+# scroll padding
+
+padding around element for snapping or scrolling
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		live: {
+			scroll: {
+				p: {
+					property: "scroll-padding: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				pt: {
+					property: "scroll-padding-top: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				pr: {
+					property: "scroll-padding-right: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				pb: {
+					property: "scroll-padding-bottom: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				pl: {
+					property: "scroll-padding-left: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				px: {
+					property: `
+						scroll-padding-left: <n><v><i>;
+            scroll-padding-right: <n><v><i>;
+          `,
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				py: {
+					property: `
+						scroll-padding-top: <n><v><i>;
+            scroll-padding-bottom: <n><v><i>;
+          `,
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				pbl: {
+					property: "scroll-padding-block: <n><v><i>",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				pbls: {
+					property: "scroll-padding-block-start: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				pble: {
+					property: "scroll-padding-block-end: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				pi: {
+					property: "scroll-padding-inline: <n><v><i>",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				pis: {
+					property: "scroll-padding-inline-start: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				pie: {
+					property: "scroll-padding-inline-end: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,15 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@table",
+	"title": "table intent",
+	"items": [
+		"border",
+		"caption",
+		"gap",
+		{
+			"name": "_layout",
+			"slug": "layout"
+		}
+	]
+}

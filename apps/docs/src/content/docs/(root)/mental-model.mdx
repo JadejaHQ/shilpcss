@@ -1,0 +1,151 @@
+---
+title: "Mental Model"
+---
+
+# Mental Model
+
+This page explains **How to think?** when working with Shilp CSS.
+
+Not syntax. <br /> Not APIs. <br /> Just the mindset that makes everything else
+click.
+
+---
+
+<section>
+
+## One Rule
+
+**Styles belong in CSS.**
+
+Not partly. <br /> Not eventually. <br /> From the beginning.
+
+Everything in Shilp CSS is designed to protect that boundary.
+
+</section>
+
+<section>
+
+## The Traditional Way
+
+Most modern styling tools ask you to _decorate markup_.
+
+You add classes. <br /> You tweak strings. <br /> You move appearance closer to
+markup.
+
+Shilp CSS makes a different move. <br /> You compose styles inside CSS, then
+apply them through named classes.
+
+HTML describes structure and meaning. <br /> CSS describes layout, appearance,
+and behavior.
+
+_This separation is not nostalgia. It is clarity that pays off._
+
+</section>
+
+<section>
+
+## How To Think?
+
+When you style an element, don’t ask: <br /> _~“What classes should I add?”~_
+
+Ask this instead:
+
+- What is the layout?
+- How does it align or flow?
+- How does it look?
+- How does it behave?
+
+Each answer lives in a **clear and explicit intent**.
+
+Layout decisions stays together. <br /> Text decisions stays together. <br />
+Animation decisions stays together. <br /> …and the pattern continues across the
+system.
+
+> Intent is grouped. Nothing ends up scattered.
+
+</section>
+
+<section>
+
+## What This Changes
+
+Because intent is grouped in CSS:
+
+- ~You don’t scatter intent across templates~
+- ~You don’t refactor by hunting class strings~
+- ~You don’t rely on conventions to imply meaning~
+
+Structure is explicit. <br /> Ownership is visible. <br /> Changes have a clear
+place to go.
+
+This is what makes refactors calm instead of risky.
+
+</section>
+
+<section>
+
+## What You Are Agreeing To
+
+Before going further, be honest with yourself.
+
+Shilp CSS will feel right only if you agree with following:
+
+- I want markup to stay readable
+- I’m okay with writing more CSS (_code_)
+- I value refactoring safety over typing speed
+- I care where decisions live
+- I build things meant to last
+
+If any of these feel like friction, Shilp CSS will feel uncomfortable.
+
+**That discomfort is intentional.**
+
+</section>
+
+<section>
+
+## What You Gain
+
+In exchange, you get:
+
+- Styles you can reason about years later
+- Centralized, owned decisions
+- Predictable, static and purgable output
+- Smaller bundler size (_HTML and CSS combined_)
+- A system that grows without falling apart
+
+**_The complexity does not disappear. It becomes organized._**
+
+</section>
+
+<section>
+
+## What You Pay
+
+You pay with:
+
+- Slightly slower build time
+- Less ecosystem sugar
+- More thinking upfront
+
+_Shilp CSS trades velocity for composure._
+
+</section>
+
+<section>
+
+## Hold This Mental Model
+
+If you want remember only one thing, remember this:
+
+> Shilp CSS prioritizes clarity over time.
+
+It is not a shortcut. It is a way of working.
+
+<Alert variant="warning">
+
+If that resonates, continue. <br /> If not, walk away early, with clarity.
+
+</Alert>
+
+</section>

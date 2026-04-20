@@ -1,0 +1,126 @@
+/* ================================================================================================
+	COLOR SCALES AND OPACITY  (/docs/colors)
+================================================================================================ */
+
+.color-scale-example,
+.color-opacity-example {
+	@space my-8 gap-2.5 p-4;
+	@layout is-flex;
+	@flex wrap;
+	@border thick rounded;
+
+	background-image:
+		linear-gradient(45deg, theme(color|colors-fg/7) 25%, transparent 25%),
+		linear-gradient(-45deg, theme(color|colors-fg/7) 25%, transparent 25%),
+		linear-gradient(45deg, transparent 75%, theme(color|colors-fg/7) 75%),
+		linear-gradient(-45deg, transparent 75%, theme(color|colors-fg/7) 75%);
+
+	background-size: 20px 20px;
+
+	background-position:
+		0 0,
+		0 10px,
+		10px -10px,
+		-10px 0px;
+
+	@childs direct {
+		@border thick rounded;
+		@space p-4;
+		@text size-sm color-fg family-code thick-600 gap-lg h-normal;
+		@layout is-inline-block;
+	}
+}
+
+/* ================================================================================================
+	COLOR SCALES
+================================================================================================ */
+
+.color-scale-example {
+	@childs direct {
+		@text color-primary-fg;
+	}
+
+	@childs nth("1") {
+		@bg color-primary-50;
+		@text color-primary-fg-alt;
+	}
+	@childs nth("2") {
+		@bg color-primary-100;
+		@text color-primary-fg-alt;
+	}
+	@childs nth("3") {
+		@bg color-primary-200;
+		@text color-primary-fg-alt;
+	}
+	@childs nth("4") {
+		@bg color-primary-300;
+		@text color-primary-fg-alt;
+	}
+	@childs nth("5") {
+		@bg color-primary-400;
+		@text color-primary-fg-alt;
+	}
+	@childs nth("6") {
+		@bg color-primary-500;
+	}
+	@childs nth("7") {
+		@bg color-primary-600;
+	}
+	@childs nth("8") {
+		@bg color-primary-700;
+	}
+	@childs nth("9") {
+		@bg color-primary-800;
+	}
+	@childs nth("10") {
+		@bg color-primary-900;
+	}
+	@childs nth("11") {
+		@bg color-primary-950;
+	}
+}
+
+/* ================================================================================================
+	COLOR OPACITY
+================================================================================================ */
+
+.color-opacity-example {
+	@childs nth("1") {
+		@bg color-primary/0;
+	}
+	@childs nth("2") {
+		@bg color-primary/10;
+	}
+	@childs nth("3") {
+		@bg color-primary/20;
+	}
+	@childs nth("4") {
+		@bg color-primary/30;
+	}
+	@childs nth("5") {
+		@bg color-primary/40;
+	}
+	@childs nth("6") {
+		@bg color-primary/50;
+	}
+	@childs nth("7") {
+		@bg color-primary/60;
+		@text color-primary-fg;
+	}
+	@childs nth("8") {
+		@bg color-primary/70;
+		@text color-primary-fg;
+	}
+	@childs nth("9") {
+		@bg color-primary/80;
+		@text color-primary-fg;
+	}
+	@childs nth("10") {
+		@bg color-primary/90;
+		@text color-primary-fg;
+	}
+	@childs nth("11") {
+		@bg color-primary/100;
+		@text color-primary-fg;
+	}
+}

@@ -1,0 +1,365 @@
+---
+title: "Colors"
+---
+
+# Colors
+
+Shilp CSS ships with **a rich, carefully curated color system** out of the box.
+
+The default palette is derived from the excellent work done by
+[Tailwind CSS](https://tailwindcss.com/docs/colors) and is suitable for a wide
+range of design styles, minimal, expressive, or system-heavy.
+
+This palette is included as raw values as well as first-class design tokens.
+
+---
+
+<section>
+
+## Color Format
+
+### OKLCH by Default
+
+All colors in Shilp CSS are defined in the `oklch` color format.
+
+`oklch` works better, because it matches how people actually see color. When you
+change lightness, the color really gets lighter or darker. Gradients look
+smooth, not muddy, and tweaking color feels natural instead of guessy.
+
+Compared to `hex`, `rgb`, or `hsl`, `oklch` simply produces colors that _look
+right_, not just mathematically calculated right.
+
+To know more, see:
+
+- [OKLCH color format](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/oklch)
+- [Shilp CSS Colors Dataset](/docs/values/colors#colors-dataset-reference)
+
+#### Native HTML Colors
+
+Shilp CSS also includes **OKLCH equivalents** for all native HTML named colors,
+such as orange, white, green, blue, gold, etc.
+
+This allows you to use familiar color names. They behave like the rest of the
+system, predictable, themeable, and token-driven.
+
+HTML colors names are split into words and organized as nested objects.
+
+| Value (in oklch)   | HTML named color | Shilp CSS Color |
+| ------------------ | ---------------- | --------------- |
+| `73.1% 0.181 66.3` | `orange`         | `orange`        |
+| `58.6% 0.199 45.4` | `orangered`      | `orange-red`    |
+| `59.8% 0.157 65.6` | `darkorange`     | `orange-dark`   |
+
+To know more, see:
+
+- [Shilp CSS Colors Dataset](/docs/values/colors#colors-dataset-reference)
+- [Native HTML Colors by MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/named-color)
+
+### Build-Time Conversion & Fallbacks
+
+While most modern browsers began supporting the `oklch` color format around
+**May 2023**, Shilp CSS’s compatibility baseline starts slightly earlier
+**January 31, 2023**.
+
+To ensure predictable behavior across all supported browsers, at build time,
+Shilp CSS uses **Lightning CSS** to transforms these values.
+
+This means:
+
+1. `oklch` to `lab` format conversion for internal processing
+   - `lab` is a simpler Cartesian form, easier to clamp and serialize, and more
+     widely supported by tooling
+
+2. A `hex` format fallback is generated to ensure broad browser compatibility
+
+This allows `oklch` to remain the authoring format, while the output stays safe
+and compatible.
+
+To know more, check:
+
+- [Browser Support](/docs/browser-compatibility#browser-support)
+- [OKLCH Color Format](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/oklch)
+- [LAB Color Format](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/lab)
+
+</section>
+
+<section>
+
+## Color Scales
+
+Same as Tailiwind CSS, Every color in the default palette includes **11 steps**,
+with `50` being the lightest, and `950` being the darkest.
+
+{/* prettier-ignore */}
+<div className="color-scale-example">
+	<div>50 (<i>lightest</i>)</div>
+	<div>100</div>
+	<div>200</div>
+	<div>300</div>
+	<div>400</div>
+	<div>500 (<i>base</i>)</div>
+	<div>600</div>
+	<div>700</div>
+	<div>800</div>
+	<div>900</div>
+	<div>950 (<i>darkest</i>)</div>
+</div>
+
+The scale gives you enough range to express hierarchy without inventing custom
+values.
+
+See:
+
+- [Tailwind CSS Color Palette](https://tailwindcss.com/docs/colors)
+- [Shilp CSS Colors Dataset](/docs/values/colors#colors-dataset-reference)
+
+</section>
+
+<section>
+
+## Adjusting The Opacity
+
+You can adjust a color’s opacity **using a variant**.
+
+| Color                     | Opacity |
+| ------------------------- | ------- |
+| `@text color-primary;`    | `100%`  |
+| `@text color-primary/50;` | `50%`   |
+
+The additional `/50` is known as **variant**. which is to be appended to the
+color utility.
+
+<Alert variant="info">
+
+You can use any opacity value between `0` and `100`. **Don't use `%` symbol**.
+
+</Alert>
+
+<div className="color-opacity-example">
+	<div>0%</div>
+	<div>10%</div>
+	<div>20%</div>
+	<div>30%</div>
+	<div>40%</div>
+	<div>50%</div>
+	<div>60%</div>
+	<div>70%</div>
+	<div>80%</div>
+	<div>90%</div>
+	<div>100%</div>
+</div>
+
+</section>
+
+<section>
+
+## Built For Theming
+
+Colors are the most visible part of theming.
+
+### Brand And Semantic Colors
+
+Shilp CSS strongly recommends styling with **brand and semantic design tokens**,
+not just raw color values.
+
+Instead of writing:
+
+- `color: orange;`
+- `color: oklch(70.5% 0.213 47.604);`
+- `color: oklch(theme(colors-orange));`
+- `@text color-orange;`
+
+You use tokens like like `primary`, `secondary`, `accent`, `base` (neutral),
+`success`, `info`, `warning`, and `danger`.
+
+Each color group provides:
+
+- a full `50–950` scale
+- a default value (without the scale)
+- a matching contrast text color for darker scales
+- an alternate contrast text color for lighter scales
+
+This keeps color usage consistent, intentional, easy to theme and refactor.
+
+See: [Brand and Semantic Color Reference](#brand-and-semantic-colors-reference)
+
+### Color Roles
+
+Brand and semantic colors (`primary`, `base`, `success` etc.) define your
+palette.
+
+Color role tokens define how your **application uses that palette**.
+
+| Role           | Purpose                                  |
+| -------------- | ---------------------------------------- |
+| `--bg`         | Background color                         |
+| `--fg`         | Contrast text color for background color |
+| `--muted`      | Muted color                              |
+| `--muted-fg`   | Contrast text color for muted color      |
+| `--surface`    | Surface color                            |
+| `--surface-fg` | Contrast text color for surface color    |
+| `--border`     | Border color                             |
+
+They are more of a **usage-level tokens**, not palette-level tokens.
+
+_Background Color + Contrast Text Color = Safe Contrast_
+
+See: [Color Roles Reference](#color-roles-reference)
+
+### The Layering Model
+
+Shilp CSS theming works in layers:
+
+1. **Raw palette tokens** (color scales + html named colors)
+2. **Brand and semantic tokens** (`primary`, `success`, etc)
+3. **Color roles tokens** (`--surface`, `--border`, etc)
+4. **Utilities consuming tokens**
+
+Each layer depends on the previous layer (order: 1 to 4).
+
+You rarely touch layer 1. You theme mostly at layers 2 and 3.
+
+### How Color Tokens Work
+
+Shilp CSS maps color tokens to **CSS variables**.
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		theme: {
+			colors: {
+				primary: {
+					//
+					DEFAULT: "var(--primary)",
+
+					fg: {
+						DEFAULT: "var(--primary-fg)",
+						alt: "var(--primary-fg-alt)",
+					},
+
+					50: "var(--primary-50)",
+					100: "var(--primary-100)",
+					...
+					950: "var(--primary-950)",
+				}
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+The actual values are defined in CSS:
+
+```css title="colors.css"
+html,
+:host {
+	--primary: var(--primary-600);
+
+	--primary-fg: var(--white);
+	--primary-fg-alt: var(--black);
+
+	--primary-50: theme(colors-orange-50);
+	--primary-100: theme(colors-orange-100);
+	--primary-200: theme(colors-orange-200);
+	...
+	--primary-900: theme(colors-orange-900);
+	--primary-950: theme(colors-orange-950);
+}
+```
+
+This separation allows **runtime theme switching** and **safe refactors**.
+
+<Alert variant="warning">
+
+If customizing colors, make sure that theme config and css variable are in sync.
+
+</Alert>
+
+#### Inline Theme Function
+
+Shilp CSS exposes all color tokens through the inline `theme(...)` function. You
+can use it anywhere a value is expected.
+
+```css
+.any-class {
+	background-image: linear-gradient(
+		in oklch to top left,
+		oklch(theme(colors-primary)) 20%,
+		oklch(theme(colors-accent-700) / 0.9) 50%,
+		oklch(theme(colors-base-100)) 70%
+	);
+}
+```
+
+<Alert variant="info">
+
+`theme(...)` always resolves during build. No runtime evaluation happens post
+build.
+
+</Alert>
+
+See:
+[Inline Theme Function Configuration](/docs/config/theme#inline-theme-function)
+
+</section>
+
+<section>
+
+## Customization
+
+You can extend / override default colors in
+[`shilp.config.js`](/docs/config/shilp-config-file).
+
+Colors are defined using nested objects. Each level of nesting adds an extra
+step when accessing the color via `@intent-name utilty;` or `theme(...)`.
+
+| Location                              | Intent                    | Inline Theme Function                     |
+| ------------------------------------- | ------------------------- | ----------------------------------------- |
+| `shilpConfig.theme.colors.orange.600` | `@text color-orange-600;` | `color: oklch(theme(colors-orange-600));` |
+| `shilpConfig.theme.colors.html.red`   | `@text color-html-red;`   | `color: oklch(theme(colors-html-red));`   |
+
+<Alert variant="warning">
+
+Use only **RAW** `oklch` format value.
+
+- Do: `colors.orange.600 = "64.6% 0.222 41.116";`
+- Don't: `colors.orange.600 = "oklch(64.6% 0.222 41.116)";`
+
+</Alert>
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		theme: {
+			colors: {
+				// you can add/override your colors here
+				orange: {
+					600: "64.6% 0.222 41.116",
+				},
+			};
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>
+
+<section>
+
+## Default Color Palette Reference
+
+<Alert>
+
+See [Shilp CSS Colors Dataset](/docs/values/colors#colors-dataset-reference)
+
+</Alert>
+
+</section>

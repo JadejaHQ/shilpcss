@@ -1,0 +1,56 @@
+---
+title: "gradient"
+---
+
+# gradient
+
+linear, radial, conic gradients
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		bg: {
+			gradient: {
+				DEFAULT: {
+					property: "background-image: <v><i>;",
+					values: {},
+				},
+
+				linear: {
+					property: "background-image: linear-gradient(<v>)<i>;",
+					values: {},
+				},
+
+				radial: {
+					property: "background-image: radial-gradient(<v>)<i>;",
+					values: {},
+				},
+
+				conic: {
+					property: "background-image: conic-gradient(<v>)<i>;",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

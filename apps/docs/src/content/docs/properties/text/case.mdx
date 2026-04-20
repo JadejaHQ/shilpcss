@@ -1,0 +1,44 @@
+---
+title: "case"
+---
+
+# case
+
+distance between text borders
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			case: {
+				property: "text-transform: <v><i>;",
+				values: {
+					lower: "lowercase",
+					upper: "uppercase",
+					capitalize: "capitalize",
+					normal: "none",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,122 @@
+/* ================================================================================================
+	DOCS TOPICS & TOC WRAPPER - MOBILE
+================================================================================================ */
+
+.content-nav__wrapper--mobile {
+	@layout layer-4;
+	@filter backdrop-blur;
+	@bg color-bg/80;
+	@flex shrink-0;
+	@position is-sticky;
+	@border thick-bottom;
+
+	top: calc(var(--banner, 0px) + var(--header));
+	height: var(--content-nav-mobile, 0px);
+
+	@screen xl {
+		@layout is-hidden;
+	}
+}
+
+.content-nav {
+	@size h-full;
+	@layout is-flex;
+	@flex items-center justify-between;
+	@border thick-x-0;
+}
+
+/* sheet component */
+.content-nav__topics-content,
+.content-nav__toc-content {
+	@layout is-flex;
+	@flex flow-col;
+	@space gap-0;
+
+	.sheet__header {
+		@flex shrink-0;
+	}
+}
+
+.content-nav__toc-content .sheet__close.wrapper {
+	@text align-x-inherit;
+}
+
+.topics__wrapper--mobile,
+.toc__wrapper--mobile {
+	/* fill the available area */
+	@flex grow;
+
+	@layout is-flex overflow-y-auto scroll-fade-y scroll-fade-size-14;
+	@flex flow-col;
+	@space py-8;
+}
+
+.toc__wrapper--mobile {
+	@space pt-6;
+}
+
+/* ================================================================================================
+	DOCS TOPICS & TOC WRAPPER - DESKTOP
+================================================================================================ */
+
+.topics__wrapper--desktop,
+.toc__wrapper--desktop {
+	@layout is-hidden;
+
+	@screen xl {
+		/* fill the available area */
+		@flex grow shrink-0;
+
+		@layout is-flex layer-3 overflow-hidden;
+		@flex flow-col;
+		@space py-6;
+		@size w-full max-w-64;
+		@position is-sticky;
+
+		top: calc(var(--header) + var(--banner, 0px));
+		height: calc(100vh - var(--header) - var(--banner, 0px));
+
+		@state hover {
+			@layout overflow-y-auto scroll-fade-y scroll-fade-size-20;
+		}
+	}
+}
+
+.topics__wrapper--desktop {
+	@border thick-right;
+}
+
+.toc__wrapper--desktop {
+	@border thick-left;
+}
+
+/* ================================================================================================
+	DOCS TOPICS & TOC
+================================================================================================ */
+
+.topics,
+.toc {
+	@space px-4;
+
+	a {
+		@space p-2;
+		@layout is-block opacity-80;
+		@text size-base h-base break-word case-capitalize;
+
+		@state hover {
+			@layout opacity-100;
+			@text line-is-under line-offset-4 line-thick-4 line-color-primary;
+		}
+
+		@data is('active') {
+			@layout opacity-100;
+		}
+	}
+}
+
+.folder__label,
+.toc__label {
+	@layout is-inline-block;
+	@space mb-3 px-2;
+	@text color-muted-fg size-sm case-upper gap-xl;
+}

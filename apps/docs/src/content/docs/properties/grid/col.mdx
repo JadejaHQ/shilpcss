@@ -1,0 +1,66 @@
+---
+title: "col"
+---
+
+# col
+
+grid item's size and location on columns
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		grid: {
+			col: {
+				start: {
+					property: "grid-column-start: <v><i>;",
+					themeKey: "range",
+					values: {},
+				},
+
+				end: {
+					property: "grid-column-end: <v><i>;",
+					themeKey: "range",
+					values: {
+						13: 13,
+					},
+				},
+
+				size: {
+					property: "grid-auto-columns: <v><i>;",
+					values: {
+						auto: "auto",
+						min: "min-content",
+						max: "max-content",
+						fraction: "minmax(0, 1fr)",
+					},
+				},
+
+				span: {
+					property: "grid-column: <v><i>;",
+					themeKey: "span",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,119 @@
+---
+title: "margin"
+---
+
+# margin
+
+space outside an element
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		space: {
+			m: {
+				property: "margin: <n><v><i>;",
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			mt: {
+				property: "margin-top: <n><v><i>;",
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			mr: {
+				property: "margin-right: <n><v><i>;",
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			mb: {
+				property: "margin-bottom: <n><v><i>;",
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			ml: {
+				property: "margin-left: <n><v><i>;",
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			mx: {
+				property: `
+					margin-left: <n><v><i>;
+          margin-right: <n><v><i>;
+        `,
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			my: {
+				property: `
+					margin-top: <n><v><i>;
+          margin-bottom: <n><v><i>;
+        `,
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			mbl: {
+				property: "margin-block: <n><v><i>",
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			mbls: {
+				property: "margin-block-start: <n><v><i>;",
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			mble: {
+				property: "margin-block-end: <n><v><i>;",
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			mi: {
+				property: "margin-inline: <n><v><i>",
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			mis: {
+				property: "margin-inline-start: <n><v><i>;",
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+			mie: {
+				property: "margin-inline-end: <n><v><i>;",
+				resolve: "spacing",
+				themeKey: "spacingPixels",
+				values: {},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

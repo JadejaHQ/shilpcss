@@ -1,0 +1,216 @@
+/* ================================================================================================
+	DEFAULT BUTTON STYLES  (.btn class)
+================================================================================================ */
+
+.btn {
+	@layout is-inline-flex;
+	@flex items-center justify-center shrink-0;
+	/* @size h-9; */
+	@space px-3 py-2 gap-2;
+	@border rounded;
+
+	@live select-none cursor-pointer;
+
+	@motion safe {
+		@phase for-properties flow-ease duration-250;
+	}
+
+	@text color-primary-fg space-nowrap size-sm thick-500;
+	@bg color-primary clip-padding;
+
+	@state hover {
+		@bg color-primary-800;
+	}
+
+	/* form inputs */
+	@aria is("invalid") {
+		@border color-danger;
+	}
+}
+
+/* ================================================================================================
+	BUTTON WITH ICON
+================================================================================================ */
+
+.btn.has-icon {
+	/* ==============================================================================================
+		BUTTON ICON SPACING
+	============================================================================================== */
+
+	@space gap-3;
+
+	&.btn--sm {
+		@space gap-2.5;
+	}
+
+	&.btn--md {
+		@space gap-4;
+	}
+
+	&.btn--lg {
+		@space gap-6;
+	}
+
+	/* ==============================================================================================
+		BUTTON ICON SIZES
+	============================================================================================== */
+
+	svg {
+		@size is-4.5;
+	}
+
+	&.btn--sm svg,
+	&.btn--icon--sm svg {
+		@size is-4;
+	}
+
+	&.btn--md svg,
+	&.btn--icon--md svg {
+		@size is-6;
+	}
+
+	&.btn--lg svg,
+	&.btn--icon--lg svg {
+		@size is-8;
+	}
+}
+
+/* ================================================================================================
+	BUTTON VARIANTS
+================================================================================================ */
+
+.btn--success {
+	@bg color-success;
+	@text color-success-fg;
+
+	@state hover {
+		@bg color-success-800;
+	}
+}
+
+/* ============================================================================================= */
+
+.btn--danger {
+	@bg color-danger;
+	@text color-danger-fg;
+
+	@state hover {
+		@bg color-danger-800;
+	}
+}
+
+/* ============================================================================================= */
+
+.btn--info {
+	@bg color-info;
+	@text color-info-fg;
+
+	@state hover {
+		@bg color-info-800;
+	}
+}
+
+/* ============================================================================================= */
+
+.btn--warning {
+	@bg color-warning;
+	@text color-warning-fg;
+
+	@state hover {
+		@bg color-warning-800;
+	}
+}
+
+/* ============================================================================================= */
+
+.btn--outline {
+	@border thick;
+	@bg color-inherit;
+	@text color-inherit;
+	@layout shadow-xs shadow-color-fg/5;
+
+	@state hover {
+		@bg color-accent;
+		@text color-accent-fg;
+	}
+
+	/* popup */
+	@aria is("expanded=true") {
+		@bg color-accent;
+		@text color-accent-fg;
+	}
+}
+
+/* ============================================================================================= */
+
+.btn--secondary {
+	@bg color-secondary;
+	@text color-secondary-fg;
+
+	@state hover {
+		@bg color-secondary-800;
+	}
+}
+
+/* ============================================================================================= */
+
+.btn--ghost {
+	@bg color-inherit;
+	@text color-inherit;
+
+	@state hover {
+		@bg color-accent;
+		@text color-accent-fg;
+
+		/* @theme dark {
+			@bg color-accent-800;
+		} */
+	}
+
+	/* popup */
+	@aria is("expanded=true") {
+		@bg color-accent;
+		@text color-accent-fg;
+	}
+}
+
+/* ================================================================================================
+	BUTTON SIZES
+================================================================================================ */
+
+.btn--sm {
+	/* @size h-8; */
+	@space px-2.5 py-1.5;
+}
+
+/* ============================================================================================= */
+
+.btn--md {
+	/* @size h-10; */
+	@space px-4 py-2.5;
+}
+
+/* ============================================================================================= */
+
+.btn--lg {
+	/* @size h-12; */
+	@space px-6 py-3;
+}
+
+/* ============================================================================================= */
+
+.btn--icon {
+	@size is-9;
+
+	&--sm {
+		@size is-8;
+	}
+
+	&--md {
+		@size is-10;
+	}
+
+	&--lg {
+		@size is-12;
+	}
+}

@@ -1,0 +1,74 @@
+/* ================================================================================================
+	LIST (with optional caption)
+================================================================================================ */
+
+.list {
+	@siblings match-closest(".list") {
+		@space mt-8;
+	}
+}
+
+.list__caption {
+	@space mt-0 mb-3;
+}
+
+/* ============================================================================================= */
+
+/* don't apply styles if `data-unstyled` attr is preset */
+:where(:where(ul, ol):not([data-unstyled="true"])) {
+	@list marker-hyphen align-text;
+	@space pl-3;
+
+	--spacing: theme(spacing|spacing-2);
+
+	max-width: 65ch;
+
+	/* direct: &:not(:first-child) */
+	@childs not-first {
+		margin-top: var(--spacing);
+	}
+
+	/* direct: ul > li */
+	@childs direct {
+		@match not("ol > li") {
+			@space pl-2;
+		}
+	}
+
+	/* nested: li & */
+	li & {
+		margin-top: var(--spacing);
+
+		/* nested: li ul */
+		@match not("li ol") {
+			@list marker-chevron;
+			@space -mx-1;
+		}
+	}
+
+	/* nested: li at any level */
+	li {
+		@text gap-md gap-word-xl h-md;
+
+		@text marker {
+			@text color-primary size-lg;
+
+			@theme dark {
+				@text color-primary-400;
+			}
+		}
+	}
+}
+
+/* ============================================================================================= */
+
+ol {
+	@list marker-number;
+	@space pl-5.5;
+
+	@childs direct {
+		@text marker {
+			@text size-inherit;
+		}
+	}
+}

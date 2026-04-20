@@ -1,0 +1,185 @@
+---
+title: "Dark Mode"
+---
+
+# Dark Mode
+
+Dark mode is a standard expectation in modern interfaces.
+
+Shilp CSS supports **class-based dark mode by default**, with full control over
+how it is applied and customized.
+
+---
+
+<section>
+
+## Implementation
+
+1. Define dark styles using `@theme dark { ... }` mixin
+2. Add the `dark` class to the `<html>` element
+   - `<html class="dark"> ... </html>`
+
+```css title="card.css"
+.card {
+	/* light mode styles (default) */
+	@bg color-white;
+	@text color-black;
+
+	/* dark mode styles */
+	@theme dark {
+		@bg color-black;
+		@text color-white;
+	}
+}
+```
+
+</section>
+
+<section>
+
+## Dark Mode Toggle
+
+Shilp CSS does not provide dark mode toggle functionality.
+
+To implement a toggle:
+
+- Add or remove the `dark` class on `<html>`
+- Persist preference in `localStorage` if needed
+
+A clean implementation pattern can follow the approach used in
+[Shadcn UI](https://ui.shadcn.com/docs/dark-mode)
+
+The styling layer remains purely CSS.
+
+</section>
+
+<section>
+
+## How It Works
+
+Under the hood, dark mode is powered by mixins (stateful intents).
+
+| Mixin                      | Resolved Selector         | Purpose                                                       |
+| -------------------------- | ------------------------- | ------------------------------------------------------------- |
+| `@theme dark { ... }`      | `.dark & { ... }`         | applies when a parent has `dark` class (usually html element) |
+| `@theme dark-self { ... }` | `&.dark { ... }`          | applies when the element itself has `dark` class              |
+| `@theme dark-any { ... }`  | `.dark &, &.dark { ... }` | applies when either of parent or self has `dark` class        |
+
+<Alert variant="info">
+
+`@theme dark-any { ... }` is not included by default. you have to explicitely
+add this. Light variants are also available.
+
+See:
+
+- [Customization](#customization)
+- [Theme Mixin](/docs/mixins/theme)
+
+</Alert>
+
+</section>
+
+<section>
+
+## Recommendation
+
+Class-based theming is recommended. Becuase, it keeps selectors simple and it
+minimizes output size.
+
+Using data-theme widely can increase CSS size if applied inconsistently across
+the app.
+
+For most applications, global `dark` class on `<html>` is the cleanest approach.
+
+</section>
+
+<section>
+
+## Dark Mode: Parent vs Self
+
+### Dark Mode With Parent
+
+Parent-based dark mode is best suited when we need site-wide theming. A single
+source of truth, controls the entire interface.
+
+You add `dark` class once on html element and all the define styles with
+`@theme dark { ... }`.
+
+### Dark Mode With Self
+
+Self-based dark mode is useful when themes need to coexist.
+
+Examples:
+
+- Component libraries in documentation sites
+- Interactive demos
+- Embedded widgets
+- Mixed theme layouts
+
+You add `dark` class on element itself (`<div class="my-el dark"> ... </div>`)
+and define styles in `.my-el { @theme dark-self { ... } }`, targetting this
+element.
+
+This allows isolated components to opt-into dark mode without affecting the
+entire page.
+
+### Special Case
+
+One special use-case for self based dark mode is `html` element itself.
+
+Shilp CSS defines color tokens on `html { ... }`. To override the tokens for
+dark mode, it need to target the `html` element itself.
+
+```css title="colors.css"
+html,
+:host {
+	--bg: theme(colors-base-50);
+	--fg: theme(colors-base-950);
+
+	@theme dark-self {
+		--bg: theme(colors-base-950);
+		--fg: theme(colors-base-50);
+	}
+}
+```
+
+</section>
+
+<section>
+
+## Customization
+
+By default, Shilp CSS uses class-based theming.
+
+If you prefer `data-theme` instead, You can extend / override it in
+[`shilp.config.js`](/docs/config/shilp-config-file).
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		mixins: {
+			theme: {
+				/* data on parent, style on self */
+				dark: "[data-theme='dark'] &",
+				light: "[data-theme='light'] &",
+
+				/* data on self, style on self */
+				"dark-self": "&[data-theme='dark']",
+				"light-self": "&[data-theme='light']",
+
+				/* data on parent or self, style on self */
+				// "dark-any": "[data-theme='dark'] &, &[data-theme='dark']",
+				// "light-any": "[data-theme='light'] &, &[data-theme='light']"
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+Now dark mode activates when `<html data-theme="dark"> ... </html>`.
+
+</section>

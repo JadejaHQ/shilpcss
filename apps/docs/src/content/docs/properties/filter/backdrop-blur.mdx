@@ -1,0 +1,43 @@
+---
+title: "backdrop blur"
+---
+
+# backdrop blur
+
+blur backdrop filter
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		filter: {
+			backdrop: {
+				blur: {
+					property: "backdrop-filter: blur(<v>)<i>;",
+					resolve: "spacing",
+					themeKey: "blur",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

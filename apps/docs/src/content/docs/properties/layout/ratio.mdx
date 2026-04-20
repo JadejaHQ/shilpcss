@@ -1,0 +1,64 @@
+---
+title: "ratio"
+---
+
+# ratio
+
+element's width-to-height ratio
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			ratio: {
+				property: "aspect-ratio: <v><i>;",
+				values: {
+					auto: "auto",
+					square: "1/1",
+					video: "16/9",
+
+					photo: {
+						DEFAULT: "4/3",
+						wide: "5/4",
+						wider: "3/2",
+						widest: "16/9",
+					},
+
+					cinema: {
+						DEFAULT: "1.85/1",
+						wide: "2.39/1",
+						"70mm": "2.76/1",
+					},
+
+					display: {
+						DEFAULT: "16/9",
+						tall: "16/10",
+						wide: "18/9",
+						wider: "19.5/9",
+						widest: "21/9",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

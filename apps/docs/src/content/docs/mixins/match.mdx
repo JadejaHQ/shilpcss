@@ -1,0 +1,41 @@
+---
+title: "@match Mixin"
+---
+
+# @match Mixin
+
+control selector matching like `:not`, `:is`
+
+<Alert variant="info">
+
+This page contains only the **mixins configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	target: "react",
+
+	mixins: {
+		match: {
+			variants: {
+				/* functions */
+				not: "&:not(<1>)",
+				is: "&:is(<1>)",
+				where: "&:where(<1>)",
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

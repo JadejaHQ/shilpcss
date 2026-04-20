@@ -1,0 +1,17 @@
+{
+	"label": "core concepts",
+	"items": [
+		{
+			"name": "index",
+			"slug": "core-concepts",
+			"label": "overview",
+			"title": "core concepts overview"
+		},
+		"browser-compatibility",
+		"styling-with-intent",
+		"colors",
+		"dark-mode",
+		"responsive-design",
+		"theming"
+	]
+}

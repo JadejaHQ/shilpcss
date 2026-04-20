@@ -1,0 +1,413 @@
+---
+title: "Properties"
+---
+
+# Properties
+
+A **property** is the layer that converts a utility into real CSS.
+
+if intent decides _where_, utility decides _what_, then **property decides how
+it becomes actual CSS**.
+
+Every utility must eventually map to a property configuration.
+
+---
+
+<section>
+
+## Property Config
+
+A **property config** is a configuration object that defines:
+
+- Which CSS property to generate
+- What values are allowed
+- How values are resolved
+- Whether variants are supported
+- Whether special behavior applies
+
+All property configs live inside `shilpConfig.properties` grouped by intent.
+
+From the [Utilities Config](/docs/config/utilities) page, we know:
+
+- Root level keys of properties objects is called **intent**
+- Utility is split into property and value tokens
+- Tokens are used to traverse `shilpConfig.properties[intentName]`
+- Object with key `property` is known as **Property Config**
+
+Example config:
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		//
+		layout: {
+			is: {
+				property: "display: <v><i>;",
+				values: {
+					flex: "flex",
+					grid: "grid",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+For intent `@layout is-flex;`, various parts are identified as:
+
+- Intent name: `"layout"`
+- Utility: `"is-flex"`
+- Property tokens: `["is"]`
+- Value tokens: `["flex"]`
+- Property config path: `shilpConfig.properties.layout.is`
+
+```js title="Property Config"
+const propertyConfig = {
+	property: "display: <v><i>;",
+	values: {
+		flex: "flex",
+		grid: "grid",
+	},
+};
+```
+
+This value tokens are further used to traverse `propertyConfig.values` object to
+find the exact value for `propertyConfig.property`.
+
+Now, if value will be found using **value tokens**, then we can **generate
+actual css property** by replacing `<v>` with values and `<i>` with _important
+flag_.
+
+</section>
+
+<section>
+
+## Basic Shape of a Property Config
+
+```js title="Property Config"
+const propertyConfig = {
+	property: "<property-name>: <n><v><i>;",
+	resolve: string, // optional
+	themeKey: string, // optional
+	variant: boolean, // optional
+	special: boolean, // optional
+	values: object, // optional if `themeKey` defined
+};
+```
+
+Each part has meaning.
+
+### property
+
+Defines how final CSS is generated.
+
+For example:
+
+- `property: "display: <v><i>;"`
+- `property: "margin-left: <n><v><i>;"`
+- `property: "background-image: linear-gradient(<v>)<i>;"`
+
+Placeholders:
+
+- `<v>` → resolved value (mandatory placeholder)
+- `<i>` → important flag (mandatory placeholder, may resolve to empty)
+- `<n>` → negative sign (optional placeholder, may resolve to empty)
+
+Rules:
+
+- `;` at the end is mandatory
+- You can define multiple properties
+- `<v><i>` must resolve consistently
+  - For `@space mx-4;` →
+    `property: "margin-left: <n><v><i>; margin-right: <n><v><i>;"`
+  - Both left and right receive the same value.
+
+### values
+
+Defines allowed values for that property.
+
+```js title="Values for display property"
+const propertyConfig.values = {
+  flex: "flex",
+	grid: "grid",
+	// other values
+}
+```
+
+Keys become utility suffixes. Values can be nested and become actual CSS values.
+
+#### Global Values
+
+Every CSS property supports global keywords as value: `inherit`, `initial`,
+`unset`, `revert` and `revert-layer`
+
+These are stored at `shilpConfig.values.globalValues` and can be accessed
+through `shilpConfig.theme.globalValues`.
+
+During processing:
+
+1. **Global values** are deep merged with `propertyConfig.values`
+2. Final result assigned back to `propertyConfig.values`
+
+So, global values are always available.
+
+### themeKey
+
+It used to inject values from structured dataset (`shilpConfig.theme`). So,
+values are defined once and re-used efficiently.
+
+Updated processing order will be:
+
+1. `shilpConfig.theme.colors` deep merged with `shilpConfig.theme.globalValues`
+2. `propertyConfig.values` deep merged with the **result of the previous step**
+3. Final result assigned back to `propertyConfig.values`
+
+Example config:
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			color: {
+				property: "color: <v><i>;",
+				resolve: "color",
+				themeKey: "colors",
+				variant: true,
+				values: {},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+<Alert variant="danger">
+
+Invalid `propertyConfig.themeKey` throws error.
+
+See:
+[Theme Config Usage](/docs/config/theme#1-provide-structured-datasets-for-properties).
+
+</Alert>
+
+This allows utilities like `@text color-orange-600;` without manually defining
+every color by using values directly from the pre-defined structured dataset.
+
+### variant
+
+Variant support must be enabled per property (`variant: true`) explicitely.
+
+This allows utilities like `@text color-orange-600/80;` to be handleded
+separately.
+
+**Know More**: [Utility Variant](/docs/config/utilities#variant)
+
+<Alert variant="danger">
+
+You cannot have different variant behaviour for values within the same property
+configuration.
+
+</Alert>
+
+### resolve
+
+Defines how values are resolved from tokens.
+
+Shilp provides pre-defined resolvers:
+
+| Resolver       | Description                                                         |
+| -------------- | ------------------------------------------------------------------- |
+| `"rawColor"`   | Returns only raw value `L% C H` as it is defined without processing |
+| `"color"`      | Return full color `oklch(L% C H)` with optional opacity support     |
+| `"rawSpacing"` | Return only raw value `px` as it is defined without processing      |
+| `"spacing"`    | Returns numeric values `px` processed to `rem` values               |
+| `"default"`    | Returns raw value as it is defined without processing               |
+
+<Alert variant="info">
+
+If `propertyConfig.resolve` is not defined, then `"default"` resolver is used.
+
+</Alert>
+
+<Alert variant="danger">
+
+Invalid value resolver (`proeprtyConfig.resolve`) throws error.
+
+See: [Value Resolver Methods](/docs/config/values#value-resolver-methods)
+
+</Alert>
+
+<Alert variant="info">
+
+You can also use custom resolvers by defining it inside
+`shilpConfig.extend.valueResolvers` object.
+
+See: [Custom Resolver](/docs/config/values#custom-resolver)
+
+</Alert>
+
+<Alert variant="info">
+
+`variant: true` is effective for `resolve: "color"` only (modifies `opacity`).
+Other pre-defined resolvers don't have any logic to handle the variant. Though
+you can use custom resolver function to handle it.
+
+</Alert>
+
+### special
+
+Marks property as special and executes special behaviour.
+
+It is used when one utility maps to multiple CSS properties.
+
+Example config:
+
+```js title="Property config (special)"
+const propertyConfig = {
+	property: "<v>",
+	special: true,
+	values: {
+		DEFAULT: `
+			<property-1>: <value1><i>;
+			<property-2>: <value2><i>;
+		`,
+	},
+};
+```
+
+#### Important Differencies
+
+- `propertyConfig.property` must only contain `<v>`
+- `propertyConfig.values` must include all CSS properties
+- You can also use inline `theme(...)` function for any property value
+- Each property rule must end with `;`
+- `<i>` must be present inside `propertyConfig.values`
+- **Global values** are _NOT merged_
+- `propertyConfig.themeKey` is _NOT merged automatically_
+- `propertyConfig.variant` is _ignored_
+
+If you need `themeKey` and/or `variant` behavior here:
+
+1. Do not rely on pre-defined resolvers
+2. Use custom value resolver `propertyConfig.resolve` with
+   `shilpConfig.extend.valueResolvers`
+
+See:
+
+- [Value Resolver Methods](/docs/config/values#value-resolver-methods)
+- [Inline Theme Function](/docs/config/theme#inline-theme-function)
+
+</section>
+
+<section>
+
+## When Errors Happen
+
+An error is thrown if:
+
+- Property config not found
+- Value not found
+- Invalid `themeKey`
+- Invalid value resolver key `resolve`
+
+<Alert variant="info">
+
+Error handling will be improved in future versions.
+
+In some setups (especially Next.js + webpack), this may interupt the development
+environment. If that happens, restart your dev environment.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Property Config Patterns
+
+There is no single way to write a property config. Depending on your use case,
+you may structure it differently.
+
+| Index | Pattern                                                     | Description                                                                                             | Reference                                                                                                       |
+| ----- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| 1     | One Utility, One Property                                   | One utility generates one CSS property with one resolved value                                          | [Read](/docs/best-practices/property-config-patterns#one-utility-one-property)                                  |
+| 2     | One Utility, Multiple Properties, Same Value                | One utility applies the same resolved value to multiple CSS properties                                  | [Read](/docs/best-practices/property-config-patterns#one-utility-multiple-properties-same-value)                |
+| 3     | One Utility, Multiple Properties, May Have Different Values | One utility outputs multiple CSS properties which may have different values, using `special: true` flag | [Read](/docs/best-practices/property-config-patterns#one-utility-multiple-properties-may-have-different-values) |
+| 4     | Single Word Utility                                         | A single word utility, using `DEFAULT` key                                                              | [Read](/docs/best-practices/property-config-patterns#single-word-utility)                                       |
+| 5     | One Utility, Multiple Variants                              | Nested property structure allows extended variations like axis or direction                             | [Read](/docs/best-practices/property-config-patterns#one-utility-multiple-variants)                             |
+| 6     | `preset-*` Utility, Shorthand + Individual                  | Provide a complete shorthand preset while allowing individual utilities                                 | [Read](/docs/best-practices/property-config-patterns#preset--utility-shorthand--individual)                     |
+| 7     | `preset-*` Utility, Multi-Part Value                        | Explicitly group multi-part combinations to avoid unpredictable value stacking                          | [Read](/docs/best-practices/property-config-patterns#preset--utility-multi-part-value)                          |
+| 8     | Multiple Utilities With CSS Variables                       | Use utilities to control CSS variables and compose the final property indirectly                        | [Read](/docs/best-practices/property-config-patterns#multiple-utilities-with-css-variables)                     |
+
+</section>
+
+<section>
+
+## High-Level Properties Processing
+
+At the beginning of processing:
+
+- Internal default properties are created and loaded at `shilpConfig.properites`
+- Root-level properties `shilpConfig.properties` override them completely (if
+  provided)
+  - This is not recommended. Avoid this.
+- `shilpConfig.extend.properties` is deep merged to `shilpConfig.properties`
+
+This defines which **properties** are available.
+
+<Alert variant="info">
+
+Properties are the execution layer and convert utilities into CSS. Everything
+passes through here before becoming real CSS.
+
+</Alert>
+
+Once property config is found:
+
+1. Value tokens are resolved
+   - Processing is handled by the [Values](/docs/config/values)
+   - Returns resolved value
+2. Negative (`<n>`) applied (if exists)
+3. Important (`<i>`) applied
+4. Final CSS string generated
+
+For example:
+
+- `@layout is-flex;` → `display: flex;`
+- `@space -ml-4;` → `margin-left: -1rem;`
+
+At this stage, property processing is done and we get the actual css.
+
+</section>
+
+<section>
+
+## Available Built-in Properties
+
+All built-in property configurations are documented separately.
+
+You can explore the [full list](/docs/properties#availabe-intents) in the
+**PROPERTIES** section of the documentation.
+
+Properties are grouped and listed inside each **intent** section of the
+documentation.
+
+Each property has its own page:
+`/docs/properties/<intent-name>/<properties-name>`
+
+Example:
+
+- `/docs/properties/layout/overflow`
+- `/docs/properties/bg/color`
+- `/docs/properties/text/size`
+
+Those pages show exact property config structure with usage example.
+
+</section>

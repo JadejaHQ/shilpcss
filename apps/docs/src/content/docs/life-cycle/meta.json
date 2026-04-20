@@ -1,0 +1,14 @@
+{
+	"label": "life cycle",
+	"items": [
+		{
+			"name": "index",
+			"label": "overview",
+			"title": "life cycle's overview"
+		},
+		"pre-processing",
+		"processing",
+		"purging",
+		"transpiling"
+	]
+}

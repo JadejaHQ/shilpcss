@@ -1,0 +1,144 @@
+---
+title: "family"
+---
+
+# family
+
+controls text column sizing algorithm
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Font Families
+
+Web fonts may **load late or fail completely** due to network issues, blocking,
+or privacy settings. To ensure text remains readable, every font should have a
+**reliable fallback stack**.
+
+Shilp CSS organizes fonts into **three variable groups**.
+
+### 1. Fallback Fonts
+
+Fallback fonts guarantee that text always renders with system fonts when user
+fonts are not available. These variables contain **system-safe font stacks**.
+
+```css
+html,
+:host {
+	/* */
+	--fallback-font-display:
+		ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+	--fallback-font-body:
+		ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+		"Segoe UI Symbol", "Noto Color Emoji";
+
+	--fallback-font-code:
+		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+		"Courier New", monospace;
+}
+```
+
+### 2. User Fonts
+
+User fonts allow projects to define their own fonts as per design system.
+
+By default they points to fallback fonts:
+
+```css
+html,
+:host {
+	/* */
+	--user-font-display: var(--fallback-font-display);
+	--user-font-body: var(--fallback-font-body);
+	--user-font-code: var(--fallback-font-code);
+}
+```
+
+As per design system, fonts can be set.
+
+```css
+html,
+:host {
+	--user-font-display: "Bitter";
+	--user-font-body: "Inter";
+	--user-font-code: "Intel One Mono";
+}
+```
+
+<Alert variant="warning">
+
+Before overriding these variables, make sure the font is properly loaded in your
+project.
+
+Otherwise the browser will fall back to the fallback fonts.
+
+</Alert>
+
+See:
+
+- [Google Fonts](https://fonts.google.com/)
+- [Best Practices For Fonts](https://web.dev/articles/font-best-practices)
+- [Ask ChatGPT](https://chatgpt.com)
+
+### 3. Composed Font Stacks
+
+The final fonts used by the UI are composed using both variables.
+
+```css
+*,
+*::before,
+*::after {
+	--font-display: var(--user-font-display), var(--fallback-font-display);
+	--font-body: var(--user-font-body), var(--fallback-font-body);
+	--font-code: var(--user-font-code), var(--fallback-font-code);
+}
+```
+
+This guarantees that **fallback fonts always exist**, even when user fonts fail.
+
+Applications should use the composed variables:
+
+```css
+body {
+	/* @text font-body; */
+	font-family: var(--font-body);
+}
+```
+
+</section>
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			family: {
+				property: "font-family: <v><i>;",
+				values: {
+					display: "var(--font-display)",
+					body: "var(--font-body)",
+					code: "var(--font-code)",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

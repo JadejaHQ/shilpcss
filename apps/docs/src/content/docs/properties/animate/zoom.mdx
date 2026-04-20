@@ -1,0 +1,52 @@
+---
+title: "zoom"
+---
+
+# zoom
+
+zoom animation
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		animate: {
+			zoom: {
+				in: {
+					property: "--entr-scl: <n><v><i>;",
+					themeKey: "fractions",
+					values: {
+						DEFAULT: 1,
+					},
+				},
+
+				out: {
+					property: "--ext-scl: <n><v><i>;",
+					themeKey: "fractions",
+					values: {
+						DEFAULT: 1,
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

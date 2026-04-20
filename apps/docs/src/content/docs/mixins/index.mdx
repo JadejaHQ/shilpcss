@@ -1,0 +1,60 @@
+---
+title: "Mixins Overview"
+---
+
+# Mixins Overview
+
+**Mixins** are predefined **stateful selectors** used to apply styles based on
+conditions.
+
+In simple words, mixins wrap styles with conditional logic.
+
+To understand about mixins and it's processing, See
+[Mixins Config](/docs/config/mixins).
+
+---
+
+<section>
+
+## Important Note
+
+<Alert variant="warning">
+
+If `mixinConfig.resolve` exists, Shilp CSS does not process
+`mixinConfig.variants`. You must handle variants inside your resolver
+explicitely.
+
+Example:
+
+the `@screen` mixin uses resolve, so variants from
+`shilpConfig.extend.mixins.screen.variants` are ignored.
+
+To overcome this, either provide a custom resolver or define a separate mixin.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Available Mixins
+
+This section lists all built-in mixins shipped with Shilp CSS.
+
+| Mixin       | Description                                  | Documentation                      |
+| ----------- | -------------------------------------------- | ---------------------------------- |
+| `@aria`     | apply styles based on `aria-*` attributes    | [@aria](/docs/mixins/aria)         |
+| `@childs`   | target child elements                        | [@childs](/docs/mixins/childs)     |
+| `@data`     | apply styles based on `data-*` attributes    | [@data](/docs/mixins/data)         |
+| `@env`      | environment-based selectors like tall, print | [@env](/docs/mixins/env)           |
+| `@form`     | form-related state selectors                 | [@form](/docs/mixins/form)         |
+| `@match`    | control selector matching like `:not`, `:is` | [@match](/docs/mixins/match)       |
+| `@motion`   | motion-related selectors like reduced motion | [@motion](/docs/mixins/motion)     |
+| `@screen`   | responsive breakpoints and media queries     | [@screen](/docs/mixins/screen)     |
+| `@self`     | target the current element                   | [@self](/docs/mixins/self)         |
+| `@siblings` | target sibling elements                      | [@siblings](/docs/mixins/siblings) |
+| `@state`    | UI states like hover, focus                  | [@state](/docs/mixins/state)       |
+| `@text`     | text-related selectors                       | [@text](/docs/mixins/text)         |
+| `@theme`    | theme-based selectors like dark/light mode   | [@theme](/docs/mixins/theme)       |
+
+</section>

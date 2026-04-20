@@ -1,0 +1,45 @@
+---
+title: "self"
+---
+
+# self
+
+align grid item itself (block axis)
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		grid: {
+			self: {
+				property: "align-self: <v><i>;",
+				values: {
+					start: "start",
+					center: "center",
+					end: "end",
+					stretch: "stretch",
+					baseline: "baseline",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

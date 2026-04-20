@@ -1,0 +1,12 @@
+/* NOTE:
+- widely supported only when used with `-webkit-box` and `orient = vertical`
+- https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/line-clamp
+*/
+
+.limit-lines {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: var(--lines, 1);
+	line-clamp: var(--lines, 1);
+}

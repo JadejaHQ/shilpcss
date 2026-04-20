@@ -1,0 +1,13 @@
+/*
+- smooth linear fading for scroll container
+- configured by `shilpConfig.properties.layout.scroll`
+*/
+.scroll-fade {
+	mask-image: linear-gradient(
+		var(--scroll-fade-direction),
+		transparent 0%,
+		black var(--scroll-fade-size),
+		black calc(100% - var(--scroll-fade-size)),
+		transparent 100%
+	);
+}

@@ -1,0 +1,20 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@flex",
+	"title": "flex intent",
+	"items": [
+		"base",
+		"content",
+		"flow",
+		"grow",
+		"items",
+		"justify",
+		"order",
+		"place",
+		"preset",
+		"self",
+		"shrink",
+		"wrap"
+	]
+}

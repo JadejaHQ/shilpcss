@@ -1,0 +1,70 @@
+---
+title: "position"
+---
+
+# position
+
+position of the mask, relative to `mask-origin`
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		mask: {
+			position: {
+				DEFAULT: {
+					property: "mask-position: <v><i>;",
+					values: {
+						// mask-position: x [spacing] [y] [spacing];
+						center: "center",
+						right: "right",
+						left: "left",
+						top: {
+							DEFAULT: "top",
+							left: "left top",
+							right: "right top",
+						},
+						bottom: {
+							DEFAULT: "bottom",
+							left: "left bottom",
+							right: "right bottom",
+						},
+					},
+				},
+
+				x: {
+					property: "mask-position-x: <v><i>;",
+					values: {
+						// mask-position-x: v [spacing];
+					},
+				},
+
+				y: {
+					property: "mask-position-y: <v><i>;",
+					values: {
+						// mask-position-y: v [spacing];
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,66 @@
+---
+title: "overflow"
+---
+
+# overflow
+
+handles content overflow
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			overflow: {
+				DEFAULT: {
+					property: "overflow: <v><i>;",
+					values: {
+						auto: "auto",
+						visible: "visible",
+						hidden: "hidden",
+						scroll: "scroll",
+					},
+				},
+
+				x: {
+					property: "overflow-x: <v><i>;",
+					values: {
+						auto: "auto",
+						visible: "visible",
+						hidden: "hidden",
+						scroll: "scroll",
+					},
+				},
+
+				y: {
+					property: "overflow-y: <v><i>;",
+					values: {
+						auto: "auto",
+						visible: "visible",
+						hidden: "hidden",
+						scroll: "scroll",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,121 @@
+---
+title: "scroll margin"
+---
+
+# scroll margin
+
+margin around element for snapping or scrolling
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		live: {
+			scroll: {
+				m: {
+					property: "scroll-margin: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				mt: {
+					property: "scroll-margin-top: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				mr: {
+					property: "scroll-margin-right: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				mb: {
+					property: "scroll-margin-bottom: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				ml: {
+					property: "scroll-margin-left: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				mx: {
+					property: `
+						scroll-margin-left: <n><v><i>;
+            scroll-margin-right: <n><v><i>;
+          `,
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				my: {
+					property: `
+            scroll-margin-top: <n><v><i>;
+            scroll-margin-bottom: <n><v><i>;
+          `,
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				mbl: {
+					property: "scroll-margin-block: <n><v><i>",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				mbls: {
+					property: "scroll-margin-block-start: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				mble: {
+					property: "scroll-margin-block-end: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				mi: {
+					property: "scroll-margin-inline: <n><v><i>",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				mis: {
+					property: "scroll-margin-inline-start: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+				mie: {
+					property: "scroll-margin-inline-end: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacingPixels",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

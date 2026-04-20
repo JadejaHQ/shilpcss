@@ -1,0 +1,18 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@mask",
+	"title": "mask intent",
+	"items": [
+		"clip",
+		"combine",
+		"gradient",
+		"image",
+		"mode",
+		"origin",
+		"position",
+		"repeat",
+		"size",
+		"type"
+	]
+}

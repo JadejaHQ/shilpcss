@@ -1,0 +1,72 @@
+---
+title: "is"
+---
+
+# is
+
+element’s height & width
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		size: {
+			is: {
+				DEFAULT: {
+					property: `
+				width: <v><i>;
+				height: <v><i>;
+			`,
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+					},
+				},
+
+				block: {
+					property: "block-size: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+					},
+				},
+
+				inline: {
+					property: "inline-size: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

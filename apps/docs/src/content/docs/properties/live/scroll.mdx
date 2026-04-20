@@ -1,0 +1,44 @@
+---
+title: "scroll"
+---
+
+# scroll
+
+controls smooth or instant scrolling
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		live: {
+			scroll: {
+				DEFAULT: {
+					property: "scroll-behavior: <v><i>;",
+					values: {
+						auto: "auto",
+						smooth: "smooth",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

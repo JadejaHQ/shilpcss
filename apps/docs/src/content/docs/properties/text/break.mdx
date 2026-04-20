@@ -1,0 +1,93 @@
+---
+title: "break"
+---
+
+# break
+
+position of a text’s break
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			break: {
+				all: {
+					property: "word-break: <v><i>;",
+					values: {
+						DEFAULT: "break-all",
+					},
+				},
+
+				anywhere: {
+					property: "overflow-wrap: <v><i>;",
+					values: {
+						DEFAULT: "anywhere",
+					},
+				},
+
+				hyphen: {
+					property: "hyphens: <v><i>;",
+					values: {
+						DEFAULT: "auto", // suggestion: "&shy;"
+					},
+				},
+
+				keep: {
+					property: "word-break: <v><i>;",
+					values: {
+						DEFAULT: "keep-all",
+					},
+				},
+
+				normal: {
+					property: "<v>",
+					special: true,
+					values: {
+						DEFAULT: `
+					overflow-wrap: normal<i>;
+					word-break: normal<i>;
+				`,
+						unset: `
+					overflow-wrap: unset<i>;
+					word-break: unset<i>;
+				`,
+					},
+				},
+
+				word: {
+					property: "overflow-wrap: <v><i>;",
+					values: {
+						DEFAULT: "word-break",
+					},
+				},
+
+				spaces: {
+					property: "white-space: <v><i>;",
+					values: {
+						DEFAULT: "break-spaces",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

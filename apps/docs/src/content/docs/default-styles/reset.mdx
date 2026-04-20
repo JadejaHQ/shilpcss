@@ -1,0 +1,1089 @@
+---
+title: "reset.css"
+---
+
+# reset.css
+
+It resets browser default styles to create a consistent starting point.
+
+Browsers apply many built-in styles to elements. These defaults vary between
+browsers and can lead to inconsistent layouts.
+
+`reset.css` removes those differences and establishes predictable base behavior.
+
+---
+
+<section>
+
+## Why This File Exists
+
+Browsers ship with different defaults.
+
+For example:
+
+- headings have margins
+- lists have padding
+- buttons have native styling
+- form elements behave differently
+
+Without a reset, the same page can render differently across browsers.
+
+`reset.css` removes those inconsistencies so styles start from a neutral
+baseline.
+
+</section>
+
+<section>
+
+## What This File Does
+
+This reset focuses on practical consistency rather than aggressive removal.
+
+It mainly:
+
+1. standardizes box sizing
+2. removes default margins and padding
+3. resets borders
+4. normalizes typography behavior
+5. fixes form element inconsistencies
+6. improves focus (keyboard) behavior
+7. standardizes replaced elements
+8. improves viewport handling on mobile browsers
+
+It avoids design decisions such as:
+
+- typography scale
+- layout systems
+- spacing systems
+- color palettes
+- component styles
+
+</section>
+
+<section>
+
+### What This File Changes
+
+The table below highlights the main browser defaults modified by `reset.css`.
+
+| Area              | What Changes                            | Purpose                                                  |
+| ----------------- | --------------------------------------- | -------------------------------------------------------- |
+| Box model         | `box-sizing: border-box;`               | Prevent padding and borders from affecting element width |
+| Margin / Padding  | Removed from all elements               | Avoid inconsistent spacing between browsers              |
+| Borders           | `border-width: 0; border-style: solid;` | Ensure borders behave consistently                       |
+| Typography        | Headings inherit font size and weight   | Encourages explicit typography control                   |
+| Links             | Remove default underline and color      | Makes styling opt-in instead of opt-out                  |
+| Lists             | `list-style: none;`                     | Prevent browser markers interfering with layout          |
+| Form controls     | Inherit font and remove native styles   | Makes form styling predictable                           |
+| Images / media    | `display: block;`                       | Prevent inline spacing issues                            |
+| Viewport handling | Scroll moved to `body`                  | Prevent mobile viewport height bugs                      |
+| Disabled elements | `pointer-events: none;`, opacity change | Consistent disabled behavior                             |
+| Focus styles      | Standardized `:focus-visible` outline   | Accessible and consistent keyboard focus                 |
+
+These changes create a predictable baseline so your styles behave the same
+across browsers.
+
+</section>
+
+<section>
+
+### Examples
+
+<Alert variant="info">
+
+Examples shown in the sections below, include only partial styles for clarity.
+
+See: [reset.css Reference](#resetcss-reference).
+
+</Alert>
+
+### Box Model Reset
+
+All elements uses `border-box` by default.
+
+```css
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+```
+
+This prevents padding or borders from affecting element width.
+
+It also removes default margins and padding.
+
+### Font Behavior
+
+Font synthesis is disabled: `font-synthesis: none !important;`
+
+Some browsers fake bold or italic styles when the font doesn’t provide them.
+This reset prevents those synthetic styles.
+
+This improves visual consistency across browsers.
+
+### Keyboard Focus Styles
+
+The reset defines a consistent focus outline.
+
+Example behavior:
+
+1. default outline removed
+2. consistent outline applied to focusable elements
+3. dark mode support included
+
+This makes keyboard navigation more predictable.
+
+### Base Document Styles
+
+The `html` element establishes base settings.
+
+Example:
+
+1. base font size
+2. default font stack
+3. line height
+4. tab width
+5. font feature defaults
+
+Example configuration:
+
+```css
+html {
+	font-size: 16px;
+	line-height: 1.5;
+}
+```
+
+System fonts are used by default, with emoji support.
+
+### Viewport Handling
+
+Mobile browsers sometimes shrink viewport height because of toolbars.
+
+This reset prevents layout shifts by fixing the html viewport and moving scroll
+behavior to body.
+
+Example behavior:
+
+```css
+html {
+	position: fixed;
+	inset: 0;
+	overflow: hidden;
+}
+
+body {
+	height: 100%;
+	overflow-y: auto;
+}
+```
+
+This stabilizes layout on mobile devices.
+
+### Typography Reset
+
+Several text behaviors are normalized.
+
+Examples:
+
+1. headings inherit font size
+2. links remove default color and underline
+3. monospace elements use consistent font stacks
+4. selection colors defined
+5. placeholders normalized across browsers
+
+Example:
+
+```css
+a {
+	color: inherit;
+	text-decoration: none;
+}
+```
+
+This encourages opt-in styling rather than overriding browser defaults.
+
+### Layout Reset
+
+Some layout behaviors are standardized.
+
+Examples:
+
+1. images and media are `display: block;`
+2. images scale within container
+3. lists remove default bullets
+4. tables collapse borders
+5. hidden elements stay hidden
+
+Example:
+
+```css
+img,
+video {
+	max-width: 100%;
+	height: auto;
+}
+```
+
+These rules make layout behavior predictable.
+
+### Form Element Reset
+
+Form elements are normalized so they inherit typography.
+
+Example:
+
+```css
+button,
+input,
+select,
+textarea {
+	font: inherit;
+	color: inherit;
+}
+```
+
+Native browser styles such as button backgrounds and input decorations are
+removed.
+
+This makes form styling consistent across browsers.
+
+### Accessibility Helpers
+
+Several small accessibility improvements are included.
+
+Examples:
+
+1. consistent keyboard focus outlines
+2. disabled element handling
+3. correct cursor behavior
+4. improved selection colors
+
+Example:
+
+```css
+:where(:disabled, .disabled, [data-disabled]) {
+	pointer-events: none;
+	opacity: 0.6;
+}
+```
+
+</section>
+
+<section>
+
+## When To Include This File
+
+`reset.css` should usually be the **first file imported**.
+
+Example:
+
+```css title="style.css"
+@import "shilpcss/styles/reset";
+/* Other Shilp CSS styles */
+```
+
+This ensures styles defined later, build on a consistent foundation.
+
+</section>
+
+<section>
+
+## Customization
+
+You can override any rule after importing the reset.
+
+Example:
+
+```css title="style.css"
+@import "shilpcss/styles/reset";
+@import "./styles/reset-overrides.css";
+/* Other Shilp CSS styles */
+```
+
+Since this file contains only normal CSS rules, it can be **modified or replaced
+entirely** if needed.
+
+See:
+[Modifying Default Styles](/docs/default-styles/overview#modifying-default-styles)
+
+</section>
+
+<section>
+
+## When You May Need Overrides
+
+`reset.css` changes several browser defaults to create a consistent baseline.
+Most applications work fine with these changes.
+
+However, some third-party libraries assume browser defaults are untouched. In
+those cases, small scoped overrides may be required.
+
+Below are common situations and what rule from the reset usually causes it.
+
+### Map Libraries
+
+Example: Google Maps, Mapbox, Leaflet
+
+Map libraries render complex UI inside nested DOM structures. They sometimes
+rely on browser's default `box-sizing`.
+
+The reset sets:
+
+```css
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+```
+
+Some map UI elements expect `content-box`.
+
+Scoped fix:
+
+```css
+.gm-style *,
+.mapboxgl-map * {
+	box-sizing: content-box;
+}
+```
+
+Apply only if layout issues appear inside the map container.
+
+### Diagram / Canvas Editors
+
+Example: ReactFlow (XYFlow), tldraw
+
+Libraries that render nodes, edges, or canvases often rely on default SVG
+behavior.
+
+The reset sets:
+
+```css
+svg {
+	display: block;
+}
+```
+
+Some libraries assume `inline` behavior for SVG.
+
+If layout issues appear:
+
+```css
+.react-flow svg {
+	display: inline;
+}
+```
+
+Only override inside the tool container.
+
+### Rich Text Editors
+
+Example: ProseMirror, TipTap, Slate, Quill
+
+They expects browser typography defaults.
+
+The reset removes heading styles:
+
+```css
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: inherit;
+	font-weight: inherit;
+}
+```
+
+If your editor renders Markdown or HTML content, restore typography inside the
+editor scope like:
+
+```css
+.editor :where(h1, h2, h3, h4, h5, h6) {
+	all: unset;
+	display: block;
+}
+.editor h1 {
+	font-size: 2rem;
+	font-weight: 700;
+	margin-bottom: 2rem;
+}
+.editor h2 {
+	font-size: 1.5rem;
+	font-weight: 600;
+	margin-bottom: 1.75rem;
+}
+```
+
+### Markdown / CMS Content
+
+The reset removes list markers:
+
+```css
+ol,
+ul,
+menu {
+	list-style: none;
+}
+```
+
+Markdown renderers expect them.
+
+Restore markers inside content container:
+
+```css
+.content ul {
+	list-style: disc;
+}
+.content ol {
+	list-style: decimal;
+}
+```
+
+### Libraries Using Border Defaults
+
+The reset normalizes borders:
+
+```css
+* {
+	border-style: solid;
+	border-width: 0;
+}
+```
+
+Some components expect browser border styles like `dashed` or `groove`.
+
+If needed, explicitly define the border:
+
+```css
+.third-party-component {
+	border-style: dashed;
+}
+```
+
+### Disabled Elements
+
+The reset applies:
+
+```css
+:where(:disabled, .disabled, [data-disabled]) {
+	pointer-events: none;
+	opacity: 0.6;
+}
+```
+
+If a library manages disabled behavior itself, you may need to override:
+
+```css
+.custom-widget [data-disabled] {
+	pointer-events: auto;
+}
+```
+
+### General Strategy
+
+When a third-party tool behaves unexpectedly:
+
+1. Inspect the element in DevTools
+2. Check if a rule from `reset.css` is affecting it
+3. Add a **scoped override**, not a global one
+
+<Alert variant="danger">
+
+**Avoid modifying `reset.css` directly.**
+
+</Alert>
+
+</section>
+
+<section>
+
+## Debugging Reset Issues
+
+If a third-party library behaves unexpectedly after importing `reset.css`, the
+reset may be overriding a browser default the library relies on.
+
+You can quickly identify the issue using the following steps.
+
+### 1. Inspect the Element
+
+Open browser DevTools and inspect the element that looks incorrect.
+
+Look at the **computed styles** panel.
+
+Check whether the rule belongs to `reset.css`. If it does, that rule is likely
+affecting the component.
+
+### 2. Identify the Reset Rule
+
+Common reset rules that affect third-party libraries include:
+
+1. `box-sizing`
+2. `border-style`
+3. `display` for media elements (`img`, `svg`, `video`)
+4. list styles (`ul`, `ol`)
+5. heading typography
+6. form control appearance
+7. pointer behavior for disabled elements
+
+Find the exact rule being applied.
+
+### 3. Apply a Scoped Override
+
+Avoid modifying `reset.css` directly.
+
+Instead, override the rule inside the component’s container.
+
+Example:
+
+```css
+.maps-container * {
+	box-sizing: content-box;
+}
+
+.editor ul {
+	list-style: disc;
+}
+```
+
+Scoped overrides prevent unintended changes elsewhere in your application.
+
+### 4. Verify the Fix
+
+Reload the page and confirm that:
+
+1. the third-party component works correctly
+2. other parts of your application remain unaffected
+
+If necessary, adjust the override to target the specific element more precisely.
+
+In most cases, the fix is small and localized.
+
+`reset.css` is meant to create a consistent baseline, not to prevent
+customization.
+
+</section>
+
+<section>
+
+## reset.css Reference
+
+<Alert>
+
+If any part of this file feels difficult to understand, copy the snippet and
+paste it into [ChatGPT](https://chatgpt.com) and ask it to explain the code in
+simple language.
+
+</Alert>
+
+```css title="reset.css"
+/*
+
+Shilp CSS Reset
+
+Purpose:
+Provide a consistent baseline across browsers without enforcing design choices.
+
+This reset focuses on:
+- predictable layout behavior
+- normalized typography
+- consistent form elements
+- accessibility-friendly defaults
+
+Browser Compatibility:
+- Chrome, Safari, Firefox and Edge released in January, 2023 and later.
+- IE, Opera and all the rest of browsers are not in scope.
+
+Re-evaluation:
+January 2028
+
+See documentation:
+https://shilpcss.com/docs/default-styles/reset
+
+REFERENCES:
+- https://github.com/necolas/normalize.css/blob/master/normalize.css
+- https://cdn.jsdelivr.net/npm/modern-normalize/modern-normalize.css
+- https://unpkg.com/tailwindcss@3.4.17/src/css/preflight.css
+- https://github.com/tailwindlabs/tailwindcss/blob/main/packages/tailwindcss/preflight.css
+- https://github.com/twbs/bootstrap/blob/v5.3.3/scss/_reboot.scss
+
+NOTE:
+KEEP THIS IN PLAIN CSS
+
+*/
+
+/* ============================================================================================= */
+
+.purge-ignore-start {
+	all: unset;
+}
+
+/* ============================================================================================= */
+
+/* ================================================================================================
+	GLOBAL RESET
+================================================================================================ */
+
+/*
+1. Prevent padding and border from affecting element width.
+-  https://github.com/mozdevs/cssremedy/issues/4
+2. Remove browser's default margin and padding.
+3. Turn off font synthesis
+-  https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis
+-  https://www.reddit.com/r/Safari/comments/17sa9w9/safari_you_are_killing_me_with_the_700_font/?rdt=39338
+-  https://stackoverflow.com/questions/9450706/safari-font-weight-issue-text-too-bold
+-  https://stackoverflow.com/questions/13296868/webkit-font-smoothing-antialiased-equivalent-in-firefox
+-  https://usabilitypost.com/2012/11/05/stop-fixing-font-smoothing/
+4. Reset all borders.
+*/
+
+*,
+*::before,
+*::after,
+input:where([type="file"]):where(
+		::file-selector-button,
+		::-webkit-file-upload-button
+	) {
+	box-sizing: border-box; /* 1 */
+	margin: 0; /* 2 */
+	padding: 0; /* 2 */
+	font-synthesis: none !important; /* 3 */
+	border-width: 0; /* 4 */
+	border-style: solid; /* 4 */
+	border-color: inherit; /* 4 */
+}
+
+/* ================================================================================================
+	KEYBOARD FOCUS
+================================================================================================ */
+
+/* Make outline consitent for focused element
+1. Use the modern Firefox focus style for all focusable elements.
+*/
+:where(
+	*,
+	*::before,
+	*::after,
+	input:where([type="file"]):where(
+			::file-selector-button,
+			::-webkit-file-upload-button
+		)
+):focus-visible {
+	outline: 0;
+}
+:where(:not([role="menu"], .no-focus), .focus):focus-visible,
+:where(:-moz-focusring) /* 1 */ {
+	outline-width: 2px;
+	outline-style: solid;
+	outline-color: #000000;
+	outline-offset: 2px;
+}
+:where(.dark) :where(:not([role="menu"], .no-focus), .focus):focus-visible,
+:where(.dark :-moz-focusring) /* 1 */ {
+	outline-color: #ffffff;
+}
+
+/* ================================================================================================
+	HTML, HOST & BODY
+================================================================================================ */
+
+/*
+1. Set base font-size.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Set base line-height.
+4. Use sans-serif font-family by default with system font-family as fallback.
+-  Also, add symbol and emoji render support.
+5. Use consistent tab size.
+6. Disable tap highlight.
+7. :host is a CSS pseudo-class selector used to target the host element within a shadow DOM, enabling styling directly applied to the custom element itself.
+8. Set font settings (browser default).
+*/
+html, :host /* 7 */ {
+	font-size: 16px; /* 1 */
+	-webkit-text-size-adjust: 100%; /* 2 */
+	line-height: 1.5; /* 3 */
+	font-family:
+		ui-sans-serif, sans-serif, system-ui, "Apple Color Emoji", "Segoe UI Emoji",
+		"Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+	tab-size: 2; /* 5 */
+	-moz-tab-size: 2; /* 5 */
+	-webkit-tap-highlight-color: transparent; /* 6 */
+	font-feature-settings: normal; /* 8 */
+	font-variation-settings: normal; /* 8 */
+}
+
+/* Set smooth scroll. */
+@media (prefers-reduced-motion: no-preference) {
+	html,
+	:host {
+		scroll-behavior: smooth;
+	}
+}
+
+/*
+1. Set text alignment.
+2. Set cursor to arrow (default) for all the elements.
+3. Set background and text color explicitely.
+4. Inherit line-height and font-size
+*/
+body {
+	text-align: left; /* 1 */
+	cursor: default; /* 2 */
+	background-color: #ffffff; /* 3 */
+	color: #000000; /* 3 */
+	font-size: inherit; /* 4 */
+	line-height: inherit; /* 4 */
+}
+:where([dir="rtl"] body) {
+	text-align: right; /* 1 */
+}
+:where(.dark body) {
+	background-color: #000000; /* 3 */
+	color: #ffffff; /* 3 */
+}
+
+/* ================================================================================================
+	VIEWPORT
+================================================================================================ */
+
+/*
+1. Prevent viewport height issue in mobile browser due to browser UI like top and bottom toolbar.
+2. Fill the available space.
+3. Move the overflow to `body`.
+*/
+html {
+	position: fixed; /* 1 */
+	inset: 0; /* 2 */
+	overflow: hidden; /* 1,3 */
+}
+body {
+	width: 100%; /* 2 */
+	height: 100%; /* 2 */
+	overflow-y: auto; /* 1,3 */
+}
+
+/* ================================================================================================
+	TYPOGRAPHY
+================================================================================================ */
+
+/** Set text selection colors.
+NOTE: iOS safari not supported.
+*/
+::selection {
+	background-color: #000000;
+	color: #ffffff;
+}
+
+:where(.dark ::selection) {
+	background-color: #ffffff;
+	color: #000000;
+}
+
+/* Remove the default font size and weight for headings. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: inherit;
+	font-weight: inherit;
+	font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+/* Reset links to optimize for opt-in styling instead of opt-out. */
+a {
+	color: inherit;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/* Add the correct font weight in Edge and Safari. */
+b,
+strong {
+	font-weight: 700;
+}
+
+/*
+1. Use the user's configured mono font-family by default.
+2. Correct the odd `em` font sizing in all browsers.
+3. Set font settings (browser default).
+*/
+code,
+kbd,
+samp,
+pre {
+	font-family:
+		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+		"Courier New", monospace; /* 1 */
+	font-size: 1em; /* 2 */
+	font-feature-settings: normal; /* 3 */
+	font-variation-settings: normal; /* 3 */
+}
+
+/* Add the correct font size. */
+small {
+	font-size: 0.8em;
+}
+
+/* Prevent from affecting the line height. */
+sub,
+sup {
+	font-size: 0.75em;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+sub {
+	bottom: -0.25em;
+}
+sup {
+	top: -0.5em;
+}
+
+/* Set default style. */
+address {
+	font-style: normal;
+	line-height: inherit;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox.
+-  https://github.com/tailwindlabs/tailwindcss/issues/3300
+2. Set the default placeholder color.
+*/
+:where(input, textarea)::placeholder {
+	opacity: 1; /* 1 */
+	color: #777777; /* 2 */
+}
+
+/* Restore default font weight and indentation */
+:where(select:is([multiple], [size])) optgroup {
+	font-weight: 700;
+}
+
+/* Add the correct text decoration. */
+abbr:where([title]) {
+	text-decoration-line: underline;
+	text-decoration-style: dotted;
+	text-decoration-color: inherit;
+	cursor: help;
+}
+
+/* Add default style */
+blockquote {
+	font-style: italic;
+}
+
+/* Hightlight  */
+mark {
+	padding: 0.125rem 0.25rem;
+	background-color: #ffff00;
+	color: #000000;
+}
+
+/* ================================================================================================
+	LAYOUT
+================================================================================================ */
+
+/* Consistent backdrop style */
+::backdrop {
+	background-color: #777777;
+	opacity: 0.6;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+:where([hidden]:not([hidden="until-found"])) {
+	display: none !important;
+}
+
+/*
+1. Add the correct pointer to the disabled element.
+2. Set uniform opacity.
+*/
+:where(:disabled, .disabled, [data-disabled]) {
+	/* cursor: not-allowed; not needed, pointer-events: none; will rule. */
+	pointer-events: none; /* 1 */
+	opacity: 0.6; /* 2 */
+}
+
+/*
+1. Make replaced elements `display: block` by default.
+-  https://github.com/mozdevs/cssremedy/issues/14
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default.
+-  https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210
+-  This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+	display: block; /* 1 */
+	vertical-align: middle; /* 2 */
+}
+
+/** Constrain images and videos to the parent width and preserve their intrinsic aspect ratio.
+> https://github.com/mozdevs/cssremedy/issues/14
+*/
+img,
+video {
+	max-width: 100%;
+	height: auto;
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox.
+-  https://bugzilla.mozilla.org/show_bug.cgi?id=190655
+3. Ensure horizontal rules are visible by default.
+*/
+hr {
+	height: 0; /* 1 */
+	color: inherit; /* 2 */
+	border-top-width: 1px; /* 3 */
+}
+
+/* Add the correct display in Chrome and Safari. */
+summary {
+	display: list-item;
+}
+
+/* Removes the default list style. */
+ol,
+ul,
+dl,
+menu {
+	list-style: none;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari.
+-  https://bugs.chromium.org/p/chromium/issues/detail?id=999088
+-  https://bugs.webkit.org/show_bug.cgi?id=201297
+2. Correct table border color inheritance in Chrome and Safari.
+-  https://bugs.chromium.org/p/chromium/issues/detail?id=935729
+-  https://bugs.webkit.org/show_bug.cgi?id=195016
+3. Remove gaps between table borders by default.
+*/
+table {
+	text-indent: 0; /* 1 */
+	border-color: inherit; /* 2 */
+	border-collapse: collapse; /* 3 */
+}
+
+/* Change the font styles. */
+button,
+input,
+optgroup,
+select,
+textarea {
+	font: inherit;
+	color: inherit;
+	font-size: 1em;
+	line-height: inherit;
+	font-weight: inherit;
+	font-family: inherit;
+	letter-spacing: inherit;
+	font-feature-settings: inherit;
+	font-variation-settings: inherit;
+	border-radius: 0;
+	background-color: transparent;
+	opacity: 1;
+}
+
+/* Remove the inheritance of text transform in Edge and Firefox. */
+button,
+select {
+	text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari. (not `role=["button"]`)
+2. Remove default button styles.
+3. Set the default cursor. (not related to point 1)
+4. Restore space after button
+5. Inherit font styles
+*/
+button,
+:where([role="button"]),
+:where(input, button):where([type="button"], [type="reset"], [type="submit"]),
+input:where([type="file"]):where(
+		::file-selector-button,
+		::-webkit-file-upload-button
+	) {
+	appearance: button; /* 1 */
+	-webkit-appearance: button; /* 1 */
+	background-color: transparent; /* 2 */
+	background-image: none; /* 2 */
+	border-radius: 0; /* 2 */
+	opacity: 1; /* 2 */
+	cursor: pointer; /* 3 */
+}
+input:where([type="file"]):where(
+		::file-selector-button,
+		::-webkit-file-upload-button
+	) {
+	font: inherit; /* 5 */
+	margin-inline-end: 8px; /* 4 */
+}
+
+/* Prevent resizing textareas horizontally by default. */
+textarea {
+	resize: vertical;
+}
+
+/* Add the correct vertical alignment in Chrome and Firefox. */
+progress {
+	vertical-align: baseline;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+input:where([type="search"]) {
+	appearance: textfield; /* 1 */
+	-webkit-appearance: textfield; /* 1 */
+}
+
+/* Remove the inner padding in Chrome and Safari on macOS. */
+::-webkit-search-decoration {
+	appearance: none;
+	-webkit-appearance: none;
+}
+
+/* Correct the cursor style of increment and decrement buttons in Safari. */
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+	height: auto;
+}
+
+/** Remove the additional `:invalid` styles in Firefox.
+- https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737
+*/
+:-moz-ui-invalid {
+	box-shadow: none;
+}
+
+/* Remove the inner border and padding in Firefox. */
+::-moz-focus-inner {
+	border-style: none;
+	padding: 0;
+}
+
+/* ============================================================================================= */
+
+.purge-ignore-end {
+	all: unset;
+}
+```
+
+</section>

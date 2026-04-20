@@ -1,0 +1,162 @@
+/* ================================================================================================
+	SHEET OVERLAY
+================================================================================================ */
+
+.sheet__overlay {
+	@layout layer-5;
+	@bg color-black/50;
+	@filter backdrop-blur;
+	@position is-fixed inset-0;
+
+	@motion safe {
+		@data open {
+			@animate enter fade-in-0;
+		}
+
+		@data closed {
+			@animate exit fade-out-0;
+		}
+
+		@data is("starting-style") {
+			@layout opacity-0;
+		}
+
+		@data is("ending-style") {
+			@layout opacity-0;
+		}
+	}
+}
+
+/* ================================================================================================
+	SHEET CONTENT
+================================================================================================ */
+
+.sheet__content {
+	@bg color-surface clip-padding;
+	@text color-surface-fg;
+	@layout layer-5 is-flex shadow-lg shadow-color-fg/5;
+	@flex flow-col;
+	@size min-w-72;
+	@space gap-4;
+	@position is-fixed;
+
+	/* ==============================================================================================
+		SHEET POSITION
+	=============================================================================================== */
+
+	&.right {
+		@position y-0 right-0;
+		@size h-full max-w-3/4;
+		@border thick-left;
+
+		@screen sm {
+			@size max-w-sm;
+		}
+	}
+
+	&.left {
+		@position y-0 left-0;
+		@size h-full max-w-3/4;
+		@border thick-right;
+
+		@screen sm {
+			@size max-w-sm;
+		}
+	}
+
+	&.top {
+		@position x-0 top-0;
+		@size h-auto;
+		@border thick-bottom;
+	}
+
+	&.bottom {
+		@position x-0 bottom-0;
+		@size h-auto;
+		@border thick-top;
+	}
+
+	/* ==============================================================================================
+		SHEET MOTION
+	=============================================================================================== */
+
+	@motion safe {
+		@phase for-all flow-ease-in-out;
+
+		@data open {
+			@animate enter fade-in-0;
+
+			&.right {
+				@animate slide-in-from-right-10;
+			}
+
+			&.left {
+				@animate slide-in-from-left-10;
+			}
+
+			&.top {
+				@animate slide-in-from-top-10;
+			}
+
+			&.bottom {
+				@animate slide-in-from-bottom-10;
+			}
+		}
+
+		@data closed {
+			@animate exit fade-out-0;
+
+			&.right {
+				@animate slide-out-to-right-10;
+			}
+
+			&.left {
+				@animate slide-out-to-left-10;
+			}
+
+			&.top {
+				@animate slide-out-to-top-10;
+			}
+
+			&.bottom {
+				@animate slide-out-to-bottom-10;
+			}
+		}
+	}
+}
+
+/* ================================================================================================
+	SHEET HEADER, TITLE, DESCRIPTION, CLOSE AND CLOSE
+================================================================================================ */
+
+.sheet__header {
+	@layout is-flex;
+	@flex flow-col;
+	@space px-4 py-2.5 gap-2;
+	@border thick-bottom;
+}
+
+.sheet__title {
+	@text thick-500 size-lg;
+}
+
+.sheet__description {
+	@text color-muted-fg size-sm;
+}
+
+.sheet__close {
+	@match not(".wrapper") {
+		@position is-absolute top-2 right-2;
+
+		svg {
+			@size is-6;
+		}
+	}
+}
+
+.sheet__footer {
+	@space mt-auto p-4 gap-2;
+	@layout is-flex;
+	@flex flow-col;
+	@border thick-top;
+}

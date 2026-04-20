@@ -1,0 +1,669 @@
+---
+title: "Container Component"
+---
+
+# Container Component
+
+A **container** is a layout component that provides a **consistent content width
+across breakpoints**.
+
+The container width adapts as the viewport changes while keeping a predictable
+layout structure. This allows pages to scale across devices while maintaining
+consistent margins and readable content width.
+
+In simple terms:
+
+- small screens → container uses full width
+- larger screens → container width is constrained
+- layout remains centered and consistent
+
+<Alert variant="danger">
+
+Avoid nesting container inside container.
+
+</Alert>
+
+---
+
+<section>
+
+## Static vs Dynamic Parts
+
+The container component has two parts.
+
+| Part    | Description                                                                                          |
+| ------- | ---------------------------------------------------------------------------------------------------- |
+| Static  | Utility helper classes for alignment and disabling container behavior                                |
+| Dynamic | Container widths generated from `shilpConfig.theme.screens` and `shilpConfig.theme.container` config |
+
+The dynamic part is generated during build from configuration.
+
+See:
+
+- [Components Config](/docs/config/components)
+- [components.css Default Styles](/docs/default-styles/components)
+
+</section>
+
+<section>
+
+## Breakpoint Dependency
+
+The container is **tightly bound to breakpoints**.
+
+Container classes are generated **only for breakpoints defined in**
+`shilpConfig.theme.screens`.
+
+If a breakpoint is removed or added, the generated container classes change
+accordingly.
+
+</section>
+
+<section>
+
+## Static Container Classes
+
+These classes are defined in `shilpcss/styles/components/container.css` file.
+
+See: [Static Classes Reference](#static-classes-reference)
+
+### Alignment Helpers
+
+| Class                | Behavior                      |
+| -------------------- | ----------------------------- |
+| `.container--left`   | Align container to the left   |
+| `.container--center` | Center container horizontally |
+| `.container--right`  | Align container to the right  |
+
+### Reset Container
+
+Use: `.container--none`
+
+This removes container constraints like:
+
+- `max-width`
+- `padding`
+- `margins`
+- `display` behavior
+
+<Alert variant="danger">
+
+`.container--none` may distorts the styles.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Dynamic Container Classes
+
+The primary `.container` class and breakpoint variants are **generated
+dynamically**.
+
+The configuration comes from `shilpConfig.theme.container` and
+`shilpConfig.theme.screens`.
+
+See: [Dynamic Classes Reference](#dynamic-classes-reference)
+
+### Dynamic Configuration
+
+The container configurations allow you to customize the behavior and appearance
+of the container component.
+
+Each option controls how container classes are generated.
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	theme: {
+		// Shilp CSS default breakpoints
+		screens: {
+			xs: "375px",
+			sm: "640px",
+			md: "768px",
+			lg: "1024px",
+			xl: "1280px",
+			mac: "1440px",
+			max: "1920px",
+		},
+
+		// Shilp CSS default component configuration
+		container: {
+			align: "center",
+			display: "block",
+
+			// max-width = breakpoint - 2 * spacing
+			spacing: {
+				sm: "40px",
+				md: "48px",
+				lg: "56px",
+				xl: "60px",
+				mac: "80px",
+				max: "240px",
+			},
+
+			// horizontal padding
+			innerPadding: {
+				DEFAULT: "16px",
+				xs: "24px",
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+#### align
+
+Controls the horizontal alignment of the container using `margin`.
+
+| Value      | Behavior                      |
+| ---------- | ----------------------------- |
+| `"center"` | container is centered         |
+| `"left"`   | container sticks to the left  |
+| `"right"`  | container sticks to the right |
+
+#### display
+
+Defines the `display` property of the container. Default is `"block"`.
+
+This can be changed if a project requires a different layout behavior.
+
+For example: `containerConfig.display = "flex"` will style container as a **flex
+container**.
+
+#### spacing
+
+Defines the **outer spacing used to calculate container width**.
+
+Container width is calculated using:
+`container width = breakpoint - (2 × spacing)`
+
+For `md` breakpoint: `768px - (2 x 48px) = 672px`
+
+This ensures the container maintains **consistent margins from the viewport
+edges**.
+
+<Alert variant="warning">
+
+The keys inside `containerConfig.spacing` **must match the breakpoint names**
+defined in `shilpConfig.theme.screens`.
+
+</Alert>
+
+For default breakpoints and container configuration, width of the container at
+each breakpoints is shown in the below table.
+
+| Class            | Spacing | \<375px | ≥375px | ≥640px | ≥768px | ≥1024px | ≥1280px | ≥1440px | ≥1920px |
+| ---------------- | ------- | ------- | ------ | ------ | ------ | ------- | ------- | ------- | ------- |
+| `.container`     | 0       | 100%    | 100%   | 560px  | 672px  | 912px   | 1160px  | 1280px  | 1440px  |
+| `.container-xs`  | 0       | 100%    | 100%   | 560px  | 672px  | 912px   | 1160px  | 1280px  | 1440px  |
+| `.container-sm`  | 40px    | 100%    | 100%   | 560px  | 672px  | 912px   | 1160px  | 1280px  | 1440px  |
+| `.container-md`  | 48px    | 100%    | 100%   | 100%   | 672px  | 912px   | 1160px  | 1280px  | 1440px  |
+| `.container-lg`  | 56px    | 100%    | 100%   | 100%   | 100%   | 912px   | 1160px  | 1280px  | 1440px  |
+| `.container-xl`  | 60px    | 100%    | 100%   | 100%   | 100%   | 100%    | 1160px  | 1280px  | 1440px  |
+| `.container-mac` | 80px    | 100%    | 100%   | 100%   | 100%   | 100%    | 100%    | 1280px  | 1440px  |
+| `.container-max` | 240px   | 100%    | 100%   | 100%   | 100%   | 100%    | 100%    | 100%    | 1440px  |
+
+#### innerPadding
+
+Defines the **horizontal padding inside the container**.
+
+<Alert variant="warning">
+
+The keys inside `containerConfig.innerPadding` **must match the breakpoint
+names** defined in `shilpConfig.theme.screens`.
+
+</Alert>
+
+For default breakpoints and container configuration, horizontal padding of the
+container at each breakpoints is shown in the below table.
+
+| Class            | \<375px | ≥375px | ≥640px | ≥768px | ≥1024px | ≥1280px | ≥1440px | ≥1920px |
+| ---------------- | ------- | ------ | ------ | ------ | ------- | ------- | ------- | ------- |
+| `.container`     | 16px    | 24px   | 24px   | 24px   | 24px    | 24px    | 24px    | 24px    |
+| `.container-xs`  | 16px    | 24px   | 24px   | 24px   | 24px    | 24px    | 24px    | 24px    |
+| `.container-sm`  | 16px    | 24px   | 24px   | 24px   | 24px    | 24px    | 24px    | 24px    |
+| `.container-md`  | 16px    | 24px   | 24px   | 24px   | 24px    | 24px    | 24px    | 24px    |
+| `.container-lg`  | 16px    | 24px   | 24px   | 24px   | 24px    | 24px    | 24px    | 24px    |
+| `.container-xl`  | 16px    | 24px   | 24px   | 24px   | 24px    | 24px    | 24px    | 24px    |
+| `.container-mac` | 16px    | 24px   | 24px   | 24px   | 24px    | 24px    | 24px    | 24px    |
+| `.container-max` | 16px    | 24px   | 24px   | 24px   | 24px    | 24px    | 24px    | 24px    |
+
+This means:
+
+- Before `xs` breakpoint (`375px`) → `16px`
+- At `xs` breakpoint and above → `24px`
+
+Since **no other breakpoint overrides** are defined, the padding remains
+**`24px` for all larger breakpoints**.
+
+#### disable
+
+You can disable container component classes (dynamic) generation.
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		components: {
+			container: {
+				disable: true,
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>
+
+<section>
+
+## Customization
+
+You can extend or override this in your config.
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		//
+		screens: {
+			"2k": "2560px",
+		},
+
+		components: {
+			container: {
+				display: "flex",
+				spacing: {
+					"2k": "320px",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This will make additional `.container-2k` class available and also make every
+container a **flex container**.
+
+</section>
+
+<section>
+
+## Static Classes Reference
+
+<Alert variant="danger">
+
+`.container--none` may distorts the styles.
+
+</Alert>
+
+```css title="shilpcss/styles/components/container.css"
+.container--left {
+	margin-left: unset;
+	margin-right: auto;
+}
+
+.container--center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.container--right {
+	margin-left: auto;
+	margin-right: unset;
+}
+
+.container--none {
+	width: initial;
+	display: initial;
+	max-width: unset;
+	margin-left: unset;
+	margin-right: unset;
+	padding-left: unset;
+	padding-right: unset;
+}
+```
+
+</section>
+
+<section>
+
+## Dynamic Classes Reference
+
+<Alert variant="danger">
+
+Avoid nesting container inside container.
+
+</Alert>
+
+```css title="shilpcss/styles/components.css"
+/* ================================================================================================
+	.container ⇒ > 0px
+================================================================================================ */
+
+.container {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 16px;
+	padding-right: 16px;
+	display: block;
+}
+@media (width>=375px) {
+	.container {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+}
+@media (width>=640px) {
+	.container {
+		max-width: 560px;
+	}
+}
+@media (width>=768px) {
+	.container {
+		max-width: 672px;
+	}
+}
+@media (width>=1024px) {
+	.container {
+		max-width: 912px;
+	}
+}
+@media (width>=1280px) {
+	.container {
+		max-width: 1160px;
+	}
+}
+@media (width>=1440px) {
+	.container {
+		max-width: 1280px;
+	}
+}
+@media (width>=1920px) {
+	.container {
+		max-width: 1440px;
+	}
+}
+
+/* ================================================================================================
+	.container-xs ⇒ ≥ 375px
+================================================================================================ */
+
+.container-xs {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 16px;
+	padding-right: 16px;
+	display: block;
+}
+@media (width>=375px) {
+	.container-xs {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+}
+@media (width>=640px) {
+	.container-xs {
+		max-width: 560px;
+	}
+}
+@media (width>=768px) {
+	.container-xs {
+		max-width: 672px;
+	}
+}
+@media (width>=1024px) {
+	.container-xs {
+		max-width: 912px;
+	}
+}
+@media (width>=1280px) {
+	.container-xs {
+		max-width: 1160px;
+	}
+}
+@media (width>=1440px) {
+	.container-xs {
+		max-width: 1280px;
+	}
+}
+@media (width>=1920px) {
+	.container-xs {
+		max-width: 1440px;
+	}
+}
+
+/* ================================================================================================
+	.container-sm ⇒ ≥ 640px
+================================================================================================ */
+
+.container-sm {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 16px;
+	padding-right: 16px;
+	display: block;
+}
+@media (width>=375px) {
+	.container-sm {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+}
+@media (width>=640px) {
+	.container-sm {
+		max-width: 560px;
+	}
+}
+@media (width>=768px) {
+	.container-sm {
+		max-width: 672px;
+	}
+}
+@media (width>=1024px) {
+	.container-sm {
+		max-width: 912px;
+	}
+}
+@media (width>=1280px) {
+	.container-sm {
+		max-width: 1160px;
+	}
+}
+@media (width>=1440px) {
+	.container-sm {
+		max-width: 1280px;
+	}
+}
+@media (width>=1920px) {
+	.container-sm {
+		max-width: 1440px;
+	}
+}
+
+/* ================================================================================================
+	.container-md ⇒ ≥ 768px
+================================================================================================ */
+
+.container-md {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 16px;
+	padding-right: 16px;
+	display: block;
+}
+@media (width>=375px) {
+	.container-md {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+}
+@media (width>=768px) {
+	.container-md {
+		max-width: 672px;
+	}
+}
+@media (width>=1024px) {
+	.container-md {
+		max-width: 912px;
+	}
+}
+@media (width>=1280px) {
+	.container-md {
+		max-width: 1160px;
+	}
+}
+@media (width>=1440px) {
+	.container-md {
+		max-width: 1280px;
+	}
+}
+@media (width>=1920px) {
+	.container-md {
+		max-width: 1440px;
+	}
+}
+
+/* ================================================================================================
+	.container-lg ⇒ ≥ 1024px
+================================================================================================ */
+
+.container-lg {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 16px;
+	padding-right: 16px;
+	display: block;
+}
+@media (width>=375px) {
+	.container-lg {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+}
+@media (width>=1024px) {
+	.container-lg {
+		max-width: 912px;
+	}
+}
+@media (width>=1280px) {
+	.container-lg {
+		max-width: 1160px;
+	}
+}
+@media (width>=1440px) {
+	.container-lg {
+		max-width: 1280px;
+	}
+}
+@media (width>=1920px) {
+	.container-lg {
+		max-width: 1440px;
+	}
+}
+
+/* ================================================================================================
+	.container-xl ⇒ ≥ 1280px
+================================================================================================ */
+
+.container-xl {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 16px;
+	padding-right: 16px;
+	display: block;
+}
+@media (width>=375px) {
+	.container-xl {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+}
+@media (width>=1280px) {
+	.container-xl {
+		max-width: 1160px;
+	}
+}
+@media (width>=1440px) {
+	.container-xl {
+		max-width: 1280px;
+	}
+}
+@media (width>=1920px) {
+	.container-xl {
+		max-width: 1440px;
+	}
+}
+
+/* ================================================================================================
+	.container-mac ⇒ ≥ 1440px
+================================================================================================ */
+
+.container-mac {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 16px;
+	padding-right: 16px;
+	display: block;
+}
+@media (width>=375px) {
+	.container-mac {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+}
+@media (width>=1440px) {
+	.container-mac {
+		max-width: 1280px;
+	}
+}
+@media (width>=1920px) {
+	.container-mac {
+		max-width: 1440px;
+	}
+}
+
+/* ================================================================================================
+	.container-max ⇒ ≥ 1920px
+================================================================================================ */
+
+.container-max {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 16px;
+	padding-right: 16px;
+	display: block;
+}
+@media (width>=375px) {
+	.container-max {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+}
+@media (width>=1920px) {
+	.container-max {
+		max-width: 1440px;
+	}
+}
+```
+
+</section>

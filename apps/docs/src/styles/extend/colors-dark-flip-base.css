@@ -1,0 +1,25 @@
+/* ================================================================================================
+	DARK THEME COLORS  (extend colors-dark-flip-base.css)
+================================================================================================ */
+
+html,
+:host {
+	/*  */
+	@theme dark-self {
+		/* ============================================================================================
+			BASE (NEUTRAL) COLORS FLIPPED  (gray)
+		============================================================================================ */
+
+		--base-50: theme(colors-gray-950);
+		--base-100: theme(colors-gray-900);
+		--base-200: theme(colors-gray-800);
+		--base-300: theme(colors-gray-700);
+		--base-400: theme(colors-gray-600);
+		--base-500: theme(colors-gray-500);
+		--base-600: theme(colors-gray-400);
+		--base-700: theme(colors-gray-300);
+		--base-800: theme(colors-gray-200);
+		--base-900: theme(colors-gray-100);
+		--base-950: theme(colors-gray-50);
+	}
+}

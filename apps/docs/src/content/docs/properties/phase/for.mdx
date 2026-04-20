@@ -1,0 +1,47 @@
+---
+title: "for"
+---
+
+# for
+
+specifies which CSS properties will transition
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		phase: {
+			for: {
+				property: "transition-property: <v><i>;",
+				values: {
+					all: "all",
+					properties: "var(--trnst-pprts)",
+					colors: "var(--trnst-clrs)",
+					filters: "var(--trnst-fltrs)",
+					adjust: "transform",
+					opacity: "opacity",
+					shadow: "box-shadow",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

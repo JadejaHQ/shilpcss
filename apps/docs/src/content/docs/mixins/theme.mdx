@@ -1,0 +1,48 @@
+---
+title: "@theme Mixin"
+---
+
+# @theme Mixin
+
+theme-based selectors like dark/light mode
+
+<Alert variant="info">
+
+This page contains only the **mixins configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	target: "react",
+
+	mixins: {
+		theme: {
+			variants: {
+				/* class on parent, style on self */
+				dark: ".dark &",
+				light: ".light &",
+
+				/* class on self, style on self */
+				"dark-self": "&.dark",
+				"light-self": "&.light",
+
+				/* class on parent or self, style on self */
+				// "dark-any": ".dark &, &.dark",
+				// "light-any": ".light &, &.light",
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

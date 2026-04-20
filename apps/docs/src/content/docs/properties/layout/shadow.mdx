@@ -1,0 +1,95 @@
+---
+title: "shadow"
+---
+
+# shadow
+
+adds shadow to an element
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			shadow: {
+				DEFAULT: {
+					property: "<v>",
+					special: true,
+					values: {
+						none: `
+					box-shadow: 0 0 #0000<i>;
+					--b-sdw: initial<i>;
+				`,
+						"2xs": `
+					box-shadow: var(--bx-sdw)<i>;
+					--b-sdw: var(--b-sdw-2xs)<i>;
+				`,
+						xs: `
+					box-shadow: var(--bx-sdw)<i>;
+					--b-sdw: var(--b-sdw-xs)<i>;
+				`,
+						sm: `
+					box-shadow: var(--bx-sdw)<i>;
+					--b-sdw: var(--b-sdw-sm)<i>;
+				`,
+						DEFAULT: `
+					box-shadow: var(--bx-sdw)<i>;
+					--b-sdw: var(--b-sdw-sm)<i>;
+				`,
+						md: `
+					box-shadow: var(--bx-sdw)<i>;
+					--b-sdw: var(--b-sdw-md)<i>;
+				`,
+						lg: `
+					box-shadow: var(--bx-sdw)<i>;
+					--b-sdw: var(--b-sdw-lg)<i>;
+				`,
+						xl: `
+					box-shadow: var(--bx-sdw)<i>;
+					--b-sdw: var(--b-sdw-xl)<i>;
+				`,
+						"2xl": `
+					box-shadow: var(--bx-sdw)<i>;
+					--b-sdw: var(--b-sdw-2xl)<i>;
+				`,
+					},
+				},
+
+				inset: {
+					property: "--in-sdw: <v><i>;",
+					values: {
+						DEFAULT: "inset",
+						none: "unset",
+					},
+				},
+
+				color: {
+					property: "--b-sdw-clr: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

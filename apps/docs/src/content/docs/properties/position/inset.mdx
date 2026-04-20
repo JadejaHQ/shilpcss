@@ -1,0 +1,90 @@
+---
+title: "inset"
+---
+
+# inset
+
+Shorthand for top, right, bottom, left offsets
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		position: {
+			inset: {
+				// all sides
+				DEFAULT: {
+					property: "inset: <n><v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {},
+				},
+
+				block: {
+					DEFAULT: {
+						property: "inset-block: <n><v><i>;",
+						resolve: "spacing",
+						themeKey: "spacing",
+						values: {},
+					},
+
+					end: {
+						property: "inset-block-end: <n><v><i>;",
+						resolve: "spacing",
+						themeKey: "spacing",
+						values: {},
+					},
+
+					start: {
+						property: "inset-block-start: <n><v><i>;",
+						resolve: "spacing",
+						themeKey: "spacing",
+						values: {},
+					},
+				},
+
+				inline: {
+					DEFAULT: {
+						property: "inset-inline: <n><v><i>;",
+						resolve: "spacing",
+						themeKey: "spacing",
+						values: {},
+					},
+
+					end: {
+						property: "inset-inline-end: <n><v><i>;",
+						resolve: "spacing",
+						themeKey: "spacing",
+						values: {},
+					},
+
+					start: {
+						property: "inset-inline-start: <n><v><i>;",
+						resolve: "spacing",
+						themeKey: "spacing",
+						values: {},
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

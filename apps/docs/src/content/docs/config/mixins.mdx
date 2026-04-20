@@ -1,0 +1,488 @@
+---
+title: "Mixins"
+---
+
+# Mixins
+
+A mixin defines **when styles apply**. It also called **Stateful Intents**.
+
+If **intents** are about “_What styles to apply?_” then **mixins** are about
+“_Under what conditions to apply those styles?_”
+
+Inside a `.css` file, Shilp CSS scans for mixin syntax. It looks for patterns
+that start with `@` and end with `{`.
+
+---
+
+<section>
+
+## Why Mixins Exist
+
+CSS is not only about properties.
+
+It is also about:
+
+- States (`hover`, `focus`, `disabled`)
+- Themes (`dark`, `light`)
+- Breakpoints (`md`, `xl`)
+- Data attributes
+- Structural relationships
+- and so on...
+
+Mixins exist to keep those conditions, structured and configurable.
+
+Instead of hardcoding selectors everywhere, you define them once in config.
+
+</section>
+
+<section>
+
+## What Is a Mixin?
+
+A mixin simply looks like `@<mixin-name> variant {`.
+
+In simple words:
+
+- Starts with `@`
+- Followed by **mixin name** and whitespace
+- Followed by a **variant** and whitespace
+- Ends with `{`
+
+Examples:
+
+- `@state hover { ... }`
+- `@theme dark { ... }`
+- `@screen md { ... }`
+- `@screen md:xl { ... }`
+- `@data is("state=disabled") { ... }`
+
+<Alert variant="info">
+
+`!important` flag (with `!` at end) is **not supported** for mixin.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Parsing
+
+Internally, Shilp CSS looks for RegExp pattern
+`/@([a-z-]+)\s([a-z-:]+)(\(.+\))?\s{/g`.
+
+For mixin `@state hover { ... }`, it splits as below:
+
+1. Mixin name: `"state"`
+2. Variant: `"hover"`
+3. Content: any styles wrapped inside mixin
+
+That's it. `Mixin = Mixin name + variant + wrapped styles`
+
+<Alert variant="info">
+
+Internally, Shilp CSS generates SCSS `@mixin` just-in-time, moves it to the top
+of the file, and replaces Shilp CSS mixin with an `@include`.
+
+You write simple syntax. Shilp CSS converts it into SCSS structure.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Location
+
+Mixins are defined in your config at `shilpConfig.mixins`.
+
+Each root-level key is a **mixin name** and value is a **mixin config**.
+
+Example:
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	mixins: {
+		state: { ... },
+		theme: { ... },
+	},
+};
+
+export default shilpConfig;
+```
+
+This creates two mixins, `"state"` and `"theme"`.
+
+<Alert variant='info'>
+
+If the mixin name does not exist in config, but used in `.css`, then it will not
+be processed.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Basic Shape of Mixin Config
+
+```js title="Mixin config"
+const mixinConfig = {
+	disable: boolean, // optional
+	resolve: function, // optional
+	variants: object // optional if `resolve` defined
+}
+```
+
+### variants
+
+Defines available variants and what selector they map to.
+
+Each key is a variant name.
+
+Each value can be:
+
+- A string
+- An array
+- A function-style placeholder pattern
+
+#### String Variant
+
+```js title="State mixin"
+const mixinConfig = {
+	variants: {
+		hover: "&:hover";
+	}
+}
+```
+
+Usage: `@state hover { ... }` ➝ `&:hover { ... }`
+
+#### Array Variant
+
+```js title="State mixin"
+const mixinConfig = {
+	variants: {
+		"custom-hover": ["@media (hover: hover)", "&:hover"],
+	},
+};
+```
+
+Usage: `@state custom-hover { ... }` ➝
+`@media (hover: hover) { &:hover { ... } }`
+
+Array creates nested wrapping.
+
+#### Function Variants
+
+Variants can accept arguments.
+
+Placeholders use `<1>`, `<2>`, etc for argument replacement order.
+
+RegExp Pattern: `/<([^>]+)>/g`
+
+Example:
+
+```js title="Data mixin"
+const mixinConfig = {
+	variants: {
+		is: "&[data-<1>]",
+		"custom-is": "&[data-<1>=<2>]",
+	},
+};
+```
+
+Usage:
+
+- `@data is("state=top")` ➝ `&[data-state=top] { ... }`
+- `@data custom-is("state", "top")` ➝ `&[data-state=top] { ... }`
+
+<Alert variant="info">
+
+Argument order matters.
+
+Shilp uses SCSS `sass:list` module internally to manage argument order.
+
+</Alert>
+
+##### Note on Arguments
+
+When using function variants, arguments must be **wrapped in quotes**.
+
+If an argument contains a comma, it will otherwise be split into multiple
+arguments:
+
+- Incorrect: `@match not(.a, .b) { ... }` ➝ ❌
+- Correct: `@match not(".a, .b") { ... }` ➝ ✅
+
+As `:not()` accepts a comma-separated list, wrapping it in quotes ensures it is
+treated as a single argument. This way you can pass any number or selectors to
+`:not()`.
+
+Otherwise you have to define exact number of arguments in mixin with `<1>`,
+`<2>`, etc explicitely and pass the exact same amount of arguments, every single
+time. <br /> If argumetns number did not match, SCSS compiler will throw error.
+
+<Alert variant="info">
+
+**Recommendation**: _Always wrap function variant arguments in quotes. Even if
+they don’t contain commas._
+
+</Alert>
+
+### resolve
+
+It is custom mixin resolver. You can override default mixin behavior with it.
+
+<Alert variant="warning">
+
+If `mixinConfig.resolve` exists, Shilp CSS does not process
+`mixinConfig.variants`. You must handle variants inside your resolver
+explicitely.
+
+Example:
+
+the `@screen` mixin uses resolve, so variants from
+`shilpConfig.extend.mixins.screen.variants` are ignored.
+
+To overcome this, either provide a custom resolver or define a separate mixin.
+
+</Alert>
+
+```js title="Custom mixin resolver"
+const shilpConfig = {
+	source: "react",
+
+	// internal defaults
+	theme: { ... },
+	mixins: { ... },
+
+	extend: {
+		mixins: {
+			ipsum: {
+				resolve: (options) => {
+					// custom mixin resolver logic
+					return { definition, selector };
+				},
+			},
+		},
+	}
+}
+
+export default shilpConfig;
+```
+
+<Alert variant="danger">
+
+If `resolve` exists:
+
+- Default resolver is skipped
+- You control final output
+- Shilp CSS do not handle `mixinConfig.variants`
+
+</Alert>
+
+#### Available Options
+
+Custom mixin resolver `mixinConfig.resolve` receives a single argument
+(`object`) with following options:
+
+| Option                | Type     | Description                                      |
+| --------------------- | -------- | ------------------------------------------------ |
+| `options.content`     | `string` | Raw CSS string                                   |
+| `options.filePath`    | `string` | Path of raw CSS string                           |
+| `options.config`      | `object` | Full shilp config object                         |
+| `options.mixinName`   | `string` | Mostly for error reporting                       |
+| `options.variantName` | `string` | Mixin variant name                               |
+| `options.mixinConfig` | `object` | Full mixins config                               |
+| `options.fn`          | `string` | Arguments if function variant, else empty string |
+| `options.raw`         | `string` | Raw mixin definition mostly for error reporting  |
+
+<Alert variant="danger">
+
+DO NOT MUTATE THESE OPTIONS.
+
+</Alert>
+
+#### Expected Output
+
+In return it expects an `object` with following options:
+
+- `definition` (string) - SCSS's full `@mixin` definition
+  - This is optional
+  - It must follow
+    [SCSS `@mixin` Pattern](https://sass-lang.com/documentation/at-rules/mixin)
+- `selector` (string) - Final selector to replace Shilp CSS mixin syntax
+  - If `definition` is provided, then it must follow
+    [SCSS `@include` Pattern](https://sass-lang.com/documentation/at-rules/mixin)
+  - If `definition` not provided, then it must be resolved selector (valid `CSS`
+    selector)
+
+### disable
+
+You can disable any mixin.
+
+For example, to disable `state` mixin:
+
+```js title="Disable state mixin"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		mixins: {
+			state: {
+				disable: true,
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This removes the mixin, and any styles defined inside it (during processing).
+
+Even if `@state` exists in your CSS, it will not generate output.
+
+This can be useful when:
+
+- Integrating third-party CSS
+- Reducing bundle size
+- Restricting allowed styling patterns
+
+</section>
+
+<section>
+
+## From Config to CSS
+
+Given this config:
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			thick: {
+				property: "font-weight: <v><i>;",
+				values: {
+					500: 500,
+					600: 600,
+				},
+			},
+		},
+	}
+
+	mixins: {
+		state: {
+			variants: {
+				hover: ["@media (hover: hover)", "&:hover"],
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+You can write:
+
+```css
+.any-class {
+	@text thick-500;
+
+	@state hover {
+		@text thick-600;
+	}
+}
+```
+
+And it becomes:
+
+```css
+.any-class {
+	font-weight: 500;
+}
+
+@media (hover: hover) {
+	.any-class:hover {
+		font-weight: 600;
+	}
+}
+```
+
+Mixins determines which styles to apply based on state or condition.
+
+</section>
+
+<section>
+
+## High-Level Mixins Processing
+
+At the beginning of processing:
+
+- Internal default mixins are created and loaded at `shilpConfig.mixins`
+- Root-level mixins `shilpConfig.mixins` override them completely (if provided)
+  - This is not recommended. Avoid this.
+- `shilpConfig.extend.mixins` is deep merged with `shilpConfig.mixins`
+
+This defines which **mixins** are available.
+
+Mixin processing happens during build generation. There is no runtime
+evaluation.
+
+When mixin is detected:
+
+1. Extract mixin name
+2. Extract variant
+3. Extract arguments (if any)
+4. Traverse `shilpConfig.mixins`
+5. Resolve selector
+6. Generate SCSS `@mixin`
+7. Replace usage with `@include`
+
+At this stage, mixin processing is done.
+
+Further processing is handled by the
+[SCSS `@mixin`](https://sass-lang.com/documentation/at-rules/mixin).
+
+</section>
+
+<section>
+
+## Reserved Names
+
+<Alert variant="danger">
+
+You **CAN NOT USE** following names reserved by `CSS` or `SCSS`. Using these as
+intents or mixins names, **WILL CAUSE CONFLICTS**.
+
+See: [Reserved Names Full List](/docs/styling-with-intent#reserved-names)
+
+</Alert>
+
+</section>
+
+<section>
+
+## Available Built-in Mixins Dataset
+
+All built-in mixins datasets are documented separately.
+
+You can explore the [full list](/docs/mixins) in the **MIXINS** section of the
+documentation.
+
+Each dataset has its own page: `/docs/mixins/<mixin-name>`
+
+Examples:
+
+- `/docs/mixins/state`
+- `/docs/mixins/data`
+- `/docs/mixins/theme`
+
+Those pages show exact mixins dataset structure with usage example.
+
+</section>

@@ -1,0 +1,20 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@grid",
+	"title": "grid intent",
+	"items": [
+		"col",
+		"cols",
+		"content",
+		"flow",
+		"items",
+		"justify",
+		"order",
+		"place",
+		"preset",
+		"row",
+		"rows",
+		"self"
+	]
+}

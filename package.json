@@ -1,0 +1,65 @@
+{
+	"name": "shilpcss-monorepo",
+	"description": "Shilp CSS monorepo",
+	"version": "1.0.0-alpha.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"docs:dev": "pnpm i && pnpm dev --filter=shilpcss-docs",
+		"docs:build": "pnpm i && pnpm build --filter=shilpcss-docs",
+		"lib:build": "pnpm i && pnpm build --filter=shilpcss",
+		"publish-it": "turbo run publish-it",
+		"pre:alpha": "pnpm changeset pre enter alpha",
+		"pre:beta": "pnpm changeset pre enter beta",
+		"pre:rc": "pnpm changeset pre enter rc",
+		"pre:exit": "pnpm changeset pre exit",
+		"release": "pnpm changeset",
+		"release:version": "pnpm changeset version"
+	},
+	"devDependencies": {
+		"@changesets/changelog-github": "^0.6.0",
+		"@changesets/cli": "^2.31.0",
+		"turbo": "^2.9.3"
+	},
+	"homepage": "https://shilpcss.com/",
+	"bugs": "https://github.com/JadejaHQ/shilpcss/issues",
+	"license": "MIT",
+	"author": {
+		"name": "Pradipsinh Jadeja",
+		"email": "224366804+jadeja97@users.noreply.github.com",
+		"url": "https://x.com/jadeja97_"
+	},
+	"contributors": [
+		{
+			"name": "Pradipsinh Jadeja",
+			"email": "224366804+jadeja97@users.noreply.github.com",
+			"url": "https://x.com/jadeja97_"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/JadejaHQ/shilpcss.git"
+	},
+	"engines": {
+		"node": ">=24",
+		"pnpm": ">=10",
+		"turbo": ">=2",
+		"npm": "please-use-pnpm",
+		"yarn": "please-use-pnpm",
+		"bun": "please-use-pnpm"
+	},
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": ">=24",
+			"onFail": "error"
+		},
+		"packageManager": {
+			"name": "pnpm",
+			"version": ">=10",
+			"onFail": "error"
+		}
+	}
+}

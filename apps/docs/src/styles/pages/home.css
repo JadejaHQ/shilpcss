@@ -1,0 +1,38 @@
+#home {
+	/* override `.typography` */
+	.hero {
+		@space mt-0;
+	}
+
+	h1 {
+		@text h-sm gap-md thick-500 gap-word-xl case-capitalize;
+		@space mt-2 mb-3;
+	}
+
+	.hero__pre {
+		@text color-muted-fg size-sm gap-xl;
+	}
+
+	.hero__post {
+		@text gap-lg color-muted-fg;
+	}
+
+	.hero__cta,
+	.bottom__cta {
+		@space mt-7;
+
+		.btn {
+			@text size-md family-display gap-md gap-word-xl;
+
+			@state hover {
+				@motion safe {
+					@animate exit zoom-out-105 mode-forward;
+				}
+			}
+		}
+	}
+
+	.bottom__cta {
+		@space mb-10;
+	}
+}

@@ -1,0 +1,47 @@
+---
+title: "clip"
+---
+
+# clip
+
+area the mask affects on the element
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		mask: {
+			clip: {
+				property: "mask-clip: <v><i>;",
+				values: {
+					border: "border-box",
+					content: "content-box",
+					padding: "padding-box",
+					fill: "fill-box",
+					stroke: "stroke-box",
+					view: "view-box",
+					none: "no-clip",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,160 @@
+---
+title: "Browser Compatibility"
+---
+
+# Browser Compatibility
+
+Shilp CSS has a **clear and intentional compatibility baseline**.
+
+It is designed for **modern browsers only**, with no legacy fallbacks, no hidden
+polyfills, and **no bleeding-edge features, while respecting the baseline**.
+
+---
+
+<section>
+
+## Browser Support
+
+Shilp CSS supports **All major browsers available since January 31, 2023**.
+
+This includes:
+
+- **Chrome _109_**
+- **Safari _16.3_**
+- **Edge _109_**
+- **Firefox _109_**
+
+<Alert variant="info">
+
+**Internet Explorer (IE) and other browser's are not in scope**.
+
+</Alert>
+
+This baseline is enforced using **Lightning CSS** and by carefully choosing
+which selectors (mixins), properties, and values.
+
+</section>
+
+<section>
+
+## Why This Baseline?
+
+Shilp CSS is built for clarity and predictability.
+
+Supporting older browsers would require:
+
+- Conditional behavior
+- Fallback utilities
+- Silent polyfills
+- Diverging output
+
+All of these make systems harder to reason about.
+
+So, Shilp CSS chooses a clear baseline:
+
+1. Modern features are included
+2. Unsupported features are excluded
+3. Nothing fails silently
+
+</section>
+
+<section>
+
+## What This Means in Practice
+
+With the default configuration:
+
+- Modern CSS features, work by default
+- Output is consistent across supported browsers
+- There is no runtime detection or branching
+- There are no automatic polyfills
+
+If something is unsupported, it is not included, not partially shimmed.
+
+</section>
+
+<section>
+
+## Deliberate Limitations
+
+Some features are intentionally restricted, even if they are partially supported
+across browsers.
+
+Examples:
+
+- `:has()` is not enabled by default
+  - Support stabilized after the baseline cutoff
+- `::selection` has known limitations
+  - Not supported in iOS Safari
+- `::marker` supports only widely-safe properties
+  - Color and size only
+- Line clamping uses vendor-prefixed approaches
+  - Based on what is widely supported today
+
+These are not oversights. They are conscious choices to avoid undefined
+behavior.
+
+</section>
+
+<section>
+
+## Opting Into Newer Features
+
+You are not locked into the defaults.
+
+If you want to Target newer browser versions, Enable additional CSS features or
+Experiment beyond the baseline, You can do so explicitly via `shilp.config.js`
+file.
+
+The defaults are conservative by design, not by limitation.
+
+</section>
+
+<section>
+
+## Purging & Compatibility
+
+During builds, Shilp CSS removes unused styles before final CSS processing.
+
+The order is:
+
+- Utilities are expanded into real CSS
+- The bundler produces final CSS output
+- Unused styles are purged
+- **Lightning CSS** then applies Minification, Vendor prefixes and Safe
+  fallbacks
+
+Because **Lightning CSS** may add small fallback rules, the final output can
+include CSS that did not exist before purging.
+
+As with any purge system, 100% unused CSS removal is not guaranteed. This is a
+known and accepted tradeoff.
+
+</section>
+
+<section>
+
+## Legacy Browser Support
+
+If you project requires Legacy browser support, Automatic polyfills or Backward
+compatibility guarantees, Shilp CSS's default config may not be the right fit.
+
+In this case, You have to modify `shilp.config.js` file as per your
+requirements.
+
+**Know More**: [Config](/docs/config)
+
+</section>
+
+<section>
+
+## One Thing to Keep in Mind
+
+Shilp CSS optimizes for:
+
+> Predictable behavior over pre-defined coverage
+
+If you are building for modern browsers and you value clarity over speed, this
+baseline will feel natural.
+
+</section>

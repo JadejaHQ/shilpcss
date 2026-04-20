@@ -1,0 +1,158 @@
+/* ================================================================================================
+	GLOBAL CSS VARIABLES - HEADER
+================================================================================================ */
+
+html {
+	--header: theme(spacing|spacing-14);
+}
+
+/* ================================================================================================
+	HEADER
+================================================================================================ */
+
+.header__wrapper {
+	@layout layer-4;
+	@filter backdrop-blur;
+	@bg color-bg/80;
+	@flex shrink-0;
+	@position is-sticky;
+	@border thick-bottom;
+
+	height: var(--header);
+	top: var(--banner, 0px);
+
+	/* keep this here to increase specificity over `.container` styles */
+	header {
+		@size h-full;
+		@space py-2;
+		@layout is-flex;
+		@flex items-center justify-between;
+	}
+}
+
+/* ================================================================================================
+	HEADER - LOGO
+================================================================================================ */
+
+.header__logo {
+	@layout is-flex;
+	@flex items-center;
+	@space gap-2;
+
+	span {
+		@text size-h3 family-display thick-600 gap-lg;
+	}
+
+	@state hover {
+		@text line-is-under line-offset-4 line-color-primary line-thick-4;
+	}
+}
+
+/* ================================================================================================
+	HEADER - MOBILE
+================================================================================================ */
+
+.header--mobile {
+	@layout is-flex;
+	@flex items-center;
+	@space gap-2;
+
+	@screen lg {
+		@layout is-hidden;
+	}
+}
+
+/* ============================================================================================= */
+
+/* sheet component */
+.header--mobile-content {
+	.sheet__title {
+		@layout is-flex;
+		@flex items-center;
+		@space gap-2;
+	}
+
+	.sheet__close {
+		@match not(".wrapper") {
+			@position top-3.5;
+		}
+	}
+
+	ul {
+		@match not(".sheet__footer ul") {
+			@space -mt-2 px-2;
+
+			a {
+				@layout is-block;
+				@space p-2;
+				@text size-md h-base break-word;
+			}
+		}
+	}
+
+	.sheet__footer {
+		@space py-2 gap-4;
+		@flex flow-row items-center;
+
+		.theme-toggle__trigger {
+			@space ml-auto;
+		}
+	}
+}
+
+/* ================================================================================================
+	HEADER - DESKTOP
+================================================================================================ */
+
+.header--desktop {
+	@layout is-hidden;
+
+	@screen lg {
+		@layout is-flex;
+	}
+
+	@flex items-center;
+	@space gap-6;
+	@text size-md;
+
+	nav a {
+		@space p-2;
+
+		@state hover {
+			@text line-color-primary line-is-under line-thick-4 line-offset-4;
+		}
+	}
+}
+
+/* ================================================================================================
+	HEADER - SOCIAL ICONS
+================================================================================================ */
+
+.social-icons {
+	@layout is-flex;
+	@flex items-center;
+	@space gap-2;
+
+	a {
+		@layout is-block;
+		@space p-2;
+
+		@state hover {
+			@text color-accent;
+			@phase for-colors flow-ease duration-250;
+		}
+	}
+}
+
+/* ================================================================================================
+	HEADER - THEME TOGGLE
+================================================================================================ */
+
+.theme-toggle__content {
+	.theme__label {
+		@text case-capitalize;
+	}
+	.theme__active-icon {
+		@space ml-auto;
+	}
+}

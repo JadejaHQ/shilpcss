@@ -1,0 +1,41 @@
+---
+title: "hide"
+---
+
+# hide
+
+hides an element without affecting layout
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			hide: {
+				property: "visibility: <v><i>;",
+				values: {
+					DEFAULT: "hidden",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

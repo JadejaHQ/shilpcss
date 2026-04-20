@@ -1,0 +1,180 @@
+---
+title: "Quick Overview"
+---
+
+# Quick Overview
+
+_Shilp CSS is an **Intent-first, CSS-centric** styling engine and framework._
+
+You compose intent-based styles in CSS, and generate plain, static and purgable
+CSS at build time, without runtime logic or framework lock-in.
+
+<Alert>
+
+_If any concept or syntax here feels unfamiliar, don’t worry. You can safely
+skip it for now. Everything is explained gradually in later chapters._
+
+</Alert>
+
+---
+
+<section>
+
+## What is Shilp CSS?
+
+Shilp CSS is a **logic-driven wrapper** built on top of
+[SCSS](https://sass-lang.com/), [Purge CSS](https://purgecss.com/) and
+[Lightning CSS](https://lightningcss.dev/), designed to integrate seamlessly as
+a **bundler plugin**.
+
+It works by transforming your styles through multiple explicit stages, and what
+the browser receives is **just plain CSS**.
+
+At a high level:
+
+1. Shilp CSS reads your `.css` files
+2. Parses them using SCSS
+3. Identifies _intents_ using Regular Expression
+4. Replaces those _intents_ with real CSS
+5. Outputs **plain, static CSS**
+
+At build time, it additionally:
+
+1. Removes unused CSS using **Purge CSS**
+2. Applies CSS transforms using **Lightning CSS**
+   - Transform modern css features
+   - Adds vendor prefixes
+   - Minifies output
+   - Browser compatibility enforcement
+
+<Alert variant="warning">
+
+_You must read [Browser Compatibility](/docs/browser-compatibility) once._
+
+</Alert>
+
+</section>
+
+<section>
+
+## What Shilp CSS Is Not
+
+Shilp CSS is not:
+
+- ~A runtime library~
+- ~A CSS-in-JS solution~
+- ~A framework-specific styling system~
+- ~A class generator you use in HTML~
+
+There is no runtime binding. <br /> There is no magic in templates.
+
+</section>
+
+<section>
+
+## Working With Shilp CSS
+
+You write styles the traditional way.
+
+The stpes are:
+
+1. Define styles in `.css` files
+   - Use _intents_ inside CSS to compose behavior
+   - ```css
+     .custom-btn {
+     	@layout shadow-sm;
+     	@text size-md;
+     	@bg color-primary/90;
+     }
+     ```
+2. Bind them using class names, IDs, or attributes
+   - HTML stays simple: `<button class="custom-btn"> Save </button>`
+
+<Alert variant="warning">
+
+Class names must be static strings. **No string concatenation**. So, purging can
+work reliably.
+
+</Alert>
+
+</section>
+
+<section>
+
+## SCSS Support
+
+Shilp CSS uses the SCSS parser internally. _an important part among many in the
+system_.
+
+This means:
+
+- Nesting works
+- Mixins work
+- Variables work
+- Any valid SCSS syntax inside `.css` works
+
+However:
+
+- Files must use the `.css` extension
+- You do not write `.scss` or `.sass` files
+- Don't forget to import the module
+  - for example, when using list `@use "sass:list";`
+- Don't use reserved keywords for intent names
+  - See, [Reserved Names](/docs/styling-with-intent#reserved-names)
+
+</section>
+
+<section>
+
+## Output
+
+Shilp CSS always outputs Plain CSS, No runtime dependencies and No framework
+assumptions.
+
+This makes it:
+
+- Cacheable
+- Inspectable
+- Debuggable
+- Easy to exit if you ever choose to
+  - though you likely won’t need to :)
+
+</section>
+
+<section>
+
+## Framework & Bundler Support
+
+Shilp CSS is **framework-agnostic by design**. It integrates at the **bundler
+level**, not the framework level.
+
+Frameworks only matter during purging, where Shilp CSS needs access to the final
+build source: `HTML`, `CSS` and `JS`.
+
+Defaults sources are provided for:
+
+- ReactJS
+- VueJS
+- NextJS
+
+All source paths are configurable though.
+
+<Alert variant="info">
+
+Currently it has plugins for **Vite** and **Webpack** bundlers.
+
+</Alert>
+
+</section>
+
+<section>
+
+## The Core Promise
+
+Shilp CSS makes one promise:
+
+> Styling decisions live in CSS, remain explicit, and age predictably.
+
+Everything else is to protect that promise.
+
+</section>

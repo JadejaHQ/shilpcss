@@ -1,0 +1,27 @@
+/* ================================================================================================
+	SHILP CSS & EXTENTIONS
+================================================================================================ */
+
+/* reset.css */
+@import "shilpcss/styles/reset";
+
+/* colors.css */
+@import "shilpcss/styles/colors";
+@import "./extend/colors.css";
+
+/* colors-dark-flip-base.css */
+@import "shilpcss/styles/colors-dark-flip-base";
+@import "./extend/colors-dark-flip-base.css";
+
+/* variables.css */
+@import "shilpcss/styles/variables";
+
+/* base.css */
+@import "shilpcss/styles/base";
+@import "./extend/base.css";
+
+/* animate.css */
+@import "shilpcss/styles/animate";
+
+/* components.css */
+@import "shilpcss/styles/components";

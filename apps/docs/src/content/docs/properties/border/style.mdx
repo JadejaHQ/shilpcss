@@ -1,0 +1,98 @@
+---
+title: "style"
+---
+
+# style
+
+border style like solid, dashed
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		border: {
+			style: {
+				DEFAULT: {
+					property: "border-style: <v><i>;",
+					themeKey: "style",
+					values: {},
+				},
+				top: {
+					property: "border-top-style: <v><i>;",
+					themeKey: "style",
+					values: {},
+				},
+				right: {
+					property: "border-right-style: <v><i>;",
+					themeKey: "style",
+					values: {},
+				},
+				bottom: {
+					property: "border-bottom-style: <v><i>;",
+					themeKey: "style",
+					values: {},
+				},
+				left: {
+					property: "border-left-style: <v><i>;",
+					themeKey: "style",
+					values: {},
+				},
+				x: {
+					property: `
+						border-left-style: <v><i>;
+						border-right-style: <v><i>;
+					`,
+					themeKey: "style",
+					values: {},
+				},
+				y: {
+					property: `
+						border-top-style: <v><i>;
+						border-bottom-style: <v><i>;
+					`,
+					themeKey: "style",
+					values: {},
+				},
+				bl: {
+					property: "border-block-style: <v><i>;",
+					themeKey: "style",
+					values: {},
+				},
+				bls: {
+					property: "border-block-start-style: <v><i>;",
+					themeKey: "style",
+					values: {},
+				},
+				bi: {
+					property: "border-inline-style: <v><i>;",
+					themeKey: "style",
+					values: {},
+				},
+				bis: {
+					property: "border-inline-start-style: <v><i>;",
+					themeKey: "style",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,70 @@
+---
+title: "distance"
+---
+
+# distance
+
+perspective and it's origin
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		adjust: {
+			distance: {
+				DEFAULT: {
+					property: "--dst: perspective(<v>)<i>;",
+					values: {
+						none: "none",
+						dramatic: "100px",
+						near: "300px",
+						normal: "500px",
+						midrange: "800px",
+						distant: "1200px",
+					},
+				},
+
+				origin: {
+					property: "perspective-origin: <n><v><i>;",
+					resolve: "rawSpacing",
+					themeKey: "spacingPixels",
+					values: {
+						// perspective-origin: x y;
+						center: "center",
+						right: "right",
+						left: "left",
+						top: {
+							DEFAULT: "top",
+							left: "left top",
+							right: "right top",
+						},
+						bottom: {
+							DEFAULT: "bottom",
+							left: "left bottom",
+							right: "right bottom",
+						},
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

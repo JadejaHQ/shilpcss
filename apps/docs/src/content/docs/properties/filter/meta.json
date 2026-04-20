@@ -1,0 +1,66 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@filter",
+	"title": "filter intent",
+	"items": [
+		"blur",
+
+		{
+			"name": "bright",
+			"label": "brightness"
+		},
+
+		"contrast",
+
+		{
+			"name": "gray",
+			"label": "grayscale"
+		},
+		{
+			"name": "hue",
+			"label": "hue rotate"
+		},
+
+		"invert",
+		"opacity",
+
+		{
+			"name": "saturate",
+			"label": "saturation"
+		},
+
+		"sepia",
+		"shadow",
+		"preset",
+		"backdrop",
+		"backdrop-blur",
+
+		{
+			"name": "backdrop-bright",
+			"label": "backdrop brightness"
+		},
+
+		"backdrop-contrast",
+
+		{
+			"name": "backdrop-gray",
+			"label": "backdrop grayscale"
+		},
+		{
+			"name": "backdrop-hue",
+			"label": "backdrop hue rotate"
+		},
+
+		"backdrop-invert",
+		"backdrop-opacity",
+
+		{
+			"name": "backdrop-saturate",
+			"label": "backdrop saturation"
+		},
+
+		"backdrop-sepia",
+		"backdrop-shadow"
+	]
+}

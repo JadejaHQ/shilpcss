@@ -1,0 +1,58 @@
+---
+title: "shadow"
+---
+
+# shadow
+
+`filter` property
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		filter: {
+			shadow: {
+				DEFAULT: {
+					property: "filter: drop-shadow(<v>)<i>;",
+					values: {
+						none: "0 0 #0000",
+						xs: "var(--d-sdw-xs)",
+						sm: "var(--d-sdw-sm)",
+						DEFAULT: "var(--d-sdw-sm)",
+						md: "var(--d-sdw-md)",
+						lg: "var(--d-sdw-lg)",
+						xl: "var(--d-sdw-xl)",
+						"2xl": "var(--d-sdw-2xl)",
+					},
+				},
+
+				color: {
+					property: "--d-sdw-clr: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

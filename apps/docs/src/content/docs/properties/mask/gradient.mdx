@@ -1,0 +1,56 @@
+---
+title: "gradient"
+---
+
+# gradient
+
+applies a gradient as a mask to an element
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		mask: {
+			gradient: {
+				DEFAULT: {
+					property: "mask-image: <v><i>;",
+					values: {},
+				},
+
+				linear: {
+					property: "mask-image: linear-gradient(<v>)<i>;",
+					values: {},
+				},
+
+				radial: {
+					property: "mask-image: radial-gradient(<v>)<i>;",
+					values: {},
+				},
+
+				conic: {
+					property: "mask-image: conic-gradient(<v>)<i>;",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

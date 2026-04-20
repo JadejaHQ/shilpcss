@@ -1,0 +1,73 @@
+---
+title: "is"
+---
+
+# is
+
+specifies how an element is rendered in layout
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			is: {
+				property: "display: <v><i>;",
+				values: {
+					hidden: "none",
+					block: "block",
+					flex: "flex",
+					grid: "grid",
+
+					// inline
+					inline: {
+						DEFAULT: "inline",
+						block: "inline-block",
+						flex: "inline-flex",
+						grid: "inline-grid",
+						table: "inline-table",
+					},
+
+					// table
+					table: {
+						DEFAULT: "table",
+						head: "table-header-group",
+						body: "table-row-group",
+						footer: "table-footer-group",
+						row: "table-row",
+						column: {
+							DEFAULT: "table-column",
+							group: "table-column-group",
+						},
+						cell: "table-cell",
+						caption: "table-caption",
+					},
+
+					// list
+					list: {
+						item: "list-item",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

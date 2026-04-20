@@ -1,0 +1,93 @@
+---
+title: "Global Values Dataset"
+---
+
+# Global Values Dataset
+
+The **Global Values dataset** defines tokens for CSS global keywords that can
+apply to **any CSS property**.
+
+---
+
+<section>
+
+## Location
+
+Resolved location: `shilpConfig.values.globalValues` <br /> Theme location:
+`shilpConfig.theme.globalValues`
+
+</section>
+
+<section>
+
+## Usage
+
+**ALL UTILITIES** (_except those with `propertyConfig.special: true`_) read
+values from the theme, which is built from this dataset.
+
+</section>
+
+<section>
+
+## Dataset Structure
+
+The dataset is a **simple key–value map** of css global keywords tokens to CSS
+values.
+
+See:
+
+- [Global Values Dataset Reference](#global-values-dataset-reference)
+- [CSS Global Keywords](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade#keywords)
+
+</section>
+
+<section>
+
+## Customizing the Dataset
+
+You can override or modify the dataset structure in your config.
+
+However, **new global values cannot be added** because the dataset already
+covers all supported css global values.
+
+```js title="Customize global values"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		values: {
+			globalValues: {
+				// modify structure if needed
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This will update global values tokens available through the theme system.
+
+</section>
+
+<section>
+
+## Global Values Dataset Reference
+
+```js title="Global Values Dataset"
+// https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade#keywords
+
+const globalValues = {
+	inherit: "inherit",
+	initial: "initial",
+	revert: {
+		DEFAULT: "revert",
+		layer: "revert-layer",
+	},
+	unset: "unset",
+};
+
+export default globalValues;
+```
+
+</section>

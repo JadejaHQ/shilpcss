@@ -1,0 +1,23 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@animate",
+	"title": "animate intent",
+	"items": [
+		"delay",
+		"direction",
+		"duration",
+		"enter",
+		"exit",
+		"fade",
+		"flow",
+		"loop",
+		"mode",
+		"name",
+		"preset",
+		"slide",
+		"spin",
+		"state",
+		"zoom"
+	]
+}

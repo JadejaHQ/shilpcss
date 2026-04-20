@@ -1,0 +1,222 @@
+---
+title: "Flex & Grid Dataset"
+---
+
+# Flex & Grid Dataset
+
+The **Flex & grid dataset** defines values used for **grid layout structure**
+and **item placement**.
+
+---
+
+<section>
+
+## Location
+
+Resolved locations:
+
+- `shilpConfig.values.flexGrid.gridAmount`
+- `shilpConfig.values.flexGrid.gridRange`
+- `shilpConfig.values.flexGrid.gridSpan`
+- `shilpConfig.values.flexGrid.order`
+
+Theme locations:
+
+- `shilpConfig.theme.amount`
+- `shilpConfig.theme.order`
+- `shilpConfig.theme.range`
+- `shilpConfig.theme.span`
+
+</section>
+
+<section>
+
+## Usage
+
+| Intent               | Theme Key  | Description                                   |
+| -------------------- | ---------- | --------------------------------------------- |
+| `@grid cols-*;`      | `"amount"` | Number of grid columns                        |
+| `@grid rows-*;`      | `"amount"` | Number of grid rows                           |
+| `@flex order-*;`     | `"order"`  | Flex items order                              |
+| `@grid order-*;`     | `"order"`  | Grid items order                              |
+| `@grid col-start-*;` | `"range"`  | Grid item's start position on column lines    |
+| `@grid col-end-*;`   | `"range"`  | Grid item's end position on column lines      |
+| `@grid row-start-*;` | `"range"`  | Grid item's start position on row lines       |
+| `@grid row-end-*;`   | `"range"`  | Grid item's end position on column lines      |
+| `@grid col-span-*;`  | `"span"`   | Grid item's position and size on column lines |
+| `@grid row-span-*;`  | `"span"`   | Grid item's position and size on row lines    |
+
+These utilities read values from the theme, which is built from this dataset.
+
+</section>
+
+<section>
+
+## Dataset Structure
+
+The dataset is a **nested key–value map** of flex & grid related tokens to CSS
+values.
+
+Dataset is **based on a 12-column grid system**.
+
+It includes:
+
+- `order` → order of flex & grid items
+- `amount` → number of grid columns & rows
+- `range` → grid items start & end position
+- `span` → grid items position and size
+
+See: [Flex & Grid Dataset Reference](#flex--grid-dataset-reference)
+
+</section>
+
+<section>
+
+## Customizing the Dataset
+
+You can extend or override this dataset in your config.
+
+```js title="Customize flex & grid dataset"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		values: {
+			flexGrid: {
+				//
+				gridAmount: {
+					13: "repeat(13, minmax(0, 1fr))",
+					14: "repeat(14, minmax(0, 1fr))",
+					15: "repeat(15, minmax(0, 1fr))",
+					16: "repeat(16, minmax(0, 1fr))",
+				},
+				//
+				gridRange: {
+					13: 13,
+					14: 14,
+					15: 15,
+					16: 16,
+				},
+				//
+				gridSpan: {
+					13: "span 13 / span 13",
+					14: "span 14 / span 14",
+					15: "span 15 / span 15",
+					16: "span 16 / span 16",
+				},
+				//
+				order: {
+					13: 13,
+					14: 14,
+					15: 15,
+					16: 16,
+				},
+			},
+		},
+		//
+		//
+		properties: {
+			grid: {
+				//
+				col: {
+					end: {
+						17: 17,
+					},
+				},
+				//
+				row: {
+					end: {
+						17: 17,
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This will make additional flex & grid related tokens available through the theme
+system.
+
+</section>
+
+<section>
+
+## Flex & Grid Dataset Reference
+
+```js title="Flex & Grid Dataset"
+const flexGrid = {
+	gridAmount: {
+		none: "none",
+		1: "repeat(1, minmax(0, 1fr))",
+		2: "repeat(2, minmax(0, 1fr))",
+		3: "repeat(3, minmax(0, 1fr))",
+		4: "repeat(4, minmax(0, 1fr))",
+		5: "repeat(5, minmax(0, 1fr))",
+		6: "repeat(6, minmax(0, 1fr))",
+		7: "repeat(7, minmax(0, 1fr))",
+		8: "repeat(8, minmax(0, 1fr))",
+		9: "repeat(9, minmax(0, 1fr))",
+		10: "repeat(10, minmax(0, 1fr))",
+		11: "repeat(11, minmax(0, 1fr))",
+		12: "repeat(12, minmax(0, 1fr))",
+	},
+
+	gridRange: {
+		auto: "auto",
+		1: 1,
+		2: 2,
+		3: 3,
+		4: 4,
+		5: 5,
+		6: 6,
+		7: 7,
+		8: 8,
+		9: 9,
+		10: 10,
+		11: 11,
+		12: 12,
+	},
+
+	gridSpan: {
+		auto: "auto",
+		full: "1 / -1",
+		1: "span 1 / span 1",
+		2: "span 2 / span 2",
+		3: "span 3 / span 3",
+		4: "span 4 / span 4",
+		5: "span 5 / span 5",
+		6: "span 6 / span 6",
+		7: "span 7 / span 7",
+		8: "span 8 / span 8",
+		9: "span 9 / span 9",
+		10: "span 10 / span 10",
+		11: "span 11 / span 11",
+		12: "span 12 / span 12",
+	},
+
+	order: {
+		first: "calc(-infinity * 1px)",
+		last: "calc(infinity * 1px)",
+		0: 0,
+		1: 1,
+		2: 2,
+		3: 3,
+		4: 4,
+		5: 5,
+		6: 6,
+		7: 7,
+		8: 8,
+		9: 9,
+		10: 10,
+		11: 11,
+		12: 12,
+	},
+};
+
+export default flexGrid;
+```
+
+</section>

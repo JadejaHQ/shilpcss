@@ -1,0 +1,271 @@
+---
+title: "Setup Shilp CSS"
+---
+
+# Setup Shilp CSS
+
+This page will guide you through setting up and running Shilp CSS.
+
+<Alert variant="warning">
+
+By any chance if you have missed the introductory pages, please go through
+[How To Read These Docs](/docs#how-to-read-these-docs).
+
+</Alert>
+
+<Alert variant="info">
+
+Content will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Addressing The Known Issues
+
+As per development and primary testing, the current setup works reliably for
+**SPA frameworks** like React and Vue.
+
+At this point in time, Shilp CSS has a known limitation related to **Purge CSS
+integration** when used with **MPA frameworks** or frameworks that perform
+additional processing after the bundler stage (for example Next and Nuxt).
+
+The issues and solutions are on paper, implementation is in progress. 😅
+
+This will be addressed in future releases (before the **v1.0.0 stable
+release**).
+
+<Alert variant="warning">
+
+If styles are not updating during development, restart the development server.
+
+</Alert>
+
+<Alert>
+
+Currently Shilp CSS is in **alpha** version and the focus is on React, Vue and
+Next. <br /> Future considerations are Nuxt, Tanstack Start, and Svelte.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Vite
+
+This is intended for vite based frameworks and / or ideal for **SPA** frameworks
+like React and Vue.
+
+### Installation
+
+Run following command at your project's root path.
+
+```sh title="Install Shilp CSS and its dependencies"
+pnpm add -D shilpcss@alpha browserslist@latest lightningcss@latest purgecss@latest sass@latest
+```
+
+### Setup
+
+Add or update following files located at your project's root.
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react", // or "vue"
+
+	extend: {},
+};
+
+export default shilpConfig;
+```
+
+Register the Shilp CSS plugin in your bundler configuration.
+
+```js title="vite.config.js"
+import { defineConfig } from "vite";
+
+import ShilpCSS from "shilpcss/bundlers/vite";
+import shilpConfig from "./shilp.config";
+
+// https://vite.dev/config/
+export default defineConfig({
+	plugins: [
+		// your other plugins
+		ShilpCSS(shilpConfig),
+	],
+
+	// other configs...
+});
+```
+
+### Integrate
+
+Add following files to your main style file which is being imported in your
+frameworks entry point.
+
+```css title="main.css"
+/* Shilp CSS Styles - Maintain the order of these imports */
+@import "shilpcss/styles/reset";
+@import "shilpcss/styles/colors";
+@import "shilpcss/styles/colors-dark";
+@import "shilpcss/styles/variables";
+@import "shilpcss/styles/base";
+@import "shilpcss/styles/animate";
+@import "shilpcss/styles/components";
+
+/* Add Your App Styles Here */
+```
+
+<Alert variant="info">
+
+Shilp CSS styles are optional. Add what you need.
+
+**Must Read**:
+
+- [Default Styles](/docs/default-styles)
+- [Importing Individual Components](/docs/default-styles/components#importing-individual-components)
+
+</Alert>
+
+### What's Next
+
+Congratulations 🥳🎉🎊. You have successfully setup the Shilp CSS.
+
+Now you can officially [Begin You Journey](/docs#begin-your-journey) with Shilp
+CSS.
+
+Explore. Learn. Play. Enjoy. Just Be Happy. 😇
+
+</section>
+
+---
+
+<section>
+
+## Webpack
+
+This is intended for webpack based frameworks specifically NextJS.
+
+### Installation
+
+Run following command at your project's root path.
+
+```sh title="Install Shilp CSS and its dependencies"
+pnpm add -D shilpcss@alpha browserslist@latest lightningcss@latest purgecss@latest sass@latest webpack-sources@latest
+```
+
+### Setup
+
+Add or update following files located at your project's root.
+
+```json title="package.json"
+{
+	// other things...
+
+	"scripts": {
+		"dev": "next dev --webpack",
+		"build": "next build --webpack"
+
+		// other scripts...
+	}
+
+	// other things...
+}
+```
+
+<Alert variant="danger">
+
+Next.js must run using the Webpack runtime for the plugin to work correctly.
+
+Make sure the `--webpack` flag is present in both `dev` and `build` scripts.
+
+</Alert>
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: null,
+
+	extend: {},
+};
+
+export default shilpConfig;
+```
+
+<Alert variant="warning">
+
+`source: null` will disable the CSS purging. This is recommended option for
+current release.
+
+This will be addressed in future releases.
+
+See:
+
+- [Addressing The Known Issues](#addressing-the-known-issues)
+- [Source Option](/docs/config/shilp-config-file#source)
+
+</Alert>
+
+Register the Shilp CSS plugin in your bundler configuration.
+
+```js title="next.config.js"
+import ShilpCSS from "shilpcss/bundlers/webpack";
+import shilpConfig from "./shilp.config.js";
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+	//
+
+	// your next config...
+
+	webpack: (config) => {
+		//
+		config.plugins.push(new ShilpCSS(shilpConfig));
+
+		return config;
+	},
+};
+
+export default nextConfig;
+```
+
+### Integrate
+
+Add following files to your main style file which is being imported in your
+frameworks entry point.
+
+```css title="main.css"
+/* Shilp CSS Styles - Maintain the order of these imports */
+@import "shilpcss/styles/reset";
+@import "shilpcss/styles/colors";
+@import "shilpcss/styles/colors-dark";
+@import "shilpcss/styles/variables";
+@import "shilpcss/styles/base";
+@import "shilpcss/styles/animate";
+@import "shilpcss/styles/components";
+
+/* Add Your App Styles Here */
+```
+
+<Alert variant="info">
+
+Shilp CSS styles are optional. Add what you need.
+
+**Must Read**:
+
+- [Default Styles](/docs/default-styles)
+- [Importing Individual Components](/docs/default-styles/components#importing-individual-components)
+
+</Alert>
+
+### What's Next
+
+Congratulations 🥳🎉🎊. You have successfully setup the Shilp CSS.
+
+Now you can officially [Begin You Journey](/docs#begin-your-journey) with Shilp
+CSS.
+
+Explore. Learn. Play. Enjoy. Just Be Happy. 😇
+
+</section>

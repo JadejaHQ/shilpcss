@@ -1,0 +1,22 @@
+{
+	"label": "getting started",
+	"items": [
+		{
+			"name": "index",
+			"label": "introduction"
+		},
+		{
+			"name": "why-shilp-css",
+			"label": "why shilp CSS"
+		},
+		"mental-model",
+		"quick-overview",
+		"benchmarks",
+		"credits",
+		"status",
+		{
+			"name": "setup",
+			"label": "setup shilp CSS"
+		}
+	]
+}

@@ -1,0 +1,908 @@
+---
+title: "Best Practices for Writing Shilp CSS"
+---
+
+# Best Practices For Writing Shilp CSS
+
+_Naming things is hard, Fear is real for broken styles by changing just one line
+and avoiding it entirely is one reason utility-first (atomic classes) approaches
+feel appealing._
+
+This page guides you how to write, name, and organize Shilp CSS.
+
+Not theory. <br /> Not trends. <br /> Just how to work with Shilp CSS in a way
+that stays clean over time.
+
+If you have ever:
+
+- Felt confused naming a class
+- Been scared to rename something
+- Been sacered of broken styles by changing one line
+- Avoided touching old CSS
+
+This page is for you.
+
+---
+
+<section>
+
+## First, Accept This
+
+If you use Shilp CSS, you must name things.
+
+There is no escaping it.
+
+Utility-first systems reduce naming. But, long-lived systems always bring naming
+back.
+
+Shilp CSS does not try to avoid naming. It helps you do it safely.
+
+</section>
+
+<section>
+
+## What Are You Naming?
+
+You are not naming colors. You are not naming sizes.
+
+**You are naming roles.**
+
+Ask this: <br /> _What is this thing in the interface?_
+
+Examples:
+
+- Button
+- Card
+- Navbar
+- Sidebar
+- Form field
+- Alert
+- Modal
+- Container
+
+Those are good names.
+
+Avoid names like:
+
+```css
+.blue-box { ... }
+
+.big-text { ... }
+
+.left-section { ... }
+
+.rounded-thing { ... }
+```
+
+Why? Because design changes. But, Roles changes slowly.
+
+</section>
+
+<section>
+
+## A Simple Structure That Always Works
+
+You do not need strict [BEM Naming](https://getbem.com/naming).
+
+But, use this loose structure:
+
+```css title="style.css"
+.block { ... }
+
+.block__element { ... }
+
+.block--modifier { ... }
+
+.block__element--modifier { ... }
+```
+
+That’s it. No complexity.
+
+### Block
+
+A block is a standalone component.
+
+```css title="style.css"
+.card { ... }
+
+.button { ... }
+
+.navbar { ... }
+
+.modal { ... }
+```
+
+A block should make sense alone.
+
+### Element
+
+An element is a part of a block.
+
+```css title="style.css"
+.card__header { ... }
+
+.card__body { ... }
+
+.card__footer { ... }
+```
+
+If it only makes sense inside `.card`, It should be an element of `.card`.
+
+### Modifier
+
+A modifier changes a block slightly.
+
+```css title="style.css"
+.button--primary { ... }
+
+.button--danger { ... }
+
+.card--elevated { ... }
+
+.navbar--sticky { ... }
+```
+
+A modifier is not a new component, It is a variation.
+
+</section>
+
+<section>
+
+## How This Works With Shilp CSS Intents
+
+Let’s build a card and understand.
+
+### Step 1 – Create the block
+
+```css title="card.css"
+.card {
+	@layout is-flex;
+	@flex flow-col;
+	@space p-6 gap-4;
+	@border rounded-lg;
+	@bg color-surface;
+	@text color-surface-fg;
+}
+```
+
+This describes the card’s responsibility.
+
+### Step 2 – Add elements
+
+```css title="card.css"
+.card__header {
+	@text size-lg thick-600;
+}
+
+.card__body {
+	@text size-sm;
+}
+
+.card__footer {
+	@layout is-flex;
+	@flex justify-between;
+}
+```
+
+Everything is grouped.
+
+### Step 3 – Add a modifier
+
+```css title="card.css"
+.card--elevated {
+	@layout shadow-lg;
+}
+```
+
+You did not rewrite the card. You extended it.
+
+That is safe CSS.
+
+</section>
+
+<section>
+
+## Separate Layout from Components
+
+Do not mix page layout with component identity.
+
+```css title="sidebar.css"
+/* Bad */
+.sidebar-card { ... }
+
+/* Better */
+.sidebar {
+  ...
+
+  .card {
+    ...
+  }
+}
+```
+
+Let layout classes define structure. Let component classes define behavior.
+
+When layout changes, you do not touch the component. This is how refactors stay
+calm.
+
+</section>
+
+<section>
+
+## One Class, One Clear Purpose
+
+Avoid writing huge classes that do too much.
+
+```css title="layout.css"
+/* Bad */
+.homepage-featured-large-primary-card { ... }
+
+/* Better */
+.homepage-layout {
+  ...
+
+  .card {
+    ...
+  }
+
+  .card--featured {
+    ...
+  }
+}
+```
+
+Small pieces are easier to change.
+
+</section>
+
+<section>
+
+## File Organization That Does Not Collapse
+
+Use simple folders.
+
+| File                        | Purpose                                 |
+| --------------------------- | --------------------------------------- |
+| `reset.css`                 | make browsers consistent in style       |
+| `colors.css`                | brand and semantic colors, color roles  |
+| `colors-dark.css`           | dark theme colors for `colors.css`      |
+| `colors-dark-flip-base.css` | invert base color scale                 |
+| `variables.css`             | define single and composed variables    |
+| `base.css`                  | base / global styles                    |
+| `animate.css`               | animations (keyframes)                  |
+| `components.css`            | card, button, modal                     |
+| `layout.css`                | grid, container, header, footer, banner |
+
+Do not dump everything in one file. If a file feels heavy, split it.
+
+</section>
+
+<section>
+
+## Writing CSS That Is Safe to Change
+
+Follow these rules:
+
+### Rule 1 – Avoid styling raw tags
+
+Avoid:
+
+```css title="style.css"
+div { ... }
+
+p { ... }
+
+span { ... }
+```
+
+Unless it’s global typography, Always prefer class boundaries.
+
+### Rule 2 – Avoid deep nesting
+
+Too much nesting creates hidden coupling.
+
+Keep structure shallow.
+
+### Rule 3 – Do not depend on DOM accidents
+
+```css
+/* Avoid */
+.card > div > span { ... }
+
+/* Use */
+.card__title { ... }
+```
+
+If HTML changes, your styles survive.
+
+</section>
+
+<section>
+
+## Understanding Specificity
+
+If you write CSS, you must understand specificity. It is part of writing safe
+CSS.
+
+Specificity is a way to help browser decide, _when two CSS rules try to style
+the same thing, which one wins?_
+
+If two rules apply to the same element:
+
+- The more specific selector wins
+- If equal in specificity, the later one wins
+
+That’s it.
+
+### Why This Matters
+
+If you ever feel:
+
+- “_Why is this style not applying?_”
+- “_Why did this suddenly break?_”
+- “_Why do I need `!important` flag?_”
+
+It is almost always specificity.
+
+Learning specificity once will save you years of confusion.
+
+### Keep Specificity Low
+
+Prefer:
+
+```css title="style.css"
+.card { ... }
+
+.card__header { ... }
+
+.button--secondary { ... }
+```
+
+Avoid:
+
+```css title="style.css"
+.sidebar .card .card__header span { ... }
+```
+
+Deep selectors create fragile systems. Simple class selectors are predictable.
+
+### When Things Conflict
+
+Assume:
+
+- Last declaration wins if specificity is equal
+- More specific selector wins if specificity is different
+
+If unsure, open browser DevTools and inspect which rule is winning.
+
+### Use !important Rarely
+
+in Shilp CSS, you can add `!important` flag to any property just by appending
+`!` to the utility.
+
+Example: `@layout is-flex!;` → `display: flex !important;`
+
+But use it only when:
+
+- Overriding third-party CSS
+- Debugging
+
+If you need it often, your selector structure may be wrong.
+
+### Learn This Properly
+
+Spend one hour learning through below resources properly. It will remove 80% of
+CSS frustration.
+
+- [Specificity by Kevin Powell](https://youtu.be/c0kfcP_nD9E?si=WVOq36ZfKkDaNfST)
+- [Specificity by Web Dev Simplified](https://youtu.be/CHyPGSpIhSs?si=5mKUuEwf7SGYsaC3)
+- [Specificity by MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Specificity)
+
+Shilp CSS gives you structure. Specificity gives you control.
+
+</section>
+
+<section>
+
+## Common Mistakes To Avoid
+
+1. Writing: `.save-button-green-rounded-big { ... }`
+2. Copying: `.btn` style into `.form-btn` and editing separately
+3. Mixing (layout and component): `.sidebar-button { ... }`
+4. Styling (based on DOM depth): `.sidebar div span { ... }`
+5. Adding: spamming `!important` flag
+
+</section>
+
+<section>
+
+## How to Rename Safely
+
+If you need to rename `.card`:
+
+1. Do global search in editor with `.card` for css and `card` for markup
+2. Filter out `<Card>` components in markups and variables in scripts
+3. Replace the instances globally
+4. Done
+
+Refactor is predictable. Because Shilp CSS uses static class names, search
+works.
+
+No dynamic strings. No magic.
+
+This is why naming matters.
+
+</section>
+
+<section>
+
+## Working in Teams
+
+If multiple people work on CSS:
+
+1. Agree on naming style early
+2. Keep block names simple
+3. Review new component names
+4. Avoid clever abbreviations
+
+Do not use:
+
+- `.cmp`
+- `.bx`
+- `.hd`
+
+Use full words. Clarity beats brevity.
+
+<Alert variant="info">
+
+Sometimes `.btn` feels right instead of `.button`. Just decide on naming early.
+
+</Alert>
+
+</section>
+
+<section>
+
+## When You Feel Stuck Naming
+
+Ask these:
+
+- Is this reusable?
+- Is this a variation?
+- Is this layout or component?
+
+Will this name make sense next year?
+
+- If yes → keep it.
+- If no → simplify.
+
+</section>
+
+<section>
+
+## Why This Is Better Than Class Soup
+
+Instead of:
+
+```html title="card with utility-first"
+<div class="flex gap-4 p-6 text-sm bg-white rounded-lg shadow-md">...</div>
+```
+
+You write:
+
+```css title="card.css"
+.card {
+	@layout is-flex;
+	@flex flow-col;
+	@space p-6 gap-4;
+	@border rounded-lg;
+	@bg color-surface;
+	@text color-surface-fg;
+}
+```
+
+And use:
+
+```html title="card with intent"
+<div class="card">...</div>
+```
+
+The HTML becomes readable. The CSS becomes the system.
+
+Refactors have a single place to change.
+
+</section>
+
+<section>
+
+## The Real Problem With Plain CSS
+
+Plain CSS fails when:
+
+- Names are random
+- Layout and components are mixed
+- Files are huge
+- Boundaries are unclear
+
+> Shilp CSS fixes grouping (via intents). <br /> You fix naming (via clear
+> roles).
+
+Together, they scale.
+
+</section>
+
+<section>
+
+## Clarity
+
+Writing Shilp CSS is not about writing more CSS.
+
+It is about writing CSS that:
+
+- Explains itself
+- Survives refactors
+- Scales with teams
+- Stays readable years later
+
+**Naming is not your enemy. Unclear boundaries are.**
+
+If you keep roles clear, CSS becomes calm again.
+
+</section>
+
+<section>
+
+## Building a Component From Scratch
+
+We’ll build a **Button component**.
+
+Not just styling. We’ll decide:
+
+- What to name it
+- Where to put it
+- How to structure it
+- How to extend it safely
+- How to refactor it later
+
+Slow. Clear. Practical.
+
+### A Small Note Before We Begin
+
+The button we are about to build is **not a production-ready design system
+button**.
+
+It is not perfect. It is not complete. It does not include every edge case.
+
+**It is styled only to help you understand.**
+
+Once you understand the structure, you can build buttons as complex as your
+system requires.
+
+### Step 1 — Decide What It Is?
+
+Ask: _What is this element?_ <br /> Answer: _It’s a button._
+
+So the block name is: `.button`
+
+Not:
+
+- `.blue-button`
+- `.rounded-btn`
+- `.main-cta-big`
+
+Just `.button`. Because, that’s what it is.
+
+### Step 2 — Write the Base Version
+
+Start simple.
+
+```css title="button.css"
+.button {
+	@layout is-inline-flex;
+	@flex items-center justify-center;
+	@space px-4 py-2;
+	@border rounded-md;
+	@text color-primary-fg family-display h-normal;
+	@bg color-primary;
+}
+```
+
+That’s your base button.
+
+HTML: `<button class="button">Save</button>`
+
+Clean. Readable. Stable.
+
+### Step 3 — Add Hover State
+
+Don’t create a new class. Extend the block.
+
+```css title="button.css"
+.button {
+	...
+  /* base styles */
+
+	@state hover {
+		@bg color-primary-600;
+	}
+}
+```
+
+State lives inside the component. No guessing in HTML.
+
+### Step 4 — Add Variants (Modifier)
+
+Now we need a secondary button.
+
+Do not duplicate `.button`. Create a modifier.
+
+```css title="button.css"
+.button {
+  ...
+}
+
+.button--secondary {
+  @bg color-secondary;
+  @text color-secondary-fg;
+
+  @state hover {
+		@bg color-secondary-600;
+	}
+}
+```
+
+Usage:
+
+```html title="secondary button"
+<button class="button button--secondary">Cancel</button>
+```
+
+The base stays untouched. You extended behavior safely.
+
+### Step 5 — Add Size Variants
+
+Need a large button? Again, modifier.
+
+```css title="button.css"
+.button { ... }
+
+.button--secondary { ... }
+
+.button--md {
+  @space px-5 py-3;
+  @text size-md;
+}
+```
+
+Usage:
+
+```html title="medium size button"
+<button class="button button--md">Continue</button>
+```
+
+Notice something important: <br /> We never changed `.button`. We added
+controlled variations.
+
+That’s scalable CSS.
+
+### Step 6 — Add an Icon Version
+
+Let’s support icon + text.
+
+Add structure:
+
+```html title="button with icon"
+<button class="button has-icon">
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="16"
+		height="16"
+		fill="currentColor"
+		view-box="0 0 16 16"
+		class="icon"
+	>
+		<path
+			d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"
+		/>
+	</svg>
+
+	Home
+</button>
+```
+
+Now define element:
+
+```css title="button.css"
+.button { ... }
+
+.button--secondary { ... }
+
+.button--md { ... }
+
+.button.has-icon {
+  @space gap-2;
+}
+```
+
+Clear relationship. If icon spacing changes, you know where to go.
+
+<Alert variant="warning">
+
+`has-icon` class on button is needed as `:has` is not supported by Shilp CSS
+baseline, **yet**.
+
+See:
+[Deliberate Limitations](/docs/browser-compatibility#deliberate-limitations)
+
+</Alert>
+
+### Step 7 — Add Dark Mode
+
+Don’t create a new class. Use stateful intent (mixins).
+
+```css title="button.css"
+.button {
+  ...
+  /* base styles */
+
+  ...
+  /* base hover styles */
+
+  @theme dark {
+    @bg color-primary-400;
+    @text color-primary-fg-alt;
+  }
+}
+
+.button--secondary {
+  ...
+  /* secondary styles */
+
+  ...
+  /* secondary hover styles */
+
+  @theme dark {
+    @bg color-secondary-400;
+    @text color-secondary-fg-alt;
+  }
+}
+
+.button--md { ... }
+
+.button.has-icon { ... }
+```
+
+Dark mode stays inside the component and relative variants. No duplication.
+
+### Step 8 — Make It Responsive
+
+Need larger padding on bigger screens?
+
+```css title="button.css"
+.button {
+  ...
+  /* base styles */
+
+  ...
+  /* base hover styles */
+
+  ...
+  /* base dark mode styles */
+
+  @screen xl {
+    @space px-4.5 py-2.5;
+  }
+}
+
+.button--secondary { ... }
+
+.button--md {
+  ...
+  /* medium size styles */
+
+  @screen xl {
+    @space px-5.5 py-3.5;
+  }
+}
+
+.button.has-icon { ... }
+```
+
+Mobile first. Only override what changes.
+
+### Step 9 — Where To Put This File
+
+Path: `/src/styles/components/button.css`
+
+One file per component. Not 5000+ lines in one file.
+
+If button grows too much:
+
+- Extract tokens
+- Extract shared utilities
+- But keep the block intact
+
+### Step 10 — What If Design Changes?
+
+Imagine design changes:
+
+- Border radius increases
+- Font size increases
+- Color changes
+
+You update: `.button`, `.button--secondary`, and `.button--md`
+
+One place (_practically some_), Not multiple markup files. This is the
+advantage.
+
+### Step 11 — What If You Need to Rename It?
+
+Suppose `.button` becomes `.btn`.
+
+You:
+
+1. Do global search in editor with `.button` for css and `button` for markup
+2. Filter out:
+   - `<button>` elements in markups
+   - `<Button>` components in markups
+   - `button` variables in scripts
+3. Replace the instances globally
+4. Done
+
+Refactor is predictable. Because, class names are static.
+
+No dynamic construction. No magic.
+
+### Step 12 — What You Did Right
+
+You did:
+
+- Named by role (button)
+- Used modifier for variations
+- Used element for internal parts
+- Kept layout separate
+- Kept HTML clean
+- Kept styles grouped by intent
+
+That’s **scalable CSS**.
+
+### What This Feels Like Over Time
+
+Even after 6 months:
+
+- You know where to look
+- You know what to change
+- You are not afraid to refactor
+
+That’s the goal.
+
+### Conclusion
+
+A component in Shilp CSS is:
+
+- A named block
+- With clear responsibilities
+- Extended by modifiers
+- Organized by intent
+- Scoped safely
+- Easy to refactor
+
+If you can build one component cleanly, you can build a system cleanly.
+
+</section>
+
+---
+
+<section>
+
+## Feeling Overwhelmed?
+
+That’s normal.
+
+This page covers a lot. Because, writing CSS well is a real skill.
+
+Take a short break. <br /> Come back. <br /> Build one small component.
+
+> Clarity comes from practice, not from reading everything at once.
+
+</section>

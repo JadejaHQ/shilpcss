@@ -1,0 +1,92 @@
+name: "Bug Report"
+description: Report a reproducible bug or unexpected behavior
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to create a bug report.
+
+        Please search open/closed issues before submitting, as the issue may have already been reported/addressed.
+
+        If this is the new one, then please provide as much detail as possible.
+
+  - type: markdown
+    attributes:
+      value: |
+        If you aren't sure about this is a bug or not, please open a discussion instead:
+        - [General Discussion](https://github.com/JadejaHQ/shilpcss/discussions/new?category=general)
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description:
+        A clear and concise description of what the bug is. If you intend to
+        submit a PR for this issue, tell us how in the description. Thanks!
+      placeholder: Bug description
+      validations:
+        required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce the issue?
+      placeholder: |
+        A clear and concise set of steps to reproduce the behavior:
+        1. Go to '...'
+        2. Click on '....'
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or Logs
+      description: Paste screenshots, stack traces, or logs here
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Package Version
+      placeholder: e.g. 1.0.0-alpha.0
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Node 24, pnpm 10, OS
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Before submitting
+      description:
+        By submitting this issue, you agree to follow our [Contributing
+        Guidelines](https://github.com/JadejaHQ/shilpcss/blob/main/CONTRIBUTING.md).
+      options:
+        - label: I've made research efforts and searched the documentation
+          required: true
+        - label: I've searched for existing issues
+          required: true
+        - label:
+            I understand that this will be closed if it doesn't meet the above
+            criteria
+          required: true

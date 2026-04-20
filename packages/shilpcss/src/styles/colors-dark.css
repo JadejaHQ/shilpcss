@@ -1,0 +1,93 @@
+/*
+
+Shilp CSS Dark Theme Overrides
+
+Purpose:
+Override color role variables defined in `colors.css` when dark mode is active.
+
+This file does not introduce new colors. It only reassigns existing color
+variables to darker equivalents so the UI adapts automatically.
+
+How it works:
+Dark values are applied with the `@theme dark-self` mixin. When the dark theme
+is active, these variables replace the light theme variables.
+
+Example:
+`--bg`  → switches from light background to dark background
+`--fg`  → switches from dark text to light text
+
+Customization:
+You can override these variables in your own styles if your design system uses
+different dark colors.
+
+Documentation:
+https://shilpcss.com/docs/default-styles/colors-dark
+
+*/
+
+/* ============================================================================================= */
+
+.purge-ignore-start {
+	all: unset;
+}
+
+/* ============================================================================================= */
+
+/* ================================================================================================
+	HTML, HOST
+================================================================================================ */
+
+/* Define CSS variables with optional value */
+html,
+:host {
+	/* */
+
+	/* ==============================================================================================
+		DARK MODE
+	============================================================================================== */
+
+	/* dark theme overrides */
+	@theme dark-self {
+		/*  */
+
+		/* ============================================================================================
+			MAIN BACKGROUND AND TEXT COLORS
+		============================================================================================ */
+
+		/* Background color (dark) */
+		--bg: var(--base-950);
+		/* Text color on background (dark) */
+		--fg: var(--base-50);
+
+		/* ============================================================================================
+			MUTED COLORS
+		============================================================================================ */
+
+		/* Muted color (dark) */
+		--muted: var(--base-800);
+		/* Text color on muted (dark) */
+		--muted-fg: var(--base-400);
+
+		/* ============================================================================================
+			SURFACE COLORS
+		============================================================================================ */
+
+		/* Surface color (dark) */
+		--surface: var(--black);
+		/* Text color on surface (dark) */
+		--surface-fg: var(--white);
+
+		/* ============================================================================================
+			BORDER COLOR
+		============================================================================================ */
+
+		/* Border color (dark) */
+		--border: var(--base-700);
+	}
+}
+
+/* ============================================================================================= */
+
+.purge-ignore-end {
+	all: unset;
+}

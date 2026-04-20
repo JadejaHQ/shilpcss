@@ -1,0 +1,120 @@
+---
+title: "color"
+---
+
+# color
+
+border color
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		border: {
+			color: {
+				DEFAULT: {
+					property: "border-color: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+				top: {
+					property: "border-top-color: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+				right: {
+					property: "border-right-color: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+				bottom: {
+					property: "border-bottom-color: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+				left: {
+					property: "border-left-color: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+				x: {
+					property: `
+						border-left-color: <v><i>;
+						border-right-color: <v><i>;
+					`,
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+				y: {
+					property: `
+						border-top-color: <v><i>;
+						border-bottom-color: <v><i>;
+					`,
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+				bl: {
+					property: "border-block-color: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+				bls: {
+					property: "border-block-start-color: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+				bi: {
+					property: "border-inline-color: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+				bis: {
+					property: "border-inline-start-color: <v><i>;",
+					resolve: "color",
+					themeKey: "colors",
+					variant: true,
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

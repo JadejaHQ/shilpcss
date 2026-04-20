@@ -1,0 +1,20 @@
+{
+	"label": "best practices",
+	"items": [
+		{
+			"name": "index",
+			"label": "overview",
+			"title": "best practices overview"
+		},
+		{
+			"name": "writing-shilp-css",
+			"label": "writing shilp CSS"
+		},
+		"property-config-patterns",
+		{
+			"name": "multi-theme",
+			"label": "Multiple Themes",
+			"hidden": true
+		}
+	]
+}

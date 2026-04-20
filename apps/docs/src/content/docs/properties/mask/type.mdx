@@ -1,0 +1,42 @@
+---
+title: "type"
+---
+
+# type
+
+defines whether mask uses brightness or transparency
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		mask: {
+			type: {
+				property: "mask-type: <v><i>;",
+				values: {
+					luminance: "luminance",
+					alpha: "alpha",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

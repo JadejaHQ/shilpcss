@@ -1,0 +1,65 @@
+---
+title: "lines"
+---
+
+# lines
+
+controls text column sizing algorithm
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			lines: {
+				DEFAULT: {
+					property: "--lines: <v><i>;",
+					values: {
+						1: 1,
+						2: 2,
+						3: 3,
+						4: 4,
+					},
+				},
+
+				all: {
+					property: "<v>",
+					special: true,
+					values: {
+						visible: `
+					overflow: visible<i>;
+					display: block<i>;
+					-webkit-box-orient: horizontal<i>;
+					--lines: none<i>;
+				`,
+						unset: `
+					overflow: unset<i>;
+					display: unset<i>;
+					-webkit-box-orient: unset<i>;
+					--lines: unset<i>;
+				`,
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

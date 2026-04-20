@@ -1,0 +1,291 @@
+---
+title: "Default Styles Overview"
+---
+
+# Default Styles Overview
+
+Shilp CSS ships with a **small set of default styles**.
+
+These are **not hardcoded**. They are regular CSS files. You can read, modify,
+or replace them like any other stylesheet.
+
+You include only what you need. This keeps the system flexible and avoids
+forcing any styling decisions.
+
+---
+
+<section>
+
+## What Default Styles Provide
+
+Default styles mainly provide:
+
+1. Browser reset
+2. Color variables
+3. Dark Theme Color variables
+4. Base CSS variables
+5. Animation keyframes
+6. Some useful component classes
+
+All of these are optional. You can include them fully, partially, or replace
+them with your own styles.
+
+</section>
+
+<section>
+
+## Files Included With Shilp CSS
+
+Shilp CSS ships with the following style files.
+
+### reset.css
+
+Resets browser default styles to make behavior consistent across browsers.
+
+It removes default margins, normalizes elements, and sets predictable defaults.
+
+**Read More**: [reset.css](/docs/default-styles/reset)
+
+### colors.css
+
+Defines all theming **color variables** used across the system.
+
+Example:
+
+- `--bg: theme(colors-base-50);` ➝ `--bg: 98.4% 0.003 247.858;`
+- `base = theme.colors.slate`
+
+This file **does not include dark mode colors**. It only defines the light theme
+color palette.
+
+**Read More**: [colors.css](/docs/default-styles/colors)
+
+### colors-dark.css
+
+Defines **dark theme** colors corresponding to the palette in `colors.css`.
+
+**Read More**: [colors-dark.css](/docs/default-styles/colors-dark)
+
+### colors-dark-flip-base.css
+
+An alternative dark theme strategy.
+
+Instead of defining a new palette, it **flips the base colors scale**.
+
+Example:
+
+- `base-50` ➝ `base-950`
+- `base-100` ➝ `base-900`
+- `base-200` ➝ `base-800`
+- and so on...
+
+This produces an inverted scale automatically.
+
+<Alert variant="danger">
+
+Do not use this together with `colors-dark.css`. Choose one approach.
+
+</Alert>
+
+**Read More**:
+[colors-dark-flip-base.css](/docs/default-styles/colors-dark-flip-base)
+
+### variables.css
+
+Contains **only CSS variables** used by Shilp CSS.
+
+Examples include variables for:
+
+- shadows
+- transforms
+- fonts
+- animation helpers
+- other utility-driven values
+
+This file **does not include any styles**, only variables.
+
+**Read More**: [variables.css](/docs/default-styles/variables)
+
+### base.css
+
+Contains **minimal base styles** for elements.
+
+Examples may include:
+
+- sensible typography defaults
+- base element behavior
+- minor layout helpers
+
+All variables used here come from `variables.css`.
+
+**Read More**: [base.css](/docs/default-styles/base)
+
+### animate.css
+
+Provides animation keyframes and base animation styles.
+
+These are used by animation related utilities.
+
+Example:
+
+- `@animate preset-spin duration-300;`
+- `@animate enter fade-in slide-in-from-top;`
+
+**Read More**: [animate.css](/docs/default-styles/animate)
+
+### components.css
+
+Contains default component classes from individual files.
+
+Examples:
+
+```css
+/* Shilp CSS styles */
+/* @import "shilpcss/styles/components"; */
+@import "shilpcss/styles/components/container";
+@import "shilpcss/styles/components/screen-reader";
+@import "shilpcss/styles/components/limit-lines";
+```
+
+Some components are static, while others may be generated dynamically.
+
+**Read More**: [components.css](/docs/default-styles/components)
+
+</section>
+
+<section>
+
+## Integrating Shilp CSS
+
+To use default styles, import them in your main stylesheet.
+
+```css title="style.css"
+/* add what you need (maintain the order) */
+@import "shilpcss/styles/reset";
+@import "shilpcss/styles/colors";
+
+/* dark mode styles — include only one */
+@import "shilpcss/styles/colors-dark";
+@import "shilpcss/styles/colors-dark-flip-base";
+
+@import "shilpcss/styles/variables";
+@import "shilpcss/styles/base";
+@import "shilpcss/styles/animate";
+@import "shilpcss/styles/components";
+
+/* import your styles here */
+```
+
+<Alert variant="info">
+
+Maintain this order. Some styles may depend on variables defined earlier.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Adding Your Own Styles
+
+Create separate CSS files for your styles.
+
+Example:
+
+```css title="style.css"
+/* Shilp CSS styles */
+
+@import "./layout.css";
+@import "./forms.css";
+/* and other styles... */
+```
+
+<Alert variant="danger">
+
+Avoid writing styles directly in `style.css`, where Shilp CSS styles are
+imported.
+
+Keeping styles in separate files.
+
+</Alert>
+
+With seperation it:
+
+- improves organization
+- keeps the entry file clean
+- makes maintenance easier
+
+</section>
+
+<section>
+
+## Modifying Default Styles
+
+Sometimes you may want to change default behavior.
+
+There are three common approaches.
+
+### 1. Override With Custom Styles
+
+Create a file and place it below the style you want to override.
+
+Example:
+
+```css title="style.css"
+/* Shilp CSS styles */
+@import "shilpcss/styles/base";
+@import "./base-overrides.css";
+/* Shilp CSS styles */
+```
+
+### 2. Replace a Default Style File
+
+Copy a default file and modify it.
+
+Example: `base.css` → `custom-base.css`
+
+Then replace the import:
+
+```css title="style.css"
+/* Shilp CSS styles */
+/* @import "shilpcss/styles/base.css"; */
+@import "./custom-base.css";
+/* Shilp CSS styles */
+```
+
+### 3. Override at the End
+
+Create a file that runs after all default styles.
+
+```css title="style.css"
+/* Shilp CSS styles */
+
+@import "./overrides.css";
+```
+
+This approach is useful for project-specific adjustments.
+
+<Alert variant="danger">
+
+This is not recommended. Use the first 2 methods.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Philosophy
+
+Default styles exist for convenience.
+
+They provide a sensible starting point without locking you into a specific
+design.
+
+You can:
+
+- use them fully
+- partially include them
+- replace them completely
+
+</section>

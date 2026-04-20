@@ -1,0 +1,97 @@
+---
+title: "minimum"
+---
+
+# minimum
+
+controls min points when scrolling a container
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		size: {
+			min: {
+				DEFAULT: {
+					property: `
+				min-width: <v><i>;
+				min-height: <v><i>;
+			`,
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+					},
+				},
+
+				block: {
+					property: "min-block-size: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+					},
+				},
+
+				h: {
+					property: "min-height: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+						screen: "100vh",
+					},
+				},
+
+				inline: {
+					property: "min-inline-size: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+					},
+				},
+
+				w: {
+					property: "min-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+						screen: "100vw",
+						stretch: "stretch",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

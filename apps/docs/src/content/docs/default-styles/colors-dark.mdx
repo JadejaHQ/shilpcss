@@ -1,0 +1,284 @@
+---
+title: "colors-dark.css"
+---
+
+# colors-dark.css
+
+`colors-dark.css` defines the **dark theme color overrides** for the variables
+defined in `colors.css`.
+
+It does not create new variables. Instead, it **overrides existing color roles**
+so the UI automatically adapts to dark environments.
+
+Because components and utilities rely on these variables, switching themes
+updates the entire interface without changing component styles.
+
+---
+
+<section>
+
+## How Dark Mode Works
+
+Shilp CSS uses a **theme mixin** to apply dark styles.
+
+```css title="colors-dark.css"
+html, :host {
+  @theme dark-self { ... }
+}
+```
+
+This mixin transform into a selector that applies when dark mode is enabled.
+
+```css title="colors-dark.css"
+html.dark, :host.dark { ... }
+```
+
+This means the same color variables defined in `colors.css` will change when
+dark mode is active.
+
+To understand how mixin works internally, see
+[Mixins Config](/docs/config/mixins).
+
+</section>
+
+<section>
+
+## What This File Changes
+
+This file only updates **color roles**. These variables control the interface
+appearance.
+
+When dark mode is active, these variables switch to darker values.
+
+| Color Role | Light Mode        | Dark Mode         |
+| ---------- | ----------------- | ----------------- |
+| `--bg`     | `var(--base-50)`  | `var(--base-950)` |
+| `--fg`     | `var(--base-950)` | `var(--base-50)`  |
+
+So background becomes dark while text becomes light.
+
+</section>
+
+<section>
+
+## Why Variables Are Used
+
+Dark mode works because components never hardcode colors. Instead they use
+variables.
+
+```css title="card.css"
+.card {
+	background-color: var(--surface);
+	color: var(--surface-fg);
+	border-color: var(--border);
+}
+```
+
+Component styles does not need to change.
+
+</section>
+
+<section>
+
+## Relationship with colors.css
+
+`colors.css` defines the base color system. `colors-dark.css` only overrides
+specific variables.
+
+Because dark styles are loaded after `colors.css`, they replace the values when
+dark mode is active.
+
+</section>
+
+<section>
+
+## Example
+
+```css title="card.css"
+.card {
+	background-color: var(--surface);
+	color: var(--surface-fg);
+	border-color: var(--border);
+}
+```
+
+In light mode, it renders actual values:
+
+```css
+.card {
+	background-color: var(--base-50);
+	color: var(--base-950);
+	border-color: var(--base-300);
+}
+```
+
+In dark mode, it renders actual values:
+
+```css
+.card {
+	background-color: var(--base-950);
+	color: var(--base-50);
+	border-color: var(--base-700);
+}
+```
+
+The component stays the same.
+
+</section>
+
+<section>
+
+## When To Use This File
+
+Use `colors-dark.css` when:
+
+1. you want **dark mode support**
+2. you want **manual control of dark colors**
+3. you prefer **explicit variable overrides**
+
+If you want a **quick automatic inversion of base colors**, you can use
+[`colors-dark-flip-base.css`](/docs/default-styles/colors-dark-flip-base)
+instead.
+
+</section>
+
+<section>
+
+## Customization
+
+You can override any color variable in your own styles.
+
+Example:
+
+```css title="override-colors-dark.css"
+html,
+:host {
+	/* */
+
+	@theme self-dark {
+		/* --bg: var(--base-950); */
+		--bg: var(--black);
+
+		/* --border: var(--base-700); */
+		--border: var(--white);
+	}
+}
+```
+
+Because components and utilities rely on variables, the entire UI will update
+automatically.
+
+See:
+[Modifying Default Styles](/docs/default-styles/overview#modifying-default-styles).
+
+</section>
+
+<section>
+
+## colors-dark.css Reference
+
+<Alert>
+
+If any part of this file feels difficult to understand, copy the snippet and
+paste it into [ChatGPT](https://chatgpt.com) and ask it to explain the code in
+simple words.
+
+</Alert>
+
+```css title="colors-dark.css"
+/*
+
+Shilp CSS Dark Theme Overrides
+
+Purpose:
+Override color role variables defined in `colors.css` when dark mode is active.
+
+This file does not introduce new colors. It only reassigns existing color
+variables to darker equivalents so the UI adapts automatically.
+
+How it works:
+Dark values are applied with the `@theme dark-self` mixin. When the dark theme
+is active, these variables replace the light theme variables.
+
+Example:
+`--bg`  → switches from light background to dark background
+`--fg`  → switches from dark text to light text
+
+Customization:
+You can override these variables in your own styles if your design system uses
+different dark colors.
+
+Documentation:
+https://shilpcss.com/docs/default-styles/colors-dark
+
+*/
+
+/* ============================================================================================= */
+
+.purge-ignore-start {
+	all: unset;
+}
+
+/* ============================================================================================= */
+
+/* ================================================================================================
+	HTML, HOST
+================================================================================================ */
+
+/* Define CSS variables with optional value */
+html,
+:host {
+	/* */
+
+	/* ==============================================================================================
+		DARK MODE
+	============================================================================================== */
+
+	/* dark theme overrides */
+	@theme dark-self {
+		/*  */
+
+		/* ============================================================================================
+			MAIN BACKGROUND AND TEXT COLORS
+		============================================================================================ */
+
+		/* Background color (dark) */
+		--bg: var(--base-950);
+		/* Text color on background (dark) */
+		--fg: var(--base-50);
+
+		/* ============================================================================================
+			MUTED COLORS
+		============================================================================================ */
+
+		/* Muted color (dark) */
+		--muted: var(--base-800);
+		/* Text color on muted (dark) */
+		--muted-fg: var(--base-400);
+
+		/* ============================================================================================
+			SURFACE COLORS
+		============================================================================================ */
+
+		/* Surface color (dark) */
+		--surface: var(--black);
+		/* Text color on surface (dark) */
+		--surface-fg: var(--white);
+
+		/* ============================================================================================
+			BORDER COLOR
+		============================================================================================ */
+
+		/* Border color (dark) */
+		--border: var(--base-700);
+	}
+}
+
+/* ============================================================================================= */
+
+.purge-ignore-end {
+	all: unset;
+}
+```
+
+</section>

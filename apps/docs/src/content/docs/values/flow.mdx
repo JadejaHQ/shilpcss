@@ -1,0 +1,99 @@
+---
+title: "Flow Dataset"
+---
+
+# Flow Dataset
+
+The **Flow dataset** defines **easing curve tokens** used by transition and
+animation.
+
+These tokens represent timing functions that control how motion accelerates,
+decelerates, or changes speed during an animation or phase transition.
+
+---
+
+<section>
+
+## Location
+
+Resolved location: `shilpConfig.values.flow` <br /> Theme location:
+`shilpConfig.theme.flow`
+
+</section>
+
+<section>
+
+## Usage
+
+| Intent             | Theme Key | Description             |
+| ------------------ | --------- | ----------------------- |
+| `@phase flow-*;`   | `"flow"`  | Transition easing curve |
+| `@animate flow-*;` | `"flow"`  | Animation easing curve  |
+
+These utilities read values from the theme, which is built from this dataset.
+
+</section>
+
+<section>
+
+## Dataset Structure
+
+The dataset is a **simple key–value map** of flow easing curve tokens to CSS
+values.
+
+See: [Flow Dataset Reference](#flow-dataset-reference)
+
+</section>
+
+<section>
+
+## Customizing the Dataset
+
+You can extend or override this dataset in your config.
+
+```js title="Customize flow dataset"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		values: {
+			flow: {
+				elastic: {
+					// --elastic-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+					pop: "var(--elastic-pop)",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This will make additional flow easing curve tokens available through the theme
+system.
+
+</section>
+
+<section>
+
+## Flow Dataset Reference
+
+```js title="Flow Dataset"
+const flow = {
+	ease: {
+		DEFAULT: "var(--ease)",
+		in: {
+			DEFAULT: "var(--ease-in)",
+			out: "var(--ease-in-out)",
+		},
+		out: "var(--ease-out)",
+	},
+	warp: "var(--ease-warp)",
+	pulse: "var(--ease-pulse)",
+};
+
+export default flow;
+```
+
+</section>

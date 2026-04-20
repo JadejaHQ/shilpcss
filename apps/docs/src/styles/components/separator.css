@@ -1,0 +1,14 @@
+/* separator (or divider) */
+.separator {
+	@bg color-border;
+	@flex shrink-0;
+
+	@data is("orientation=vertical") {
+		@size w-px;
+		@flex self-stretch;
+	}
+
+	@data is("orientation=horizontal") {
+		@size h-px w-full;
+	}
+}

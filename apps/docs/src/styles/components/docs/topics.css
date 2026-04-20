@@ -1,0 +1,60 @@
+/* ================================================================================================
+	DOCS TOPICS
+================================================================================================ */
+
+.topics {
+	/*  */
+
+	/* highlight intent and mixins in navigation (ux) */
+	[data-folder-page^="@"] > a,
+	[data-folder="mixins"] li ~ li > a {
+		/*  */
+		@match not("[data-active]") {
+			@layout opacity-100;
+			@text color-secondary thick-600;
+
+			@theme dark {
+				@text color-secondary-400;
+			}
+		}
+	}
+
+	/*
+		case for every link is lowercase. but, with styles it's converted to capitalize.
+		for below folders, the styles will change to lowercase
+	*/
+	:where(
+			[data-folder="components"],
+			[data-folder="properties"],
+			[data-folder="mixins"],
+			[data-folder="default styles"]
+		)
+		a {
+		@text case-inherit;
+	}
+}
+
+/* ============================================================================================= */
+
+[data-folder] {
+	@siblings match("[data-folder]") {
+		@space mt-14;
+	}
+}
+
+/* ============================================================================================= */
+
+[data-folder-page] ul {
+	@space pl-5;
+
+	li {
+		@position is-relative;
+
+		@self before {
+			content: "-";
+
+			@position is-absolute top-1/2;
+			@adjust preset -move-y-1/2 -move-x-2.5;
+		}
+	}
+}

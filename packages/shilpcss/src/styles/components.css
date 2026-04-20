@@ -1,0 +1,41 @@
+/*
+
+Shilp CSS Default Components
+
+Purpose:
+Provide a small set of commonly used reusable component classes.
+
+Components are regular CSS classes meant for direct usage in markup.
+They solve recurring layout and accessibility patterns.
+
+Static components are imported from individual files.
+Dynamic components generated from the config are appended during processing.
+
+Includes:
+- container
+- line clamping
+- screen-reader accessibility helpers
+- dynamic components generated from shilpConfig.components
+- and many more...
+
+Customization:
+Override in your own styles to change behavior globally.
+
+Documentation:
+https://shilp.dev/docs/default-styles/components
+
+*/
+
+/* ================================================================================================
+	STATICALLY DEFINED COMPONENTS IMPORTS
+================================================================================================ */
+
+@import "./components/limit-lines.css";
+@import "./components/screen-reader.css";
+@import "./components/container.css";
+
+/* ================================================================================================
+	DYNAMICALLY GENERATED COMPONENTS PLACEHOLDER
+================================================================================================ */
+
+/* import("shilpcss-dynamic-components"); */

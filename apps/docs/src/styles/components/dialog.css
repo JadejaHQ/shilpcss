@@ -1,0 +1,102 @@
+/* ================================================================================================
+	DIALOG OVERLAY
+================================================================================================ */
+
+.dialog__overlay {
+	@layout layer-5;
+	@bg color-black/50;
+	@filter backdrop-blur;
+	@position is-fixed inset-0;
+
+	@motion safe {
+		@phase for-all flow-ease-in-out duration-100;
+
+		@data open {
+			@animate enter fade-in-0;
+		}
+
+		@data closed {
+			@animate exit fade-out-0;
+		}
+
+		@data is("starting-style") {
+			@layout opacity-0;
+		}
+
+		@data is("ending-style") {
+			@layout opacity-0;
+		}
+	}
+}
+
+/* ================================================================================================
+	DIALOG CONTENT
+================================================================================================ */
+
+.dialog__content {
+	@bg color-surface clip-padding;
+	@text color-surface-fg;
+	@layout layer-5 is-flex shadow-lg shadow-color-fg/5;
+	@flex flow-col;
+	@size min-w-72 max-w-lg;
+	@space gap-4;
+	@position is-fixed top-1/2 left-1/2;
+	@adjust preset -move-1/2 origin-top-left;
+	@border rounded-xl;
+	@live outline-none;
+
+	width: calc(100vw - 10%);
+	max-height: calc(100vh - 20%);
+
+	@screen sm {
+		@size max-w-sm;
+	}
+
+	@motion safe {
+		@phase for-all flow-ease-in-out duration-100;
+
+		@data open {
+			@animate enter fade-in-0 zoom-in-95;
+		}
+
+		@data closed {
+			@animate exit fade-out-0 zoom-out-95;
+		}
+	}
+}
+
+/* ================================================================================================
+	DIALOG HEADER, TITLE, DESCRIPTION, CLOSE AND CLOSE
+================================================================================================ */
+
+.dialog__header {
+	@layout is-flex;
+	@flex flow-col;
+	@space px-4 py-2.5 gap-2;
+	@border thick-bottom;
+}
+
+.dialog__title {
+	@text thick-500 size-lg;
+}
+
+.dialog__description {
+	@text color-muted-fg size-sm;
+}
+
+:where(.dialog__close) {
+	@match not(".wrapper") {
+		@position is-absolute top-2 right-2;
+
+		svg {
+			@size is-6;
+		}
+	}
+}
+
+.dialog__footer {
+	@space mt-auto p-4 gap-2;
+	@layout is-flex;
+	@flex flow-col;
+	@border thick-top;
+}

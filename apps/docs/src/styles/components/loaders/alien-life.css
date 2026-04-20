@@ -1,0 +1,163 @@
+/*
+	Author: andrew-manzyk
+	Link: https://uiverse.io/andrew-manzyk/young-walrus-64
+*/
+
+.alien-life {
+	/* colors */
+	--color-one: #ffbf48;
+	--color-two: #be4a1d;
+	--color-three: #ffbf4780;
+	--color-four: #bf4a1d80;
+	--color-five: #ffbf4740;
+
+	/* time */
+	--animation-time: 2s;
+
+	/* size */
+	--element-size: 1;
+
+	@position is-relative;
+	@border rounded-full;
+	@size is-24;
+
+	will-change: transform, filter;
+	transform: scale(var(--element-size));
+	box-shadow:
+		0 0 25px 0 var(--color-three),
+		0 20px 50px 0 var(--color-four);
+
+	@motion safe {
+		@animate flow-ease-in-out loop-infinite;
+
+		animation-name: animate-alien-life-colorize;
+		animation-duration: calc(var(--animation-time) * 3);
+	}
+
+	@self before {
+		content: "";
+
+		@position is-absolute top-0 left-0;
+		@size is-24;
+		@border rounded-full thick-top thick-bottom;
+
+		border-top-color: var(--color-one);
+		border-bottom-color: var(--color-two);
+		background: linear-gradient(180deg, var(--color-five), var(--color-four));
+		box-shadow:
+			inset 0 10px 10px 0 var(--color-three),
+			inset 0 -10px 10px 0 var(--color-four);
+	}
+}
+
+.alien-life .box {
+	@size is-24;
+
+	mask: url(#clipping);
+	background: linear-gradient(
+		180deg,
+		var(--color-one) 30%,
+		var(--color-two) 70%
+	);
+}
+
+.alien-life svg {
+	@position is-absolute;
+
+	#clipping {
+		@animate flow-linear loop-infinite;
+
+		filter: contrast(15);
+		animation-name: animate-alien-life-roundness;
+		animation-duration: calc(var(--animation-time) / 2);
+
+		@childs direct {
+			filter: blur(7px);
+
+			@motion safe {
+				@animate flow-linear loop-infinite;
+				animation-name: animate-alien-life-rotation;
+			}
+		}
+
+		@childs nth("1") {
+			transform-origin: 75% 25%;
+			transform: rotate(90deg);
+		}
+
+		@childs nth("2") {
+			@animate direction-reverse;
+
+			transform-origin: 50% 50%;
+			animation-duration: var(--animation-time);
+		}
+
+		@childs nth("3") {
+			transform-origin: 50% 60%;
+			animation-duration: calc(var(--animation-time) / -3);
+		}
+
+		@childs nth("4") {
+			@animate direction-reverse;
+
+			transform-origin: 40% 40%;
+			animation-duration: var(--animation-time);
+		}
+
+		@childs nth("5") {
+			@animate direction-reverse;
+			transform-origin: 40% 40%;
+			animation-duration: calc(var(--animation-time) / -2);
+		}
+
+		@childs nth("6") {
+			transform-origin: 60% 40%;
+			animation-duration: var(--animation-time);
+		}
+
+		@childs nth("7") {
+			transform-origin: 60% 40%;
+			animation-duration: calc(var(--animation-time) / -1.5);
+		}
+	}
+}
+
+@keyframes animate-alien-life-rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes animate-aline-life-roundness {
+	0%,
+	60%,
+	100% {
+		filter: contrast(15);
+	}
+	20%,
+	40% {
+		filter: contrast(3);
+	}
+}
+
+@keyframes animate-alien-life-colorize {
+	0%,
+	100% {
+		filter: hue-rotate(0deg);
+	}
+	20% {
+		filter: hue-rotate(-30deg);
+	}
+	40% {
+		filter: hue-rotate(-60deg);
+	}
+	60% {
+		filter: hue-rotate(-90deg);
+	}
+	80% {
+		filter: hue-rotate(-45deg);
+	}
+}

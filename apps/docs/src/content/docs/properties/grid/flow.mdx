@@ -1,0 +1,48 @@
+---
+title: "flow"
+---
+
+# flow
+
+grid item's auto-placement algorithm
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		grid: {
+			flow: {
+				property: "grid-auto-flow: <v><i>;",
+				values: {
+					row: {
+						DEFAULT: "row",
+						dense: "row dense",
+					},
+					col: {
+						DEFAULT: "column",
+						dense: "column dense",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,26 @@
+/* ================================================================================================
+	TABLE
+================================================================================================ */
+
+.table {
+	@layout overflow-hidden overflow-x-auto;
+	@size w-full max-w-fit;
+	@space my-10;
+	@border thick rounded-xl;
+
+	table {
+		@table layout-fixed border-separate gap-0;
+	}
+
+	td,
+	th {
+		@space p-3;
+		@text align-x-left align-y-top break-word break-anywhere space-normal;
+	}
+
+	th {
+		@size min-w-40;
+		@border thick-bottom;
+		@bg color-base-100;
+	}
+}

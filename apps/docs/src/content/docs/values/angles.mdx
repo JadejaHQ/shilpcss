@@ -1,0 +1,98 @@
+---
+title: "Angles Dataset"
+---
+
+# Angles Dataset
+
+The **Angles dataset** defines angle units used by CSS properties that require
+**degree values (`deg`)**.
+
+---
+
+<section>
+
+## Location
+
+Resolved location: `shilpConfig.values.angles` <br /> Theme location:
+`shilpConfig.theme.angles`
+
+</section>
+
+<section>
+
+## Usage
+
+| Intent                    | Theme Key  | Description                        |
+| ------------------------- | ---------- | ---------------------------------- |
+| `@adjust rotate-*;`       | `"angles"` | tranform rotation angle            |
+| `@adjust skew-*;`         | `"angles"` | transform skew angle               |
+| `@animate spin-in-*;`     | `"angles"` | enter animation rotation angle     |
+| `@animate spin-out-*;`    | `"angles"` | exit animation rotation angle      |
+| `@filter hue-*;`          | `"angles"` | filter hue rotation angle          |
+| `@filter backdrop-hue-*;` | `"angles"` | backdrop filter hue rotation angle |
+
+These utilities read values from the theme, which is built from this dataset.
+
+</section>
+
+<section>
+
+## Dataset Structure
+
+The dataset is a **simple key–value map** of angle tokens to CSS values.
+
+See: [Angles Dataset Reference](#angles-dataset-reference)
+
+</section>
+
+<section>
+
+## Customizing the Dataset
+
+You can extend or override this dataset in your config.
+
+```js title="Customize angles dataset"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		values: {
+			angles: {
+				120: "120deg",
+				270: "270deg",
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This will make additional angle tokens available through the theme system.
+
+</section>
+
+<section>
+
+## Angles Dataset Reference
+
+```js title="Angles dataset"
+const angles = {
+	0: "0deg",
+	1: "1deg",
+	2: "2deg",
+	6: "6deg",
+	15: "15deg",
+	DEFAULT: "15deg",
+	30: "30deg",
+	45: "45deg",
+	60: "60deg",
+	75: "75deg",
+	90: "90deg",
+	180: "180deg",
+};
+
+export default angles;
+```
+
+</section>

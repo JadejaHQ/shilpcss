@@ -1,0 +1,91 @@
+/*
+
+Shilp CSS Dark Theme (Base Scale Flip)
+
+Purpose:
+Provide an alternative dark theme strategy by flipping the base (neutral)
+color scale used across the system.
+
+Instead of redefining every color role (like `colors-dark.css`), this file
+inverts the base scale so light tokens become dark tokens and vice-versa (automatically).
+
+Example scale inversion:
+50  ↔ 950
+...
+500 ↔ 500
+...
+950 ↔ 50
+
+Because many UI variables depend on the base scale, the interface adapts
+to dark mode automatically.
+
+Important:
+Do not use this together with `colors-dark.css`. Choose one dark mode strategy.
+
+Customization:
+You can override any base token if your design system requires slightly
+different dark contrast.
+
+Documentation:
+https://shilpcss.com/docs/default-styles/colors-dark-flip-base
+
+*/
+
+/* ============================================================================================= */
+
+.purge-ignore-start {
+	all: unset;
+}
+
+/* ============================================================================================= */
+
+/* ================================================================================================
+	HTML, HOST
+================================================================================================ */
+
+/* Define CSS variables with optional value */
+html,
+:host {
+	/* */
+
+	/* ==============================================================================================
+		DARK MODE
+	============================================================================================== */
+
+	/* dark theme overrides */
+	@theme dark-self {
+		/*  */
+
+		/* ============================================================================================
+			SURFACE COLORS
+		============================================================================================ */
+
+		/* Surface color (dark) */
+		--surface: var(--black);
+		/* Text color on surface (dark) */
+		--surface-fg: var(--white);
+
+		/* ============================================================================================
+			BASE (NEUTRAL) COLORS FLIPPED
+		============================================================================================ */
+
+		/* Base (neutral) color scale (dark) */
+		--base-50: theme(colors-slate-950); /* darkest */
+		--base-100: theme(colors-slate-900);
+		--base-200: theme(colors-slate-800);
+		--base-300: theme(colors-slate-700);
+		--base-400: theme(colors-slate-600);
+		--base-500: theme(colors-slate-500); /* stays the same */
+		--base-600: theme(colors-slate-400);
+		--base-700: theme(colors-slate-300);
+		--base-800: theme(colors-slate-200);
+		--base-900: theme(colors-slate-100);
+		--base-950: theme(colors-slate-50); /* lightest */
+	}
+}
+
+/* ============================================================================================= */
+
+.purge-ignore-end {
+	all: unset;
+}

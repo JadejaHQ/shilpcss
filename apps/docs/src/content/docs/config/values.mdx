@@ -1,0 +1,376 @@
+---
+title: "Values"
+---
+
+# Values
+
+At the lowest level, everything is just a value.
+
+- `16px`: absolute spacing
+- `0.25rem`: relative spacing
+- `64.6% 0.222 41.116`: raw OKLCH color (`L% C H`)
+- `1.5`: fraction (number)
+- `200ms`: time
+
+These are primitive values and finally becomes:
+`property: value <optional !important flag>;`
+
+Shilp CSS simply organizes them.
+
+if intent decides _where_, utility decides _what_, property decides _how_, then
+**values decides what the actual data is**.
+
+---
+
+<section>
+
+## Property Config And Values
+
+From the [Properties Config](/docs/config/properties) Page, we know:
+
+- What a property config is
+- How property and value tokens are resolved
+- How `global values`, `propertyConfig.themeKey`, and `propertyConfig.values`
+  are merged
+- What `special: true` changes
+
+Values are resolved after property config is found and each property decides how
+its values are resolved using `propertyConfig.resolve`.
+
+</section>
+
+<section>
+
+## Value Resolver Methods
+
+You can define how value is resolved (per property) by using
+`propertyConfig.resolve: <resolver-name>`.
+
+All the built-in value resolvers are defined at `shilpConfig.valueResolvers`.
+
+| Resolver       | Description                                                         |
+| -------------- | ------------------------------------------------------------------- |
+| `"rawColor"`   | Returns only raw value `L% C H` as it is defined without processing |
+| `"color"`      | Return full color `oklch(L% C H)` with optional opacity support     |
+| `"rawSpacing"` | Return only raw value `px` as it is defined without processing      |
+| `"spacing"`    | Returns numeric values `px` processed to `rem` values               |
+| `"default"`    | Returns raw value as it is defined without processing               |
+
+<Alert variant="info">
+
+You can also use custom resolvers by defining it inside
+`shilpConfig.extend.valueResolvers` object.
+
+See: [Custom Resolver](/docs/config/values#custom-resolver)
+
+</Alert>
+
+### How Resolver Is Selected
+
+For every property:
+
+- If `propertyConfig.resolve` is defined → use resolver from
+  `shilpConfig.valueResolvers`
+- If nothing provided → use `shilpConfig.valueResolvers.default` resolver
+- If invalid resolver provided → error will be thrown
+
+</section>
+
+<section>
+
+## How Value Is Found (Core Logic)
+
+Algorithm:
+
+1. Start at `propertyConfig.values` object
+2. Take first value `token`
+3. Try `values[token]`
+4. If not found → try `values.DEFAULT`
+5. If result is another object → go one level deeper
+6. With sub-sequent value tokens, continue until final non-object value is found
+7. If nothing found → throw error
+
+In simple words, Value resolver finds a value from `propertyConfig.values` using
+**value tokens** and thows error if not found a correct path.
+
+That’s it. Everything else in resolvers builds on top of this logic.
+
+</section>
+
+<section>
+
+## Built-in Resolvers
+
+All the built-in resolvers are explained below:
+
+### Default Resolver
+
+```js title="Property config with 'default' resovler"
+const propertyConfig = {
+	property: "...",
+	resolve: "default",
+	values: { ... }
+}
+```
+
+If nothing is specified, this is used.
+
+It:
+
+- Uses the standard value-finding logic
+- Does not support variant
+- Supports inline `theme(...)` values
+
+#### Special Case
+
+For [Inline Theme Function](/docs/config/theme#inline-theme-function) with
+**color value**, If value not found by core logic, it will try `values[500]`
+once for current nesting level.
+
+### Raw Color Resolver
+
+```js title="Property config with 'rawColor' resolver"
+const propertyConfig = {
+	property: "...",
+	resolve: "rawColor",
+	values: { ... }
+}
+```
+
+It uses the standard value-finding logic, but with slightly different fallback.
+
+Instead of only checking `values[token]` and then `values.DEFAULT`, it also
+checks `values[500]` at current nesting level.
+
+In simple words, if token not found and no `DEFAULT` at current nesting level,
+it will check `500` key.
+
+It returns **raw color** value as-is (not wrapped in `oklch()`).
+
+<Alert variant="info">
+
+Does not support variant.
+
+</Alert>
+
+### Raw Spacing Resolver
+
+```js title="Property config with 'rawSpacing' resolver"
+const propertyConfig = {
+	property: "...",
+	resolve: "rawSpacing",
+	values: { ... }
+}
+```
+
+It uses standard value-finding logic. No extra transformation.
+
+Returns raw spacing value as-is.
+
+<Alert variant="info">
+
+Does not support variant.
+
+</Alert>
+
+### Color Resolver
+
+```js title="Property config with 'color' resolver"
+const propertyConfig = {
+	property: "...",
+	resolve: "color",
+	values: { ... }
+}
+```
+
+Steps:
+
+1. First uses `rawColor` resolver to get raw color
+2. If value:
+   - Starts with `var(...)` → return as-is.
+   - Is not in `L% C H` format → return as-is.
+     - `L% C H` format pattern is `/(\d*\.?\d+)%\s+(\d*\.?\d+)\s+(\d*\.?\d+)/g`
+     - NOTE: `L` must be in `%` (0-100%)
+3. If valid OKLCH raw value:
+   - If no variant → return `oklch(rawColor)`
+   - If variant exists:
+     - Must be between `0–100`
+     - Converted to opacity (`variant / 100`)
+     - Return `oklch(rawColor / opacity)`
+
+For example, `@text color-orange-600/80;` will becomes
+`color: oklch(64.6% 0.222 41.116 / 0.8);`.
+
+### Spacing Resolver
+
+```js title="Property config with 'spacing' resolver"
+const propertyConfig = {
+	property: "...",
+	resolve: "spacing",
+	values: { ... }
+}
+```
+
+Steps:
+
+1. Use `rawSpacing` to get raw value
+2. If value:
+   - contains `calc` keyword → return as-is
+   - does not ends with `px` unit → return as-is
+3. If valid raw spacing value:
+   - Parse float
+   - Divide by `16`
+   - Keep up to 4 decimal precision
+   - Remove `.0000` if exist
+
+<Alert variant="info">
+
+Here, considering standard `font-size` on `html` is `16px`. This will becomes
+`16px = 1rem`
+
+Values provided to property config are in `px` unit and built-in values dataset
+contains `px` unit mostly.
+
+</Alert>
+
+<Alert variant="info">
+
+Does not support variant.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Custom Resolver
+
+You can also use custom value resolvers by defining it inside
+`shilpConfig.extend.valueResolvers` object.
+
+Use this for advanced use-cases.
+
+<Alert variant="info">
+
+There is no nested objects structure like `shilpConfig.values`. just plain
+`key-value` pairs at the root level.
+
+</Alert>
+
+```js title="Custom value resolver 'ipsum'"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		properties: {
+			space: {
+				// margin
+				m: {
+					resolve: "ipsum",
+				},
+			},
+		},
+
+		valueResolvers: {
+			ipsum: (options) => {
+				// custom value resolver logic
+				return resolvedValue;
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+### Available Options
+
+Custom resolver function receives a single argument (`object`) with following
+options:
+
+| Option                      | Type     | Description                        |
+| --------------------------- | -------- | ---------------------------------- |
+| `options.config`            | `object` | full shilp config object           |
+| `options.intentName`        | `string` | mostly for error reporting         |
+| `options.utility`           | `object` | utility object                     |
+| `options.tokens`            | `array`  | values tokens array                |
+| `options.values`            | `object` | values object from property config |
+| `options.propertyConfig`    | `object` | full property config object        |
+| `options.inlineThemeConfig` | `object` | full inline theme config object    |
+
+<Alert variant="info">
+
+Here, either `options.propertyConfig` (for intent) or
+`options.inlineThemeConfig` (for inline theme function) will be available.
+
+This will help to identify the resolver invocation purpose.
+
+</Alert>
+
+<Alert variant="danger">
+
+DO NOT MUTATE THESE OPTIONS.
+
+</Alert>
+
+### Expected Output
+
+In return, it expects a string containing valid CSS value.
+
+</section>
+
+<section>
+
+## High-Level Values Processing
+
+**values** is the first config that is resolved in config.
+
+At the beginning of processing:
+
+1. Internal defaults are created and loaded
+   - values loaded at `shilpConfig.values`
+   - value resolvers loaded at `shilpConfig.valueResolvers`
+2. Root-level objects override them completely (if provided)
+   - values at `shilpConfig.values`
+   - value resolvers at `shilpConfig.valueResolvers`
+   - This is not recommended. Avoid this
+3. Extend configs are deep merged
+   - `shilpConfig.extend.values` deep merged with `shilpConfig.values`
+   - `shilpConfig.extend.valueResolvers` deep merged with
+     `shilpConfig.valueResolves`
+
+Now full **values dataset** and **value resovlers** are available.
+
+When properties processing reaches at resolver stage:
+
+- Resolver runs
+- Value is resolved
+- Value returned to property config to generates final CSS
+
+At this stage, value resolution is done.
+
+Further processing is handled by the
+[Properties Config – High Level Processing](/docs/config/properties#high-level-properties-processing).
+
+</section>
+
+<section>
+
+## Available Built-in Values Dataset
+
+All built-in values datasets are documented separately.
+
+You can explore the [full list](/docs/values) in the **VALUES** section of the
+documentation.
+
+Each dataset has its own page: `/docs/values/<dataset-name>`
+
+Examples:
+
+- `/docs/values/colors`
+- `/docs/values/border`
+- `/docs/values/time`
+
+Those pages show exact values dataset structure with usage example.
+
+</section>

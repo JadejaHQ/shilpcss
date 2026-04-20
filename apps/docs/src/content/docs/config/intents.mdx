@@ -1,0 +1,260 @@
+---
+title: "Intents"
+---
+
+# Intents
+
+Shilp CSS is an **intent-first, CSS-centic** styling engine and framework.
+
+That means, Inside a `.css` files, Shilp CSS looks for **intent syntax**.
+
+It does not scan for random classes. It scans for patterns that begin with `@`.
+
+---
+
+<section>
+
+## Why Intents Exist
+
+Without intents, everything becomes flat.
+
+With intents, we get:
+
+- Separate responsibilities
+- Limit which utilities can be used together
+- Make large stylesheets easier to reason about
+- Prevent accidental cross-mixing of concerns
+
+Intent is not decoration. It is a boundary.
+
+</section>
+
+<section>
+
+## What Is an Intent?
+
+An intent simply looks like `@<intent-name> utility-1 utility-2;`.
+
+In simple words:
+
+- It starts with `@`
+- It ends with `;`
+- The first word after `@` is the **intent name**
+- Everything after that (space separated) are **utilities**
+
+Examples:
+
+- `@layout ... ...;`
+- `@layout! ... ...;`
+- `@good-intent ... ...;`
+- `@good-intent! ... ...;`
+
+Intent-name and utility both accepts optional `!` at the end. It will add
+`!important` flag to the property.
+
+If appended to intent-name then, every utility in that intent will be with
+`!important` flag, ignoring utility flag (has or not) completely.
+
+</section>
+
+<section>
+
+## Parsing
+
+Internally, Shilp CSS looks for RegExp pattern `/@([a-z-!]+?)\s(.+);/g`.
+
+For intent `@layout is-flex overflow-y-auto;`, it splits as below:
+
+1. Intent name: `"layout"`
+2. Utilities: `["is-flex", "overflow-y-auto"]`
+
+That’s it. `Intent = Intent name + list of utilities`.
+
+</section>
+
+<section>
+
+## Location
+
+Intents are defined in your config.
+
+It is derived from `shilpConfig.properties`, Each **root-level** key inside
+`properties` becomes an **intent**.
+
+Example config:
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: { ... },
+		text: { ... }
+	}
+};
+
+export default shilpConfig;
+```
+
+This creates two intents, `"layout"` and `"text"`.
+
+<Alert variant='info'>
+
+If the intent name does not exist in config, but used in `.css`, then it will
+not be processed.
+
+</Alert>
+
+</section>
+
+<section>
+
+## From Config to CSS
+
+Given this config:
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		//
+		layout: {
+			is: {
+				property: "display: <v><i>;",
+				values: {
+					flex: "flex",
+					grid: "grid",
+				},
+			},
+		},
+
+		text: {
+			thick: {
+				property: "font-weight: <v><i>;",
+				values: {
+					600: 600,
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+You can write:
+
+```css
+.any-class {
+	@layout is-flex;
+	@text thick-600;
+}
+```
+
+And it becomes:
+
+```css
+.any-class {
+	display: flex;
+	font-weight: 600;
+}
+```
+
+Intent determines which **group of properties**, utilities are allowed to use.
+
+</section>
+
+<section>
+
+## High-Level Intents Processing
+
+At the beginning of processing:
+
+- Internal default intents are created from `shilpConfig.properites` and loaded
+- Root-level intents `shilpConfig.intents` override them completely (if
+  provided)
+  - This is not recommended. Avoid this.
+- `shilpConfig.extend.intents` is deep merged to `shilpConfig.intents`
+
+This defines which **intents** are available.
+
+At this stage, intent processing is done. Further processing is handled by the
+[Utilities](/docs/config/utilities).
+
+</section>
+
+<section>
+
+## Disable Intent
+
+You can disable any intent.
+
+For example, to disable `layout` intent:
+
+```js title="Disable layout intent"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		intents: {
+			layout: {
+				disable: true,
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This removes the intent during processing, Even if `@layout` exists in your CSS,
+it will not generate output.
+
+This can be useful when:
+
+- Integrating third-party CSS
+- Reducing bundle size
+- Restricting allowed styling patterns
+
+</section>
+
+<section>
+
+## Reserved Names
+
+<Alert variant="danger">
+
+You **CAN NOT USE** following names reserved by `CSS` or `SCSS`. Using these as
+intents or mixins names, **WILL CAUSE CONFLICTS**.
+
+See: [Reserved Names Full List](/docs/styling-with-intent#reserved-names)
+
+</Alert>
+
+</section>
+
+<section>
+
+## Available Built-in Intents
+
+Shilp CSS ships with a set of built-in intents. Each intent maps to a group of
+properties defined in the config.
+
+All built-in intent configurations are documented separately.
+
+You can explore the [full list](/docs/properties#availabe-intents) inside the
+**PROPERTIES** section of the documentation.
+
+Each intent has its own page: `/docs/properties/<intent-name>`
+
+Example:
+
+- `/docs/properties/layout`
+- `/docs/properties/bg`
+- `/docs/properties/text`
+
+Those pages show exact intents config structure with usage example and the list
+of properties inside that intent.
+
+</section>

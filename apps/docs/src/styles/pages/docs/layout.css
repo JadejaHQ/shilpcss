@@ -1,0 +1,32 @@
+/* ================================================================================================
+	DOCS SPECIFIC CSS VARIABLES  (/docs*)
+================================================================================================ */
+
+html[data-root="docs"] {
+	/* /docs `main` element's top padding */
+	--docs-main-pt: theme(spacing|spacing-4);
+
+	/* content mobile navigation sticky layout (below header) */
+	--content-nav-mobile: theme(spacing|spacing-9);
+
+	@screen md {
+		--content-nav-mobile: theme(spacing|spacing-11);
+	}
+
+	@screen xl {
+		--content-nav-mobile: unset;
+	}
+}
+
+/* ================================================================================================
+	DOCS LAYOUT
+================================================================================================ */
+
+#docs {
+	/* fill the available space */
+	@flex grow shrink-0;
+	/* increasing space for outline visibility */
+	@space px-0;
+
+	@layout is-flex;
+}

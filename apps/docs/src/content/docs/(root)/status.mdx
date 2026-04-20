@@ -1,0 +1,206 @@
+---
+title: "Shilp CSS Status"
+---
+
+# Shilp CSS Status
+
+Currently Shilp CSS is in **active development (_alpha_)**.
+
+<Alert variant="danger">
+
+You can experiment and play with it, but do not use it in any personal project
+you plan to put into production.
+
+</Alert>
+
+---
+
+<section>
+
+## Current Status
+
+Shilp CSS is in **alpha** and under active development.
+
+This means:
+
+- The mental model is stable
+- The core architecture is intentional
+- The docs reflect the actual system
+- It is being used to build real things, including this site
+
+It also means:
+
+- Rough edges exist
+- Some parts will evolve
+- Feedback matters
+
+</section>
+
+<section>
+
+## What Is Ready Today
+
+Shilp CSS is solid in its fundamentals:
+
+- Intent-based styling inside CSS
+- Static, purgeable output
+- Modern CSS via **Lightning CSS**
+- Clear browser support baseline
+  - More at
+    [Browser Compatibility](/docs/is-it-production-ready#browser-compatibility)
+- No runtime
+- No framework lock-in
+- Great defaults styles
+
+You can build real interfaces with it today and expect the way of working to
+remain consistent.
+
+This is not an experiment in ideas anymore. <br /> It’s an experiment in
+**execution, quality and developer experience**.
+
+</section>
+
+<section>
+
+## What Still Needs Work
+
+- Developer Experience (DX)
+- Error handling is still rough
+- Testing across different devices
+- In some environments (notably Next.js + Webpack), it can still crash the dev
+  server instead of failing gracefully.
+- and few more things...
+
+This is known, understood, and being improved. But today, it requires patience.
+
+</section>
+
+<section>
+
+## Tooling & Integration
+
+Shilp CSS supports:
+
+- Vite
+- Webpack
+
+However:
+
+- Edge cases exists
+- Error handling is still being refined
+- Not all bundler behaviors are equally smooth yet
+- If your setup is unconventional, you will entertain the friction
+
+</section>
+
+<section>
+
+## Performance
+
+Processing time is generally fast enough for real projects. But, performance has
+**not yet been aggressively optimized**.
+
+This will improve through:
+
+- Real-world usage
+- Profiling
+- Iteration during alpha and beta
+
+</section>
+
+<section>
+
+## API & Stability Guarantees
+
+Most concepts are locked.
+
+However, during alpha and beta:
+
+- Utility, mixins, names may change
+- New utilities, mixins will be added or maybe existing removed
+- Bugs may force internal rewrites
+
+Shilp CSS follows SemVer <small>( _loosely_ )</small>.
+
+Breaking changes may happen if they protect the system long-term.
+
+</section>
+
+<section>
+
+## Browser Compatibility
+
+Shilp CSS has a clear default baseline: <br /> **Browsers since January 31,
+2023**<br />this includes chrome, safari, firefox and edge only.
+
+This is enforced intentionally via **Lightning CSS** and carefully selected
+utilities, mixins and values.
+
+This means:
+
+- Modern features work by default
+- Older edge cases are excluded on purpose
+- No silent polyfills
+- Limitations exists
+
+You can opt-in newer features manually. <br /> Defaults are conservative by
+design.
+
+**Read More**: [Browser Compatibility](/docs/browser-compatibility)
+
+</section>
+
+<section>
+
+## Purging & Unused CSS
+
+Shilp CSS includes purge logic via `purgecss`, but:
+
+- It cannot guarantee 100% unused CSS removal
+- Some unused styles may remain
+
+This is a known limitation and a hard problem in general. <br /> It’s
+acknowledged openly rather than hidden.
+
+</section>
+
+<section>
+
+# Support & Maintenance
+
+Shilp CSS is currently crafted by the team of
+[one person](https://x.com/jadeja97_).
+
+Support is:
+
+- Best effort
+- Honest
+- Public <small>( _issues and discussions_ )</small>
+
+_The team is actively working on it and enjoying the process._
+
+</section>
+
+<section>
+
+## The Intent
+
+Shilp CSS is not rushing to a “production-ready” label.
+
+It will pass through feedbacks with:
+
+- The clear philosophy
+- The complete documentation
+- The explicit tradeoffs
+
+Production readiness will come through use, feedback, and iterations. not just
+version numbers.
+
+</section>
+
+---
+
+If you’re comfortable building alongside, welcome. <br /> If not, check back
+later.
+
+Thank you 🫶🏻🫰🏻❤️

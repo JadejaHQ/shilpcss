@@ -1,0 +1,110 @@
+---
+title: "maximum"
+---
+
+# maximum
+
+element’s maximum height and width
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		size: {
+			max: {
+				DEFAULT: {
+					property: `
+				max-width: <v><i>;
+				max-height: <v><i>;
+			`,
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+					},
+				},
+
+				block: {
+					property: "max-block-size: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+					},
+				},
+
+				h: {
+					property: "max-height: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+						screen: "100vh",
+					},
+				},
+
+				inline: {
+					property: "max-inline-size: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+					},
+				},
+
+				w: {
+					property: "max-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {
+						min: "min-content",
+						max: "max-content",
+						fit: "fit-content",
+						screen: "100vw",
+						stretch: "stretch",
+						xs: "320px",
+						sm: "384px",
+						md: "448px",
+						lg: "512px",
+						xl: "576px",
+						"2xl": "672px",
+						"3xl": "768px",
+						"4xl": "896px",
+						"5xl": "1024px",
+						"6xl": "1152px",
+						"7xl": "1280px",
+						"8xl": "1440px",
+						"9xl": "1920px",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

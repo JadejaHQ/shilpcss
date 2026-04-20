@@ -1,0 +1,160 @@
+/* ================================================================================================
+	DROPDOWN CONTENT
+================================================================================================ */
+
+.dropdown__content-positioner {
+	@layout isolate-forced layer-5;
+	@live outline-thick-0;
+}
+
+/* ============================================================================================= */
+
+.dropdown__content,
+.dropdown__sub-content {
+	@bg color-surface;
+	@text color-surface-fg;
+	@layout layer-5 overflow-x-hidden overflow-y-auto shadow-md shadow-color-black/5;
+	@border thick rounded;
+	@space p-1;
+
+	svg {
+		@size is-4;
+	}
+
+	@data closed {
+		@layout overflow-hidden;
+	}
+
+	/* ==============================================================================================
+		DROPDOWN MOTION
+	=============================================================================================== */
+
+	@motion safe {
+		@data open {
+			@animate enter fade-in-0 zoom-in-90;
+		}
+
+		@data closed {
+			@animate exit fade-out-0 zoom-out-90;
+		}
+
+		@data is("side=bottom") {
+			@animate slide-in-from-top-2;
+		}
+
+		@data is("side=left") {
+			@animate slide-in-from-right-2;
+		}
+
+		@data is("side=top") {
+			@animate slide-in-from-bottom-2;
+		}
+
+		@data is("side=right") {
+			@animate slide-in-from-left-2;
+		}
+	}
+}
+
+.dropdown__content {
+	@size min-w-40 w-auto;
+
+	/* width: var(--anchor-width); */
+	max-height: var(--available-height);
+	transform-origin: var(--transform-origin);
+}
+
+.dropdown__sub-content {
+	@size min-w-32 w-auto;
+
+	@motion safe {
+		@animate duration-100;
+	}
+}
+
+/* ================================================================================================
+	DROPDOWN ITEM
+================================================================================================ */
+
+.dropdown__item,
+.dropdown__sub-trigger,
+.dropdown__checkbox-item,
+.dropdown__radio-item {
+	@layout is-flex;
+	@flex items-center;
+	@border rounded;
+	@space px-2 py-2 gap-4;
+	@text size-base;
+	@live select-none outline-thick-0;
+	@position is-relative;
+
+	@state focus {
+		@bg color-accent;
+		@text color-accent-fg;
+		@live outline-thick-0;
+	}
+
+	@state hover {
+		@bg color-accent;
+		@text color-accent-fg;
+		@live cursor-pointer;
+	}
+}
+
+.dropdown__sub-trigger {
+	svg {
+		@space ml-auto;
+	}
+
+	@data open {
+		@bg color-accent;
+		@text color-accent-fg;
+	}
+}
+
+.dropdown__item,
+.dropdown__sub-trigger {
+	&.inset {
+		@space pl-8;
+	}
+}
+
+.dropdown__checkbox-item,
+.dropdown__radio-item {
+	@space pl-2 pr-8;
+
+	&-wrapper {
+		@live events-none;
+		@layout is-flex;
+		@size is-3.5;
+		@flex items-center justify-center;
+		@position is-absolute right-2;
+	}
+}
+
+/* ================================================================================================
+	DROPDOWN LABEL, SEPARATOR AND SHORTCUT
+================================================================================================ */
+
+.dropdown__label {
+	@space px-2 py-1.5;
+	@text size-xs gap-lg family-display thick-500 color-muted-fg;
+
+	&.inset {
+		@space pl-8;
+	}
+}
+
+/* ============================================================================================= */
+
+.dropdown__separator {
+	@bg color-border;
+	@space -mx-1 my-1;
+	@size h-px;
+}
+
+/* ============================================================================================= */
+
+.dropdown__shortcut {
+	@space ml-auto;
+}

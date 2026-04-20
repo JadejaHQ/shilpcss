@@ -1,0 +1,57 @@
+---
+title: "gap"
+---
+
+# gap
+
+spacing between items (flex, grid & multi-columns)
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		space: {
+			gap: {
+				DEFAULT: {
+					property: "gap: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {},
+				},
+
+				x: {
+					property: "column-gap: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {},
+				},
+
+				y: {
+					property: "row-gap: <v><i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

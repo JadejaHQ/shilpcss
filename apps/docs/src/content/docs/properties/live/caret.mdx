@@ -1,0 +1,44 @@
+---
+title: "caret"
+---
+
+# caret
+
+sets the text input cursor color
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		live: {
+			caret: {
+				property: "caret-color: <v><i>;",
+				resolve: "color",
+				themeKey: "colors",
+				variant: true,
+				values: {
+					auto: "auto",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

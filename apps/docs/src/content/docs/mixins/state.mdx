@@ -1,0 +1,45 @@
+---
+title: "@state Mixin"
+---
+
+# @state Mixin
+
+UI states like hover, focus
+
+<Alert variant="info">
+
+This page contains only the **mixins configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	target: "react",
+
+	mixins: {
+		state: {
+			disabled: "&:disabled",
+			enabled: "&:enabled",
+			empty: "&:empty",
+			hover: ["@media (hover: hover)", "&:hover"],
+			// "real-focus": "&:focus",
+			focus: "&:focus-visible",
+			// "focus-within": "&:focus-within",
+			active: "&:active", // active during user interaction (press/hold/trigger)
+			// visited: "&:visited",
+			target: "&:target",
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,109 @@
+---
+title: "thick"
+---
+
+# thick
+
+border thickness
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		border: {
+			thick: {
+				DEFAULT: {
+					property: "border-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+				top: {
+					property: "border-top-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+				right: {
+					property: "border-right-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+				bottom: {
+					property: "border-bottom-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+				left: {
+					property: "border-left-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+				x: {
+					property: `
+						border-left-width: <v><i>;
+						border-right-width: <v><i>;
+					`,
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+				y: {
+					property: `
+						border-top-width: <v><i>;
+						border-bottom-width: <v><i>;
+					`,
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+				bl: {
+					property: "border-block-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+				bls: {
+					property: "border-block-start-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+				bi: {
+					property: "border-inline-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+				bis: {
+					property: "border-inline-start-width: <v><i>;",
+					resolve: "spacing",
+					themeKey: "thickness",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

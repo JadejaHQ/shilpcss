@@ -1,0 +1,44 @@
+---
+title: "direction"
+---
+
+# direction
+
+animation direction
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		animate: {
+			direction: {
+				property: "animation-direction: <v><i>;",
+				values: {
+					normal: "normal", // from -> to
+					reverse: "reverse", // to -> from
+					boomerang: "alternate-reverse", // from -> to -> from
+					strikeback: "alternate", // to -> from -> to
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

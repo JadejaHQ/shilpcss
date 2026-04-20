@@ -1,0 +1,59 @@
+---
+title: "size"
+---
+
+# size
+
+controls text column sizing algorithm
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			size: {
+				property: "font-size: <v><i>;",
+				resolve: "spacing",
+				values: {
+					xs: "12px",
+					sm: "14px",
+					base: "16px",
+					md: "18px",
+					lg: "20px",
+					xl: "22px",
+					"2xl": "24px",
+					"3xl": "28px",
+					"4xl": "32px",
+					"5xl": "36px",
+					"6xl": "40px",
+					"7xl": "48px",
+					h1: "var(--h1)",
+					h2: "var(--h2)",
+					h3: "var(--h3)",
+					h4: "var(--h4)",
+					h5: "var(--h5)",
+					h6: "var(--h6)",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,294 @@
+---
+title: "Configuration's Overview"
+---
+
+# Configuration
+
+Shilp CSS is powered by configuration kind of similar to
+[Tailwind CSS v3](https://v3.tailwindcss.com/docs/configuration).
+
+Everything in Shilp CSS comes from one place: `shilp.config.js` file
+
+If you understand what this file controls, you understand how Shilp CSS works.
+
+---
+
+<section>
+
+## The Simple Idea
+
+The configuration defines three things:
+
+1. What properties and values exist
+2. How those become utilities
+3. How the final CSS is processed
+
+That’s it. Everything else is a detail.
+
+</section>
+
+<section>
+
+## Values
+
+At the lowest level, everything is just a value.
+
+For example:
+
+- `16px`: absolute spacing
+- `0.25rem`: relative spacing
+- `64.6% 0.222 41.116`: raw OKLCH color (`L% C H`)
+- `1.5`: fraction (number)
+- `200ms`: time
+
+These are primitive values and finally becomes:
+`property: value <optional !important flag>;`
+
+Shilp CSS simply organizes them.
+
+**Read More**: [Values Config](/docs/config/values)
+
+</section>
+
+<section>
+
+## Theme
+
+Theme gives structure to raw values.
+
+For example:
+
+- Colors are grouped into scales
+- Spacing has steps
+- Radius has a base
+- Fonts have roles
+
+Theme does not generate CSS by itself. It just defines what values are
+available.
+
+You can think of theme as your design dictionary.
+
+**Read More**: [Theme's Config](/docs/config/theme)
+
+</section>
+
+<section>
+
+## Properties
+
+When you write: `@text size-sm;`
+
+The config knows:
+
+1. Which real CSS property this maps to
+2. Which values are allowed and applied
+3. How to generate the final rule
+
+Behind every utility, there is a property configuration that maps it to real
+CSS.
+
+**Read More**: [Properties Config](/docs/config/properties)
+
+</section>
+
+<section>
+
+## Intents
+
+When writing Shilp CSS, you use intents like `@layout`, `@text`, `@space`,
+`@animate`.
+
+Each intent controls which utilities belong inside it. This prevents mixing
+everything together.
+
+Intents keep your CSS organized and easier to manage.
+
+Intents do not exist on their own. They are built from **properties**.
+
+**Read More**: [Intents Config](/docs/config/intents)
+
+</section>
+
+<section>
+
+## Utilities
+
+Utilities are the words (like `size-sm`, `color-primary`, `px-4`, etc) you
+actually write inside intents.
+
+Utilities do not exist on their own. They are built from **properties +
+values**, grouped under **intents**.
+
+For example: `@text size-sm;`, `@bg color-primary;`, `@space px-4;`, etc
+
+**Read More**: [Utilities Config](/docs/config/utilities)
+
+</section>
+
+<section>
+
+## Mixins
+
+Mixins also called **Stateful Intents**, it applies styles based on a condition.
+
+A condition can be:
+
+- A state (`hover`, `focus`, `disabled`)
+- A theme (`dark`, `light`)
+- A breakpoint (`md`, `xl`)
+- A structural rule (_first child_, _direct child_)
+
+```css title="style.css"
+.any-class {
+   @state hover { ... }
+   @theme dark { ... }
+   @screen md { ... }
+}
+```
+
+They are defined in the config and **expand into real selectors**. In other
+words, They controls when the inner styles apply.
+
+**Read More**: [Mixins Config](/docs/config/mixins)
+
+</section>
+
+<section>
+
+## Components
+
+Shilp CSS is written inside `.css` files (_mostly_), static and predictable.
+
+But sometimes, you need styles that are dynamic and easier to generate using
+JavaScript logic. Components allow you to define generator function in the
+config to generate CSS classes dynamically.
+
+For example: `.component`, `.component-<breakpoint>`, `.sr-only`, `.limit-lines`
+
+They are defined in the config, logic is processed and outputs ready-to-use CSS
+classes.
+
+**Read More**: [Components Config](/docs/config/components)
+
+</section>
+
+<section>
+
+## High Level Flow
+
+Once your CSS is written:
+
+1. Components generates classes
+2. Mixins expand into real selectors
+3. Intents expand into plain CSS
+
+Then after build:
+
+- Unused styles are removed (Purge CSS)
+- Final CSS is optimized (Lightning CSS)
+
+By the time it reaches the browser, it is just plain CSS.
+
+**Read More**:
+
+- [Purge CSS Config](/docs/config/shilp-config-file#purge)
+- [Lightning CSS Config](/docs/config/shilp-config-file#transpile)
+
+</section>
+
+<section>
+
+## Shilp Config in Nutshell
+
+- **Values** define raw data
+- **Theme** organize values
+- **Intents** group utilities
+- **Utilities** are the actual keywords you write inside intents
+- **Properties** map intent and utilities to real CSS
+- **Mixins** handle states and conditions
+- **Components** generates dynamic classes ready to use
+- **Purge CSS** removes unused styles
+- **Lightning CSS** prepares the final output
+
+Because everything is defined in config:
+
+- You can extend it
+- You can override it
+- You can remove parts
+
+Shilp CSS is structured configuration that generates plain CSS.
+
+That’s it.
+
+</section>
+
+<section>
+
+## Basic Structure
+
+Below is the basic structure of `shilp.config.js` file. For a deeper explanation
+of how the file is processed, see
+[Shilp Config File](/config/shilp-config-file).
+
+```js title="shilp.config.js"
+const shilpConfig = {
+  // scss config: dev environment + build time
+  scss: { ... },
+
+  // Build & Output
+  source: "" or [],
+  purge: (options) => { ... },
+  colorFormat: "oklch" or "rgb",
+  transpile: (options) => { ... },
+
+  // default config: replace objects completely
+  values: { ... },
+  valueResolvers: { ... },
+  theme: (values) => { ... } or { ... },
+  inlineTheme: { ... },
+  properties: { ... },
+  intents: { ... },
+  components: { ... },
+  mixins: { ... },
+
+  // extend default config: deep merge objects with default config
+  extend: {
+    values: { ... },
+    valueResolvers: { ... },
+    theme: (values, defaultTheme) => { ... } or { ... },
+    inlineTheme: { ... }
+    properties: { ... },
+    intents: { ... },
+    components: { ... },
+    mixins: { ... }
+  },
+}
+
+export default shilpConfig;
+```
+
+</section>
+
+<section>
+
+## How to Understand the Config
+
+If you want to fully understand how Shilp CSS works, read the various
+configurations in following order:
+
+| Index | Config                                              | Description                                              |
+| ----- | --------------------------------------------------- | -------------------------------------------------------- |
+| 1     | [Shilp Config File](/docs/config/shilp-config-file) | Overall structure and available options                  |
+| 2     | [Intents](/docs/config/intents)                     | How intents are identified by pattern and processed      |
+| 3     | [Utilities](/docs/config/utilities)                 | How utilities processed                                  |
+| 4     | [Properties](/docs/config/properties)               | How intents, utilities are mapped to real css properties |
+| 5     | [Values](/docs/config/values)                       | The raw data set of values                               |
+| 6     | [Theme](/docs/config/theme)                         | How values are organized                                 |
+| 7     | [Mixins](/docs/config/mixins)                       | Conditional styling                                      |
+| 8     | [Components](/docs/config/components)               | Generated classes                                        |
+
+This order follows how the system is designed internally.
+
+Take it step by step. Everything connects.
+
+</section>

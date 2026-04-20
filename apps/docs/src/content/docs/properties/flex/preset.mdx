@@ -1,0 +1,45 @@
+---
+title: "preset"
+---
+
+# preset
+
+`flex` property
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		flex: {
+			preset: {
+				property: "flex: <v><i>;",
+				values: {
+					// flex: [grow] [shrink] [basis];
+					1: "1 1 0%",
+					auto: "1 1 auto",
+					initial: "0 1 auto",
+					none: "none",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

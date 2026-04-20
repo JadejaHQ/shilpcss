@@ -1,0 +1,52 @@
+---
+title: "exit"
+---
+
+# exit
+
+exit animation
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		animate: {
+			exit: {
+				property: "<v>",
+				special: true,
+				values: {
+					DEFAULT: `
+						animation-name: exit<i>;
+						animation-duration: 0.25s<i>;
+					`,
+					unset: `
+						--ext-opct: unset<i>;
+						--ext-scl: unset<i>;
+						--ext-rtt: unset<i>;
+						--ext-mv-x: unset<i>;
+						--ext-mv-y: unset<i>;
+					`,
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

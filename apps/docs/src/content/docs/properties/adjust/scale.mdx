@@ -1,0 +1,76 @@
+---
+title: "scale"
+---
+
+# scale
+
+scale element
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		adjust: {
+			scale: {
+				DEFAULT: {
+					property: "--scl: scale(<n><v>, <n><v>)<i>;",
+					themeKey: "fractions",
+					values: {
+						DEFAULT: "1.1",
+					},
+				},
+
+				"3d": {
+					property: "--scl: scale3d(<n><v>, <n><v>, <n><v>)<i>;",
+					themeKey: "fractions",
+					values: {
+						DEFAULT: "1.1",
+					},
+				},
+
+				x: {
+					property: "--scl-x: scaleX(<n><v>)<i>;",
+					themeKey: "fractions",
+					values: {
+						DEFAULT: "1.1",
+					},
+				},
+
+				y: {
+					property: "--scl-y: scaleY(<n><v>)<i>;",
+					themeKey: "fractions",
+					values: {
+						DEFAULT: "1.1",
+					},
+				},
+
+				z: {
+					property: "--scl-z: scaleZ(<n><v>)<i>;",
+					themeKey: "fractions",
+					values: {
+						DEFAULT: "1.1",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

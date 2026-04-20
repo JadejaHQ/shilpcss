@@ -1,0 +1,86 @@
+{
+	"label": "properties",
+	"items": [
+		{
+			"name": "index",
+			"label": "Overview",
+			"title": "properties overview"
+		},
+		{
+			"type": "folder",
+			"name": "adjust"
+		},
+		{
+			"type": "folder",
+			"name": "animate"
+		},
+		{
+			"type": "folder",
+			"name": "bg"
+		},
+		{
+			"type": "folder",
+			"name": "border"
+		},
+		{
+			"type": "folder",
+			"name": "filter"
+		},
+		{
+			"type": "folder",
+			"name": "flex"
+		},
+		{
+			"type": "folder",
+			"name": "form"
+		},
+		{
+			"type": "folder",
+			"name": "grid"
+		},
+		{
+			"type": "folder",
+			"name": "layout"
+		},
+		{
+			"type": "folder",
+			"name": "list"
+		},
+		{
+			"type": "folder",
+			"name": "live"
+		},
+		{
+			"type": "folder",
+			"name": "mask"
+		},
+		{
+			"type": "folder",
+			"name": "phase"
+		},
+		{
+			"type": "folder",
+			"name": "position"
+		},
+		{
+			"type": "folder",
+			"name": "size"
+		},
+		{
+			"type": "folder",
+			"name": "space"
+		},
+		{
+			"type": "folder",
+			"name": "svg"
+		},
+		{
+			"type": "folder",
+			"name": "table"
+		},
+		{
+			"type": "folder",
+			"name": "text"
+		}
+	]
+}

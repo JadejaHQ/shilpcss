@@ -1,0 +1,74 @@
+---
+title: "gap"
+---
+
+# gap
+
+controls text column sizing algorithm
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			gap: {
+				DEFAULT: {
+					property: "letter-spacing: <n><v><i>;",
+					resolve: "spacing",
+					values: {
+						normal: "normal",
+						DEFAULT: "0.0125em",
+						md: "0.025em",
+						lg: "0.05em",
+						xl: "0.1em",
+						0: 0,
+						1: "1px",
+						2: "2px",
+						3: "3px",
+						4: "4px",
+						6: "6px",
+						8: "8px",
+					},
+				},
+
+				word: {
+					property: "word-spacing: <n><v><i>;",
+					resolve: "spacing",
+					values: {
+						normal: "normal",
+						DEFAULT: "0.0125em",
+						md: "0.025em",
+						lg: "0.05em",
+						xl: "0.1em",
+						0: 0,
+						1: "1px",
+						2: "2px",
+						3: "3px",
+						4: "4px",
+						6: "6px",
+						8: "8px",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

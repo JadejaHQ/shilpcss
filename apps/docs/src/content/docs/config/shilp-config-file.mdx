@@ -1,0 +1,456 @@
+---
+title: "Shilp Config File"
+---
+
+# Shilp Config File
+
+`shilp.config.js` controls how Shilp CSS behaves. It shapes the system before
+CSS is generated.
+
+In other words, it is the brain of Shilp CSS. It works kind of similar to
+[Tailwind CSS v3](https://v3.tailwindcss.com/docs/configuration).
+
+If you understand this file, you understand how Shilp CSS works.
+
+---
+
+<section>
+
+## The Structure
+
+Below is the full shape of the config file. _Almost_ everything is just nested
+objects.
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	// scss config: dev environment + build time
+  scss: {
+		imports: "",
+		options: (options) => { ... }
+	},
+
+  // Build & Output
+  source: "" or [],
+  purge: (options) => { ... },
+  colorFormat: "oklch" or "rgb",
+  transpile: (options) => { ... },
+
+  // override default config: replaces objects completely
+  values: { ... },
+	valueResolvers: { ... },
+  theme: (values) => { ... } or { ... },
+	inlineTheme: { ... },
+  properties: { ... },
+  intents: { ... },
+  components: { ... },
+  mixins: { ... },
+
+  // extend default config: adds / modifies root-level config (deep merge)
+  extend: {
+    values: { ... },
+		valueResolvers: { ... },
+    theme: (values, inBuiltTheme) => { ... } or { ... },
+		inlineTheme: { ... },
+    properties: { ... },
+    intents: { ... },
+    components: { ... },
+    mixins: { ... }
+  }
+}
+
+export default shilpConfig;
+```
+
+</section>
+
+<section>
+
+## How Config File is Processed
+
+The process is simple:
+
+1. Load internal default config to root-level
+2. Override internal default config with your root-level config if provided
+3. Deep merge from `shilpConfig.extend` to root-level config
+4. Freeze the final configuration
+5. Start generating CSS
+
+_Root level keys replace defaults. extend keys merge into defaults._
+
+### Root Level
+
+<Alert variant="danger">
+
+Root-level config object, overrides internal default config completely. This is
+a full override.
+
+`Root = full override`
+
+Use this only if you want complete control.
+
+```js title="Override theme config"
+const shilpConfig = {
+  source: "react",
+  // other config
+
+  theme: { ... },
+
+  extend: {}
+}
+
+export default shilpConfig;
+```
+
+</Alert>
+
+### Extend
+
+Inside `extend`, everything is deep merged with the root-level config or in
+other words adds / modifies part of the root-level config.
+
+<Alert variant="info">
+
+This is the recommended approach.
+
+</Alert>
+
+```js title="Extend theme config"
+const shilpConfig = {
+  source: "react",
+  // other config
+
+  extend: {
+    theme: { ... }
+  }
+}
+
+export default shilpConfig;
+```
+
+In most cases, extend is safer. Use root-level replacement only when you want
+full control.
+
+</section>
+
+<section>
+
+## Core System Config
+
+These define how Shilp CSS used to generates plain css.
+
+At a high level:
+
+| Config     | Description                               | Documentation                   |
+| ---------- | ----------------------------------------- | ------------------------------- |
+| Values     | Raw primitives & Resolver methods         | [Read](/docs/config/values)     |
+| Theme      | Structured tokens & Inline theme function | [Read](/docs/config/theme)      |
+| Properties | Map utilities to CSS properties           | [Read](/docs/config/properties) |
+| Intents    | Group and Filter utilities                | [Read](/docs/config/intents)    |
+| Components | Generate ready to use classes             | [Read](/docs/config/components) |
+| Mixins     | Generate conditional selectors            | [Read](/docs/config/mixins)     |
+
+</section>
+
+<section>
+
+## SCSS Config
+
+Controls how SCSS is processed during development and build time.
+
+| Option         | Type       | Description                                                |
+| -------------- | ---------- | ---------------------------------------------------------- |
+| `scss.imports` | `string`   | SCSS modules to preload before processing                  |
+| `scss.options` | `function` | Returns SCSS compilation options passed to the SCSS JS API |
+
+### imports
+
+A string of SCSS imports that are automatically included before processing.
+
+Useful when your styles depend on shared SCSS.
+
+For example: [Mixins](/docs/config/mixins) uses `list` module from SCSS so it is
+added (`@use "sass:list";`) to the `imports` internally by default.
+
+<Alert variant="danger">
+
+While adding imports, don't forget to end each import statement with colon
+(`;`). Internally it is used to split all the imports and then only unique
+imports are passed to SCSS compiler.
+
+</Alert>
+
+### options
+
+A function that receives the SCSS compilation options.
+
+| Option                   | Type     | Description                                                         |
+| ------------------------ | -------- | ------------------------------------------------------------------- |
+| `options.defaultOptions` | `object` | Defaults options passed to the **Purge CSS**                        |
+| `options.css`            | `string` | Raw CSS string with SCSS modules imports (added at top)             |
+| `options.filePath`       | `string` | Path of the raw CSS string (css files without SCSS modules imports) |
+
+<Alert variant="info">
+
+In the above table `options` is argument passed to the
+`shilpConfig.scss.options` function. don't get confused.
+
+```js
+const shilpConfig = {
+	source: "react",
+
+	scss: {
+		imports: "...",
+		options: (options) => { ... }
+	}
+};
+
+export default shilpConfig;
+```
+
+</Alert>
+
+```js title="Default options for SCSS"
+const defaultOptions = {
+	// No Shilp CSS default options, configured as of now
+};
+```
+
+<Alert variant="info">
+
+No Shilp CSS default options, configured as of now. SCSS's internal
+configuration is good.
+
+</Alert>
+
+You can modify or replace the options before they are passed to **SCSS**.
+
+<Alert variant="danger">
+
+If you define `scss.options` config, Your returned object becomes final **SCSS**
+config.
+
+</Alert>
+
+If you don’t define `scss.options` config, `defaultOptions` are passed to
+**SCSS**.
+
+See:
+[SCSS `compileString` Options](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/)
+
+</section>
+
+<section>
+
+## Build & Output Config
+
+**After css is generated**, these options optimizes it.
+
+### source
+
+<Alert variant="info">
+
+This is the **only mandatory option** Shilp CSS expects to add purging
+functionality.
+
+If not provided anything, purging will be skipped completely.
+
+</Alert>
+
+It defines which markup files are scanned for removing unused styles
+(_purging_).
+
+| Source    | Description                                                                                          |
+| --------- | ---------------------------------------------------------------------------------------------------- |
+| `null`    | It skips purging completely                                                                          |
+| `"react"` | Adds react.js sources `["./dist/**/*.{html,js}"]`                                                    |
+| `"vue"`   | Adds vue.js sources `["./dist/**/*.{html,js}"]`                                                      |
+| `[...]`   | For [Custom globs file pattern](https://github.com/isaacs/node-glob/blob/main/README.md#glob-primer) |
+
+By default, Shilp CSS recommends scanning build output folders for more accurate
+and efficient purging.
+
+<Alert variant="info">
+
+`source` feeds directly into **Purge CSS**'s `content` option.
+
+</Alert>
+
+### purge
+
+A function that receives the final purge options for removing unused styles.
+
+| Option                   | Type     | Description                                  |
+| ------------------------ | -------- | -------------------------------------------- |
+| `options.defaultOptions` | `object` | Defaults options passed to the **Purge CSS** |
+| `options.css`            | `string` | Raw CSS string                               |
+| `options.filePath`       | `string` | Path of the raw CSS string                   |
+
+```js title="Default options for Purge CSS"
+const defaultOptions = {
+	content: ["./dist/**/*.{html,js}"], // as source is "react"
+	css: [{ raw: css }], // css is raw styles string
+	safelist: [],
+	// keep below options false for now, more will be explained in `/docs/life-cycle/purging`
+	variables: false,
+	keyframes: false,
+	fontFace: false,
+};
+```
+
+You can modify or replace the options before they are passed to **Purge CSS**.
+
+<Alert variant="danger">
+
+If you define `purge` config, Your returned object becomes final **Purge CSS**
+config.
+
+</Alert>
+
+If you don’t define `purge` config, `defaultOptions` are passed to **Purge
+CSS**.
+
+See: [Purge CSS Options](https://purgecss.com/configuration.html#options)
+
+<Alert variant="info">
+
+There is known issue related to Purge CSS integration specifically for server
+rendered apps like Next or Nuxt.
+
+This will be addressed in future releases (before the **v1.0.0 stable
+release**).
+
+</Alert>
+
+### colorFormat
+
+Default value is `"oklch"`.
+
+All the colors authoring happens in OKLCH format irrespecitve of the value of
+this option.
+
+| Color Format | Output                                   |
+| ------------ | ---------------------------------------- |
+| `"oklch"`    | stays as `oklch` format                  |
+| `"rgb"`      | `oklch` format converted to `rgb` format |
+
+<Alert>
+
+This conversion happens just before **Lightning CSS** processing.
+
+Shilp CSS uses an **isolated Lightning CSS instance with a lower browser
+baseline** to safely transform the color format.
+
+</Alert>
+
+#### Important Note For RGB Format
+
+If you set `colorFormat: "rgb"`, It will conflict with `@supports` rules that
+check for `oklch` support.
+
+<Alert variant="danger">
+
+The conversion process replaces `oklch` with `rgb`, so
+`@supports (color: oklch(...)) { ... }` will becomes
+`@supports (color: rgb(...)) { ... }` and conditions will no longer behave as
+expected.
+
+Example:
+
+```css title="variables.css"
+@supports (color: oklch(0% 0 0)) {
+	html,
+	:host {
+		/* gradient gamut */
+		--grdnt-gmt: in oklch;
+	}
+}
+```
+
+</Alert>
+
+If your project relies on `@supports (color: oklch(...)) { ... }` checks, keep
+the default `colorFormat: "oklch"`.
+
+### transpile
+
+A function that receives the final **Lightning CSS** options for styles
+optimization.
+
+<Alert variant="info">
+
+Transpilation process runs **after the build generation**. So, if you apply some
+config and it is not being reflected in development environment (local dev
+server), It is the expected behaviour.
+
+</Alert>
+
+| Option                           | Type       | Description                                       |
+| -------------------------------- | ---------- | ------------------------------------------------- |
+| `options.defaultOptions`         | `object`   | Defaults options passed to the **Lightning CSS**  |
+| `options.DEFAULT_BROWSER_TARGET` | `string`   | Shilp CSS baseline. default: `"since 2023-01-31"` |
+| `options.createCSSTargets`       | `function` | Helper function to create baseline browser target |
+| `options.css`                    | `string`   | Raw CSS string                                    |
+| `options.originalCSS`            | `string`   | Raw CSS string in `OKLCH` format (**always**)     |
+| `options.filePath`               | `string`   | Path of the raw CSS string                        |
+
+```js title="Default options for Lightning CSS"
+const defaultOptions = {
+	// `finalCSS` is after color format conversion with `colorFormat` option
+	code: Buffer.from(finalCSS),
+	minify: true,
+	sourceMap: true,
+	// DEFAULT_BROWSER_TARGET: since 2023-01-31
+	targets: createCSSTargets(DEFAULT_BROWSER_TARGET),
+	nonStandard: {
+		deepSelectorCombinator: true, // vue, angular
+	},
+};
+```
+
+You can modify or replace the options before they are passed to **Lightning
+CSS**.
+
+<Alert variant="danger">
+
+If you define `transpile` config, Your returned object becomes final **Lightning
+CSS** config.
+
+</Alert>
+
+If you don’t define `transpile` config, `defaultOptions` are passed to
+**Lightning CSS**.
+
+See: [Lightning CSS Options](https://lightningcss.dev/docs.html)
+
+<Alert variant="info">
+
+In Lightning CSS documentation, options are scattered across multiple pages.
+
+</Alert>
+
+</section>
+
+<section>
+
+## Development vs Build
+
+While running in development (on your local machine):
+
+1. Your `.css` files are read and processed
+2. Plain CSS is generated
+3. The result is served to the browser
+
+This happens inside the development environment. It is simply build-time
+processing happening live.
+
+During production build:
+
+1. Your `.css` files are read and processed
+2. Plain CSS is generated
+3. Unused styles are removed (if enabled)
+4. Final CSS is optimized
+5. Static CSS file is emitted
+
+Now, Deploy 🚀 and Rock 🤘🏻🪩.
+
+</section>

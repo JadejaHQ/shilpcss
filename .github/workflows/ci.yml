@@ -1,0 +1,49 @@
+# Purpose: Verify repository builds
+# Trigger: pull_request
+
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - main
+    types:
+      - opened
+      - closed
+      - synchronize
+
+permissions:
+  contents: read # for actions/checkout
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      # 2. Setup PNPM (to provide access to setup-node `cache: pnpm`)
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v5
+        with:
+          version: 10.x.x
+          run_install: false
+          cache: true
+
+      # 3. Setup Node.js
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+
+      # 4. Install dependencies (prevent when lockfile is out of sync)
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      # 5. Build packages
+      - name: Build all packages
+        run: pnpm build

@@ -1,0 +1,45 @@
+---
+title: "is"
+---
+
+# is
+
+element's is position related to parent
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		position: {
+			is: {
+				property: "position: <v><i>;",
+				values: {
+					static: "static",
+					fixed: "fixed",
+					absolute: "absolute",
+					relative: "relative",
+					sticky: "sticky",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,51 @@
+---
+title: "skin"
+---
+
+# skin
+
+override native style of form controls
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		form: {
+			skin: {
+				property: "appearance: <v><i>;",
+				values: {
+					none: "none",
+					auto: "auto",
+					search: "search-field",
+					textarea: "textarea",
+					checkbox: "checkbox",
+					radio: "radio",
+					menu: "menulist",
+					list: "listbox",
+					meter: "meter",
+					progress: "progress-bar",
+					button: "button",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

@@ -1,0 +1,56 @@
+---
+title: "events"
+---
+
+# events
+
+controls if element reacts to mouse events
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		live: {
+			events: {
+				property: "pointer-events: <v><i>;",
+				values: {
+					// general
+					auto: "auto",
+					none: "none",
+
+					// svg only
+					all: "all",
+					painted: "painted",
+					fill: "fill",
+					stroke: "stroke",
+					box: "bounding-box",
+					visible: {
+						DEFAULT: "visible",
+						painted: "visiblePainted",
+						fill: "visibleFill",
+						stroke: "visibleStroke",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

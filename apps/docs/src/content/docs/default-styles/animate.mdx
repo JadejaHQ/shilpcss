@@ -1,0 +1,344 @@
+---
+title: "animate.css"
+---
+
+# animate.css
+
+`animate.css` defines the **motion system used by Shilp CSS**.
+
+Like other parts of Shilp CSS, the system relies heavily on **CSS variables** so
+utilities can compose motion instead of replacing it.
+
+---
+
+<section>
+
+## What animate.css Provides
+
+This file supplies the motion primitives used by animation and transition
+utilities.
+
+| System              | Purpose                                       |
+| ------------------- | --------------------------------------------- |
+| Timing functions    | Standard easing curves used across animations |
+| Transition groups   | Predefined sets of properties for transitions |
+| Enter & exit motion | Composable animation states                   |
+| Animation keyframes | Reusable motion presets                       |
+
+These primitives allow animation utilities to produce consistent motion across
+the UI.
+
+</section>
+
+<section>
+
+## Timing Functions
+
+The file defines commonly used easing curves.
+
+| Intent                     | Custom CSS                                             |
+| -------------------------- | ------------------------------------------------------ |
+| `@animate flow-ease;`      | `animation-timing-function: theme(flow-ease);`         |
+| `@phase flow-ease-in-out;` | `transition-timing-function: theme(flow-ease-in-out);` |
+
+These values are used by animation and transition utilities so motion across the
+system follows the same curves.
+
+Check available easing curves:
+
+- [animate.css Reference](#animatecss-reference)
+- [Animation Timing Function](/docs/properties/animate/flow)
+- [Transition Timing Function](/docs/properties/phase/flow)
+
+</section>
+
+<section>
+
+## Transition Property Groups
+
+Transitions often apply to multiple properties.
+
+Instead of repeating long lists of properties, this file defines reusable
+groups.
+
+| Intent               | Output                                    |
+| -------------------- | ----------------------------------------- |
+| `@phase for-all;`    | `transition-property: all;`               |
+| `@phase for-colors;` | `transition-property: var(--trnst-clrs);` |
+
+This allows transition utilities to target consistent property sets.
+
+Check available properties:
+
+- [animate.css Reference](#animatecss-reference)
+- [Transition Property](/docs/properties/phase/for)
+
+</section>
+
+<section>
+
+## Enter & Exit Animation
+
+The most important part of this file is the **enter & exit motion composition**.
+
+Instead of defining many animation variants, Shilp CSS composes animations using
+variables.
+
+Variables describe the initial and / or final state of an animation. This can be
+composed as **fade**, **slide**, **zoom** for enter and exit individually.
+
+<Alert variant="info">
+
+The enter and exit keyframes are adapted from
+[`tailwindcss-animate` Package](https://www.npmjs.com/package/tailwindcss-animate)
+to provide a composable animation system.
+
+</Alert>
+
+See:
+
+- [animate.css Reference](#animatecss-reference)
+- [Animate Intent](/docs/properties/animate)
+
+</section>
+
+<section>
+
+## Animation Presets
+
+The file also includes several reusable animation presets.
+
+These are common UI animations.
+
+| Animation | Purpose                 |
+| --------- | ----------------------- |
+| spin      | continuous rotation     |
+| ping      | expanding ripple effect |
+| pulse     | fading emphasis         |
+| bounce    | vertical bounce         |
+| wiggle    | playful rotation        |
+
+These animations are commonly used for:
+
+- loading indicators
+- notifications
+- interactive UI elements
+
+See:
+
+- [animate.css Reference](#animatecss-reference)
+- [Animate Preset](/docs/properties/animate/preset)
+
+</section>
+
+<section>
+
+## Customization
+
+You can override any variable in your own styles.
+
+In most cases, customization should happen through **variables**, not style
+rules.
+
+Example:
+
+```css title="override-animate.css"
+/* set default border color to element, if it has border */
+html,
+:host {
+	/* --ease: cubic-bezier(0.7, 0.3, 0.5, 0.8); */
+	--ease: cubic-bezier(0.6, 0.2, 0.3, 0.9);
+
+	/* transition property */
+	/* --trnst-pprts:
+		var(--trnst-clrs), opacity, box-shadow, transform, var(--trnst-fltrs); */
+	--trnst-pprts: opacity, transform;
+}
+```
+
+This approach updates the entire system consistently.
+
+See:
+[Modifying Default Styles](/docs/default-styles/overview#modifying-default-styles).
+
+</section>
+
+<section>
+
+## animate.css Reference
+
+<Alert>
+
+If any part of this file feels difficult to understand, copy the snippet and
+paste it into [ChatGPT](https://chatgpt.com) and ask it to explain the code in
+simple words.
+
+</Alert>
+
+```css title="animate.css"
+/*
+
+Shilp CSS Motion System
+
+Purpose:
+Provide timing functions, transition groups, and animation keyframes used by
+motion utilities.
+
+This file enables composable animations through CSS variables. Utilities update
+animation state variables while shared keyframes generate the final animation.
+
+Includes:
+- timing function variables
+- transition property groups
+- enter / exit animation system
+- animation presets
+
+Customization:
+Override variables in your own styles to change behavior globally.
+
+Documentation:
+https://shilpcss.com/docs/default-styles/animate
+
+*/
+
+/* ============================================================================================= */
+
+.purge-ignore-start {
+	all: unset;
+}
+
+/* ============================================================================================= */
+
+/* ================================================================================================
+	BASE VARIABLES - HTML, HOST
+================================================================================================ */
+
+/* Define CSS variables with optional value */
+html,
+:host {
+	/* */
+
+	/* ==============================================================================================
+		TIMING FUNCTIONS
+	============================================================================================== */
+
+	--ease: cubic-bezier(0.7, 0.3, 0.5, 0.8);
+	--ease-in: cubic-bezier(0.4, 0, 1, 1);
+	--ease-out: cubic-bezier(0, 0, 0.2, 1);
+	--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+	--ease-warp: cubic-bezier(0.9, 0.15, 0.1, 0.9);
+	--ease-pulse: cubic-bezier(0.4, 0, 0.6, 1);
+
+	/* ==============================================================================================
+		TRANSITION PROPERTIES
+	============================================================================================== */
+
+	/* colors */
+	--trnst-clrs:
+		color, background-color, border-color, text-decoration-color, fill, stroke;
+	/* filters */
+	--trnst-fltrs: filter, -webkit-backdrop-filter, backdrop-filter;
+	/* properties */
+	--trnst-pprts:
+		var(--trnst-clrs), opacity, box-shadow, transform, var(--trnst-fltrs);
+
+	/* ==============================================================================================
+		ANIMATION
+	============================================================================================== */
+
+	/* enter */
+	--entr-opct: ;
+	--entr-scl: ;
+	--entr-rtt: ;
+	--entr-mv-x: ;
+	--entr-mv-y: ;
+	/* exit */
+	--ext-opct: ;
+	--ext-scl: ;
+	--ext-rtt: ;
+	--ext-mv-x: ;
+	--ext-mv-y: ;
+}
+
+/* ================================================================================================
+	ENTER / EXIT ANIMATION KEYFRAMES
+================================================================================================ */
+
+@keyframes enter {
+	from {
+		opacity: var(--entr-opct);
+		/* transform: translate3d(var(--entr-trslt-x), var(--entr-trslt-y), 0)
+			scale3d(var(--entr-scl), var(--entr-scl), var(--entr-scl))
+			rotate(var(--entr-rtt)); */
+		translate: var(--entr-mv-x) var(--entr-mv-y) 0;
+		scale: var(--entr-scl) var(--entr-scl) var(--entr-scl);
+		rotate: var(--entr-rtt);
+	}
+}
+
+@keyframes exit {
+	to {
+		opacity: var(--ext-opct);
+		/* transform: translate3d(var(--ext-mv-x), var(--ext-mv-y), 0)
+			scale3d(var(--ext-scl), var(--ext-scl), var(--ext-scl))
+			rotate(var(--ext-rtt)); */
+		translate: var(--ext-mv-x) var(--ext-mv-y) 0;
+		scale: var(--ext-scl) var(--ext-scl) var(--ext-scl);
+		rotate: var(--ext-rtt);
+	}
+}
+
+/* ================================================================================================
+	ANIMATION PRESET KEYFRAMES
+================================================================================================ */
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes ping {
+	75%,
+	100% {
+		transform: scale(2);
+		opacity: 0;
+	}
+}
+
+@keyframes pulse {
+	50% {
+		opacity: 0.5;
+	}
+}
+
+@keyframes bounce {
+	0%,
+	100% {
+		transform: translateY(-25%);
+		animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+	}
+	50% {
+		transform: none;
+		animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+	}
+}
+
+@keyframes wiggle {
+	0%,
+	100% {
+		transform: rotate(-3deg);
+	}
+	50% {
+		transform: rotate(3deg);
+	}
+}
+
+/* ============================================================================================= */
+
+.purge-ignore-end {
+	all: unset;
+}
+```
+
+</section>

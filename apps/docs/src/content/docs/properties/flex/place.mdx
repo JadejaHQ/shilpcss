@@ -1,0 +1,47 @@
+---
+title: "place"
+---
+
+# place
+
+align flex items (main & cross axis)
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		flex: {
+			place: {
+				property: "place-content: <v><i>;",
+				values: {
+					start: "flex-start",
+					center: "center",
+					end: "flex-end",
+					between: "space-between",
+					around: "space-around",
+					evenly: "space-evenly",
+					stretch: "stretch",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

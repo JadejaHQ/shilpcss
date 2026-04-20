@@ -1,0 +1,47 @@
+---
+title: "width"
+---
+
+# width
+
+element’s height
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		size: {
+			w: {
+				property: "width: <v><i>;",
+				resolve: "spacing",
+				themeKey: "spacing",
+				values: {
+					min: "min-content",
+					max: "max-content",
+					fit: "fit-content",
+					screen: "100vw",
+					stretch: "stretch",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

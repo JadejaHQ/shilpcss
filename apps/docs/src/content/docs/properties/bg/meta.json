@@ -1,0 +1,7 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@bg",
+	"title": "bg (a.k.a. background) intent",
+	"items": ["attachment", "blend", "clip", "color", "gradient", "image"]
+}

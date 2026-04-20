@@ -1,0 +1,68 @@
+---
+title: "object"
+---
+
+# object
+
+fits and positions content in container
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			object: {
+				fit: {
+					property: "object-fit: <v><i>;",
+					values: {
+						none: "none",
+						contain: "contain",
+						cover: "cover",
+						fit: "fit",
+						scale: {
+							down: "scale-down",
+						},
+					},
+				},
+
+				position: {
+					property: "object-position: <v><i>;",
+					values: {
+						top: {
+							DEFAULT: "top",
+							left: "left top",
+							right: "right top",
+						},
+						bottom: {
+							DEFAULT: "bottom",
+							left: "left bottom",
+							right: "right bottom",
+						},
+						left: "left",
+						right: "right",
+						center: "center",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

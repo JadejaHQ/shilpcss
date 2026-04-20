@@ -1,0 +1,24 @@
+{
+	"label": "values",
+	"items": [
+		{
+			"name": "index",
+			"label": "overview",
+			"title": "values overview"
+		},
+		"angles",
+		"blend",
+		"border",
+		"colors",
+		"filter",
+		{
+			"name": "flex-grid",
+			"label": "Flex & Grid"
+		},
+		"flow",
+		"global-values",
+		"numbers",
+		"spacing",
+		"time"
+	]
+}

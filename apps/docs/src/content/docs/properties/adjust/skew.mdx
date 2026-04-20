@@ -1,0 +1,54 @@
+---
+title: "skew"
+---
+
+# skew
+
+skew element
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		adjust: {
+			skew: {
+				DEFAULT: {
+					property: "--skw: skew(<n><v>, <n><v>)<i>;",
+					themeKey: "angles",
+					values: {},
+				},
+
+				x: {
+					property: "--skw: skewX(<n><v>)<i>;",
+					themeKey: "angles",
+					values: {},
+				},
+
+				y: {
+					property: "--skw-y: skewY(<n><v>)<i>;",
+					themeKey: "angles",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

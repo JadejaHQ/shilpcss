@@ -1,0 +1,21 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@live",
+	"title": "live intent",
+	"items": [
+		{
+			"name": "caret",
+			"label": "caret color"
+		},
+		"cursor",
+		"events",
+		"outline",
+		"scroll",
+		"scroll-margin",
+		"scroll-padding",
+		"scroll-snap",
+		"select",
+		"touch"
+	]
+}

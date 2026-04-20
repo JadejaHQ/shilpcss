@@ -1,0 +1,43 @@
+---
+title: "mode"
+---
+
+# mode
+
+sets how the mask image is applied
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		mask: {
+			mode: {
+				property: "mask-mode: <v><i>;",
+				values: {
+					alpha: "alpha",
+					luminance: "luminance",
+					match: "match-source",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

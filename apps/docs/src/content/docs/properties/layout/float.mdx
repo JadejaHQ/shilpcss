@@ -1,0 +1,55 @@
+---
+title: "float"
+---
+
+# float
+
+positions element and letting content wrap around
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			float: {
+				DEFAULT: {
+					property: "float: <v><i>;",
+					values: {
+						left: "left",
+						right: "right",
+						none: "none",
+					},
+				},
+
+				clear: {
+					property: "clear: <v><i>;",
+					values: {
+						left: "left",
+						right: "right",
+						none: "none",
+						both: "both",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

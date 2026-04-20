@@ -1,0 +1,47 @@
+---
+title: "line height"
+---
+
+# line height
+
+controls text column sizing algorithm
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			h: {
+				property: "line-height: <v><i>;",
+				values: {
+					normal: 1,
+					xs: 1.25,
+					sm: 1.375,
+					base: 1.5,
+					md: 1.625,
+					lg: 1.75,
+					xl: 2,
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

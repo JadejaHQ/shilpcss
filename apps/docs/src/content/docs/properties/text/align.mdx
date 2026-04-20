@@ -1,0 +1,64 @@
+---
+title: "align"
+---
+
+# align
+
+vertical alignment of text (cross axis)
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		text: {
+			align: {
+				x: {
+					property: "text-align: <v><i>;",
+					values: {
+						left: "left",
+						right: "right",
+						center: "center",
+						justify: "justify",
+						start: "start",
+						end: "end",
+					},
+				},
+
+				y: {
+					property: "vertical-align: <v><i>;",
+					values: {
+						baseline: "baseline",
+						top: "top",
+						middle: "middle",
+						bottom: "bottom",
+						to: {
+							top: "text-top",
+							bottom: "text-bottom",
+						},
+						sub: "sub",
+						sup: "sup",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

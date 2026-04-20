@@ -1,0 +1,39 @@
+---
+title: "@motion Mixin"
+---
+
+# @motion Mixin
+
+motion-related selectors like reduced motion
+
+<Alert variant="info">
+
+This page contains only the **mixins configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	target: "react",
+
+	mixins: {
+		motion: {
+			variants: {
+				safe: "@media (prefers-reduced-motion: no-preference)",
+				reduce: "@media (prefers-reduced-motion: reduce)",
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

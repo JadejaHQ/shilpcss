@@ -1,0 +1,60 @@
+---
+title: "backdrop shadow"
+---
+
+# backdrop shadow
+
+backdrop shadow filter
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		filter: {
+			backdrop: {
+				shadow: {
+					DEFAULT: {
+						property: "backdrop-filter: drop-shadow(<v>)<i>;",
+						values: {
+							none: "0 0 #0000",
+							xs: "var(--bd-sdw-xs)",
+							sm: "var(--bd-sdw-sm)",
+							DEFAULT: "var(--bd-sdw-sm)",
+							md: "var(--bd-sdw-md)",
+							lg: "var(--bd-sdw-lg)",
+							xl: "var(--bd-sdw-xl)",
+							"2xl": "var(--bd-sdw-2xl)",
+						},
+					},
+
+					color: {
+						property: "--bd-sdw-clr: <v><i>;",
+						resolve: "color",
+						themeKey: "colors",
+						variant: true,
+						values: {},
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

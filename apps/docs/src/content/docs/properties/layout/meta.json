@@ -1,0 +1,22 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@layout",
+	"title": "layout intent",
+	"items": [
+		"blend",
+		"box",
+		"float",
+		"hide",
+		"is",
+		"isolate",
+		"layer",
+		"object",
+		"opacity",
+		"overflow",
+		"ratio",
+		"shadow",
+		"show",
+		"theme"
+	]
+}

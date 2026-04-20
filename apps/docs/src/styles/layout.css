@@ -1,0 +1,105 @@
+/* ================================================================================================
+	HIERARCHY
+================================================================================================ */
+
+/*
+
+html
+-	body
+--	#root
+---		#main
+----		".page-layout .container"
+
+*/
+
+/* ================================================================================================
+	PAGE LAYOUT
+================================================================================================ */
+
+html,
+:host {
+	@size h-full;
+}
+
+/* ============================================================================================= */
+
+body {
+	@size w-screen min-h-full;
+
+	@layout is-flex overflow-x-hidden;
+	@flex flow-col;
+
+	/* set scroll position (useful when using sticky layouts) */
+	scroll-padding-top: calc(
+		var(--banner, 0px) + var(--header) + var(--content-nav-mobile, 0px) +
+			var(--docs-main-pt, 0px)
+	);
+}
+
+/* ============================================================================================= */
+
+#root {
+	@layout is-flex;
+	@flex flow-col grow;
+	@size w-full;
+	@space mx-auto;
+
+	max-width: theme(screens-mac);
+
+	/*
+		This style creates a separate stacking context for your application’s #root element.
+		This way, popups always appear above the page contents, and any `z-index` property in your styles won’t interfere with them.
+	*/
+	@layout isolate-forced;
+}
+
+/* ============================================================================================= */
+
+#main {
+	@size h-fit;
+	@layout is-flex;
+	@flex flow-col grow;
+}
+
+/* ============================================================================================= */
+
+.page-layout {
+	@flex grow;
+	@size h-fit;
+	@space py-10;
+}
+
+/* ================================================================================================
+	BOUNDARY LINES
+================================================================================================ */
+
+@screen sm {
+	.container {
+		@border thick-x;
+	}
+
+	.footer__wrapper {
+		@border thick-top;
+	}
+
+	.banner__wrapper,
+	.header__wrapper {
+		@border thick-bottom;
+	}
+}
+
+/* ============================================================================================= */
+
+@screen xl {
+	main {
+		@border thick-x;
+	}
+}
+
+/* ============================================================================================= */
+
+@screen mac {
+	#root {
+		@border thick-x;
+	}
+}

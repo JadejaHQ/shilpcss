@@ -1,0 +1,7 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "@size",
+	"title": "size intent",
+	"items": ["height", "is", "maximum", "minimum", "width"]
+}

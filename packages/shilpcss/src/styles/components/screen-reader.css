@@ -1,0 +1,25 @@
+/* https://webaim.org/techniques/css/invisiblecontent */
+/* https://v3.tailwindcss.com/docs/screen-readers */
+
+.screen-reader {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	border-width: 0;
+	clip-path: polygon(0 0);
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.screen-reader--none {
+	position: static;
+	width: auto;
+	height: auto;
+	padding: 0;
+	margin: 0;
+	overflow: visible;
+	clip-path: none;
+	white-space: normal;
+}

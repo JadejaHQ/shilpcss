@@ -1,0 +1,44 @@
+---
+title: "mode"
+---
+
+# mode
+
+fill mode
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		animate: {
+			mode: {
+				property: "animation-fill-mode: <v><i>;",
+				values: {
+					backward: "backwards",
+					forward: "forwards",
+					both: "both",
+					none: "none",
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

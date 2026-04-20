@@ -1,0 +1,325 @@
+---
+title: "Responsive Design"
+---
+
+# Responsive Design
+
+Design must adapt to screen sizes. There’s no escape.
+
+Users expect layouts to feel correct on small phones, large monitors and
+everything in between.
+
+Shilp CSS provides a small, intentional set of breakpoints and a clear,
+mobile-first approach to help you handle this cleanly.
+
+---
+
+<section>
+
+## Pre-requisites
+
+Before anything else, make sure **meta viewport** is present in your **HTML's
+`<head>`**. Without it, responsive layouts will not behave as expected.
+
+```html title="index.html"
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	<body>
+		...
+	</body>
+</html>
+```
+
+</section>
+
+<section>
+
+## Mobile First Design
+
+Shilp CSS is **mobile-first**.
+
+That means:
+
+- Base styles apply to small screens by default
+- Larger screens override them explicitly
+
+Think of it like this:
+
+1. Design for mobile first
+2. Add complexity only when screen space increases
+
+This avoids writing “**undo**” styles later.
+
+</section>
+
+<section>
+
+## Default Breakpoints
+
+Shilp CSS ships with a minimal, practical set of breakpoints.
+
+| Variant | Width  |
+| ------- | ------ |
+| xs      | 375px  |
+| sm      | 640px  |
+| md      | 768px  |
+| lg      | 1024px |
+| xl      | 1280px |
+| mac     | 1440px |
+| max     | 1920px |
+
+**JUST DO NOT FORGET TO TEST THAT ONE ODD SCREEN.**
+
+</section>
+
+<section>
+
+## Working With Breakpoints
+
+You can write responsive rules using `@screen <variant> { ... }` and this is
+replaced with `@media (<condition>) { ... }`.
+
+<Alert variant="info">
+
+Shilp CSS does not automatically add `@media screen`. You can wrap it manually
+using:
+
+```css
+@env screen {
+	@screen md {
+		...
+	}
+}
+```
+
+You don’t need `screen` because `@media` defaults to **all media types**, and in
+practice your styles are meant for screens anyway.
+
+Use print only when you want **separate styles specifically for printing**
+(e.g., hiding UI, adjusting layout for paper).
+
+</Alert>
+
+There are few approaches:
+
+### 1. Minimum Width
+
+This is recommended and mobile first approach.
+
+`@screen md { ... }` → `@media (min-width: 768px) { ... }`
+
+### 2. Maximum Width
+
+This is not recommended and use it only if there's no other way.
+
+`@screen max-md { ... }` → `@media (max-width: 767px) { ... }`
+
+Here, `max-md` means below `md`
+
+### 3. Width Range
+
+Ranges are important when a style is **valid only within a specific window**,
+not beyond it.
+
+`@screen md:mac { ... }` →
+`@media (min-width: 768px) and (max-width: 1439px) { ... }`
+
+Here, `max-*` **maximum is not allowed inside range**. it doesn't make semantic
+sense.
+
+</section>
+
+<section>
+
+## Why Mobile-First Matters
+
+Mobile-first gives you:
+
+- A stable base
+- Fewer overrides
+- Cleaner cascade
+- Better performance defaults
+- Clear upgrade path for larger screens
+
+You design for small screen first. Then progressively enhance.
+
+This reduces accidental complexity.
+
+</section>
+
+<section>
+
+## How to Design Responsively
+
+Responsive design in Shilp CSS follows a simple pattern:
+
+1. Define the mobile layout first
+2. Override only what changes
+3. Add precision only when needed
+
+### Step 1 - Start With Mobile
+
+Write the smallest, simplest version first.
+
+```css title="navigation.css"
+nav {
+	@layout is-flex;
+	@flex flow-col;
+	@space p-4 gap-4;
+}
+```
+
+This applies to all screens by default, including mobile.
+
+You do not write a mobile breakpoint. Mobile is the baseline.
+
+### Step 2 - Enhance at Larger Screens
+
+Now ask: what changes at `md`?
+
+```css title="navigation.css"
+nav {
+	@layout is-flex;
+	@flex flow-col;
+	@space p-4 gap-4;
+
+	@screen md {
+		@flex flow-row;
+		@space p-6 gap-6;
+	}
+}
+```
+
+Here, We override only what changes.
+
+### Step 3 - Add Precision Only When Needed
+
+If something needs special handling for a range:
+
+```css title="navigation.css"
+nav {
+	@layout is-flex;
+	@flex flow-col;
+	@space p-4 gap-4;
+
+	@screen md {
+		@flex flow-row;
+		@space p-6 gap-6;
+	}
+
+	@screen md:xl {
+		@text size-lg;
+	}
+}
+```
+
+Avoid adding breakpoints “_just in case_”. Add them only when layout truly
+changes.
+
+<Alert variant="info">
+
+Here, for ranges, we have defined separate mixin.
+
+1. `@screen md { ... }` - targets `≥ 768px`
+2. `@screen md:xl { ... }` - targets `768px` to `1279px`
+
+In other way, It can be written as:
+
+```css
+@screen md {
+	@screen max-xl {
+		...
+	}
+}
+```
+
+But, this is **intentionally avoided**.
+
+Shilp CSS **do not recommend nested breakpoints**. use ranged breakpoints
+instead.
+
+</Alert>
+
+### When Layout Gets Complex
+
+If responsive logic starts growing too large:
+
+- Extract components
+- Use clearer class boundaries
+- Make sure there are no nested breakpoints
+- Re-evaluate layout assumptions
+
+Responsive design is not about adding more media queries. It’s about simplifying
+structure.
+
+<Alert>
+
+Must check [Container](/docs/components/container)
+
+</Alert>
+
+### Common Mistakes to Avoid
+
+- Avoid writing desktop first and patching mobile later
+- Avoid overusing `max-*` breakpoint variants
+- Avoid adding breakpoints for minor spacing tweaks
+- Avoid duplicating layout logic across ranges
+- Aboid forgetting to test real devices
+
+Responsive CSS should feel progressive, not reactive.
+
+</section>
+
+<section>
+
+## Customization
+
+You can extend or override breakpoints in `shilp.config.js`.
+
+<Alert variant="warning">
+
+Values must be **string with px unit**.
+
+</Alert>
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		theme: {
+			screens: {
+				xs: "360px", // override: 375px to 360px
+				mid: "1536px", // new breakpoint
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+Keep the breakpoint list small and intentional. Adding too many defeats clarity.
+
+</section>
+
+<section>
+
+## Container Queries
+
+Container queries are **not included by default**.
+
+They fall slightly outside the current Shilp CSS compatibility baseline.
+
+You can still use it with raw CSS if needed. No restrictions.
+
+<Alert variant="info">
+
+It is in roadmap and will be added progressively.
+
+</Alert>
+
+</section>

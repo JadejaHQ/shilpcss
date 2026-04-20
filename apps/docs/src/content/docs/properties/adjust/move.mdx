@@ -1,0 +1,71 @@
+---
+title: "move"
+---
+
+# move
+
+move element
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		adjust: {
+			move: {
+				DEFAULT: {
+					property: "--mv: translate(<n><v>, <n><v>)<i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {},
+				},
+
+				"3d": {
+					property: "--mv: translate3d(<n><v>, <n><v>, <n><v>)<i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {},
+				},
+
+				x: {
+					property: "--mv-x: translateX(<n><v>)<i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {},
+				},
+
+				y: {
+					property: "--mv-y: translateY(<n><v>)<i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {},
+				},
+
+				z: {
+					property: "--mv-z: translateZ(<n><v>)<i>;",
+					resolve: "spacing",
+					themeKey: "spacing",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

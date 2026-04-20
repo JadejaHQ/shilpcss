@@ -1,0 +1,47 @@
+/* ================================================================================================
+	GLOBAL CSS VARIABLES - BANNER
+================================================================================================ */
+
+html {
+	--banner: theme(spacing|spacing-10);
+}
+
+/* ================================================================================================
+	BANNER
+================================================================================================ */
+
+.banner__wrapper {
+	@layout layer-4;
+	@filter backdrop-blur;
+	@bg color-bg/80;
+	@position is-sticky top-0;
+	@border thick-bottom;
+
+	height: var(--banner);
+}
+
+/* ============================================================================================= */
+
+.banner {
+	@layout is-flex;
+	@flex items-center justify-center;
+	@size h-full;
+	@space gap-2;
+
+	a {
+		@text thick-600 space-nowrap;
+		@space p-1;
+
+		@state hover {
+			@text color-accent;
+
+			@theme dark {
+				@text color-accent-400;
+			}
+
+			@motion safe {
+				@animate preset-wiggle loop-1;
+			}
+		}
+	}
+}

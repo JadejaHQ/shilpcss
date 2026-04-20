@@ -1,0 +1,54 @@
+---
+title: "Properties Overview"
+---
+
+# Properties Overview
+
+**Properties** define how intents generate real CSS rules.
+
+In simple words, properties **map intent to CSS properties and values**.
+
+Utilities are resolved through property definitions, which determine:
+
+- which intent it belongs
+- which CSS property is generated
+- how the value is resolved
+- which dataset or resolver method should be used
+
+To understand about properties and it's processing, See
+[Properties Config](/docs/config/properties).
+
+---
+
+<section>
+
+## Available Intents
+
+This section lists all built-in intents shipped with Shilp CSS.
+
+Intent are derived from properties. Shilp CSS simply **organizes properties
+under intents**.
+
+| Intent      | Description                                                        | Documentation                          |
+| ----------- | ------------------------------------------------------------------ | -------------------------------------- |
+| `@adjust`   | element's `transform` related utilities                            | [@adjust](/docs/properties/adjust)     |
+| `@animate`  | element's `animation` related utilities                            | [@animate](/docs/properties/animate)   |
+| `@bg`       | element's `background` related utilities                           | [@bg](/docs/properties/bg)             |
+| `@border`   | element's `border` related utilities                               | [@border](/docs/properties/border)     |
+| `@filter`   | element's `filter` (including `backdrop-filter`) related utilities | [@filter](/docs/properties/filter)     |
+| `@flex`     | element's `flex` layout related utilities                          | [@flex](/docs/properties/flex)         |
+| `@form`     | element's **form controls** related utilities                      | [@form](/docs/properties/form)         |
+| `@grid`     | element's `grid` layout related utilities                          | [@grid](/docs/properties/grid)         |
+| `@layout`   | **element's layout** related utilities                             | [@layout](/docs/properties/layout)     |
+| `@list`     | **list** items related utilities                                   | [@list](/docs/properties/list)         |
+| `@live`     | **user interaction** related utilities                             | [@live](/docs/properties/live)         |
+| `@mask`     | **element's masking** related utilities                            | [@mask](/docs/properties/mask)         |
+| `@phase`    | element's `transition` related utilities                           | [@phase](/docs/properties/phase)       |
+| `@position` | **element's position** related utilities                           | [@position](/docs/properties/position) |
+| `@size`     | **element's dimensions** related utilities                         | [@size](/docs/properties/size)         |
+| `@space`    | **element's spacing** related utilities                            | [@space](/docs/properties/space)       |
+| `@svg`      | `svg` related utilities                                            | [@svg](/docs/properties/svg)           |
+| `@table`    | `table` layout related utilities                                   | [@table](/docs/properties/table)       |
+| `@text`     | **element's typography** related utilities                         | [@text](/docs/properties/text)         |
+
+</section>

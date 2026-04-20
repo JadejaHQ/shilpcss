@@ -1,0 +1,116 @@
+---
+title: "Limit Lines Component"
+---
+
+# Limit Lines Component
+
+The **limit lines** component truncates text after a specified number of lines.
+
+This is useful when content length is unpredictable but the layout must remain
+consistent.
+
+Typical use cases include:
+
+- article previews
+- card descriptions
+- product listings
+- search results
+
+Instead of letting long text expand the layout, this component **limits the
+number of visible lines and hides the overflow**.
+
+---
+
+<section>
+
+## How It Works
+
+The component uses the `line-clamp` property to restrict the number of visible
+lines.
+
+| Property                               | Purpose                                   |
+| -------------------------------------- | ----------------------------------------- |
+| `overflow: hidden;`                    | hides overflowing text                    |
+| `display: -webkit-box;`                | enable multi-line truncation              |
+| `-webkit-box-orient: vertical;`        | sets vertical layout direction            |
+| `-webkit-line-clamp: var(--lines, 1);` | defines number of visible lines           |
+| `line-clamp: var(--lines, 1);`         | modern equivalent of `-webkit-line-clamp` |
+
+See: [Classes Reference](#classes-reference)
+
+</section>
+
+<section>
+
+## Setting Line Count
+
+The number of visible lines is controlled by CSS variable `--lines` (default is
+`1`).
+
+To change the number of lines, use the **Text Intent**: `@text lines-*;`
+
+Example:
+
+```html
+<div class="my-essay">
+	<p class="limit-lines">
+		Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum commodi
+		enim iure tempora rerum qui iste at dolore? Fuga, quam sint! Numquam
+		molestiae, est amet quas sit officia! Alias, quos?
+	</p>
+</div>
+```
+
+```css
+.my-essay {
+	@size w-60;
+
+	.limit-lines {
+		@text lines-2;
+	}
+}
+```
+
+The text will display **only two lines**, and the rest will be hidden.
+
+</section>
+
+<section>
+
+## Browser Support
+
+The component relies on the `-webkit-line-clamp` technique, which currently has
+the best cross-browser support for multi-line truncation.
+
+Important requirements:
+
+```css
+.limit-lines {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+}
+```
+
+See: [Line Clamp](https://developer.mozilla.org/en-US/docs/Web/CSS/line-clamp)
+
+</section>
+
+<section>
+
+## Classes Reference
+
+```css title="shilpcss/styles/components/limit-lines.css"
+/* NOTE:
+- widely supported only when used with `-webkit-box` and `orient = vertical`
+- https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/line-clamp
+*/
+.limit-lines {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: var(--lines, 1);
+	line-clamp: var(--lines, 1);
+}
+```
+
+</section>

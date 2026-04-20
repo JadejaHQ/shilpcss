@@ -1,0 +1,52 @@
+---
+title: "Values Overview"
+---
+
+# Values Overview
+
+**Values** are predefined **datasets of key–value pairs** used by Shilp CSS to
+organize commonly used data such as colors, spacing, time, and numbers.
+
+These datasets themselves are **not used directly**. Instead, they act as the
+**source data** used to build the theme system.
+
+`shilpConfig.theme` organizes and exposes this data so that:
+
+1. `shilpConfig.properties` can reference it
+2. Inline theme function can reference it
+
+In simple words:
+
+- **Values** → raw datasets
+- **Theme** → organizes those datasets
+  - **Inline Theme Function** → use values directly
+- **Properties** → reference the theme using `themeKey`
+
+To understand how values are processed and resolved, see
+[Values Config](/docs/config/values).
+
+---
+
+<section>
+
+## Available Values Datasets
+
+This section lists all built-in values datasets shipped with Shilp CSS.
+
+Each dataset has its own page that documents the dataset structure and usage.
+
+| Dataset       | Description                                                  | Documentation                                       |
+| ------------- | ------------------------------------------------------------ | --------------------------------------------------- |
+| Angles        | Angle values used for rotation and transform related styles. | [Angles Dataset](/docs/values/angles)               |
+| Blend         | Blend-mode values used for compositing and visual effects.   | [Blend Dataset](/docs/values/blend)                 |
+| Border        | Border width, style and radius related values.               | [Border Dataset](/docs/values/border)               |
+| Colors        | Full color palette used across the design system.            | [Colors Dataset](/docs/values/colors)               |
+| Filter        | Filter values used for blur, brightness and similar effects. | [Filter Dataset](/docs/values/filter)               |
+| Flex-Grid     | Values used by flexbox and grid layout utilities.            | [Flex-Grid Dataset](/docs/values/flex-grid)         |
+| Flow          | Timing functions used for animations and transitions.        | [Flow Dataset](/docs/values/flow)                   |
+| Global Values | Standard CSS global keywords like `inherit`, `unset`, etc.   | [Global Values Dataset](/docs/values/global-values) |
+| Numbers       | Generic numeric values reused across utilities.              | [Numbers Dataset](/docs/values/numbers)             |
+| Spacing       | Spacing scale used for margins, padding, etc.                | [Spacing Dataset](/docs/values/spacing)             |
+| Time          | Duration values used for transitions and animations.         | [Time Dataset](/docs/values/time)                   |
+
+</section>

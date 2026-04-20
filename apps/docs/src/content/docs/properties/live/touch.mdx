@@ -1,0 +1,49 @@
+---
+title: "touch"
+---
+
+# touch
+
+controls how touch gestures are handled
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		live: {
+			touch: {
+				property: "touch-action: <v><i>;",
+				values: {
+					normal: "manipulation", // pan-x pan-y pinch-zoom
+					auto: "auto",
+					none: "none",
+					pinch: "pinch-zoom",
+					pan: {
+						DEFAULT: "pan-x pan-y",
+						x: "pan-x",
+						y: "pan-y",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

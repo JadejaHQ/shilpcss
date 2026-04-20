@@ -1,0 +1,25 @@
+.container--left {
+	margin-left: unset;
+	margin-right: auto;
+}
+
+.container--center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.container--right {
+	margin-left: auto;
+	margin-right: unset;
+}
+
+/* NOTE: using this will override the existing styles. */
+.container--none {
+	width: initial;
+	display: initial;
+	max-width: unset;
+	margin-left: unset;
+	margin-right: unset;
+	padding-left: unset;
+	padding-right: unset;
+}

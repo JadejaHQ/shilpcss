@@ -1,0 +1,48 @@
+---
+title: "theme"
+---
+
+# theme
+
+suggests light or dark theme for the page
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		layout: {
+			theme: {
+				property: "color-scheme: <v><i>;",
+				values: {
+					normal: "normal",
+					auto: "light dark",
+					dark: "dark",
+					light: "light",
+					only: {
+						light: "only light",
+						dark: "only dark",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

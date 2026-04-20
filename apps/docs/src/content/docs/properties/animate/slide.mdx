@@ -1,0 +1,116 @@
+---
+title: "slide"
+---
+
+# slide
+
+slide animation
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		animate: {
+			slide: {
+				in: {
+					from: {
+						top: {
+							property: "--entr-mv-y: -<v><i>;",
+							themeKey: "spacing",
+							resolve: "spacing",
+							values: {
+								DEFAULT: "100%",
+							},
+						},
+
+						bottom: {
+							property: "--entr-mv-y: <v><i>;",
+							themeKey: "spacing",
+							resolve: "spacing",
+							values: {
+								DEFAULT: "100%",
+							},
+						},
+
+						left: {
+							property: "--entr-mv-x: -<v><i>;",
+							themeKey: "spacing",
+							resolve: "spacing",
+							values: {
+								DEFAULT: "100%",
+							},
+						},
+
+						right: {
+							property: "--entr-mv-x: <v><i>;",
+							themeKey: "spacing",
+							resolve: "spacing",
+							values: {
+								DEFAULT: "100%",
+							},
+						},
+					},
+				},
+
+				out: {
+					to: {
+						top: {
+							property: "--ext-mv-y: -<v><i>;",
+							themeKey: "spacing",
+							resolve: "spacing",
+							values: {
+								DEFAULT: "100%",
+							},
+						},
+
+						bottom: {
+							property: "--ext-mv-y: <v><i>;",
+							themeKey: "spacing",
+							resolve: "spacing",
+							values: {
+								DEFAULT: "100%",
+							},
+						},
+
+						left: {
+							property: "--ext-mv-x: -<v><i>;",
+							themeKey: "spacing",
+							resolve: "spacing",
+							values: {
+								DEFAULT: "100%",
+							},
+						},
+
+						right: {
+							property: "--ext-mv-x: <v><i>;",
+							themeKey: "spacing",
+							resolve: "spacing",
+							values: {
+								DEFAULT: "100%",
+							},
+						},
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

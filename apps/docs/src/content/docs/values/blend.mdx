@@ -1,0 +1,103 @@
+---
+title: "Blend Dataset"
+---
+
+# Blend Dataset
+
+The **Blend dataset** defines values used for **CSS blend modes**.
+
+---
+
+<section>
+
+## Location
+
+Resolved location: `shilpConfig.values.blend` <br /> Theme location:
+`shilpConfig.theme.blend`
+
+</section>
+
+<section>
+
+## Usage
+
+| Intent             | Theme Key | Description           |
+| ------------------ | --------- | --------------------- |
+| `@bg blend-*;`     | `"blend"` | background blend mode |
+| `@layout blend-*;` | `"blend"` | mix blend mode        |
+
+These utilities read values from the theme, which is built from this dataset.
+
+</section>
+
+<section>
+
+## Dataset Structure
+
+The dataset is a **simple key–value map** of blend mode tokens to CSS values.
+
+See: [Blend Dataset Reference](#blend-dataset-reference)
+
+</section>
+
+<section>
+
+## Customizing the Dataset
+
+You can override or modify the dataset structure in your config.
+
+However, **new blend values cannot be added** because the dataset already covers
+all supported blend modes within the Shilp CSS browser baseline.
+
+```js title="Customize blend dataset"
+const shilpConfig = {
+	source: "react",
+
+	extend: {
+		values: {
+			blend: {
+				// modify structure if needed
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+This will update blend tokens available through the theme system.
+
+</section>
+
+<section>
+
+## Blend Dataset Reference
+
+```js title="Blend Dataset"
+const blend = {
+	color: {
+		DEFAULT: "color",
+		burn: "burn",
+		dodge: "dodge",
+	},
+	darken: "darken",
+	diff: "difference",
+	exclusion: "exclusion",
+	hue: "hue",
+	light: {
+		DEFAULT: "lighten",
+		hard: "hard-light",
+		soft: "soft-light",
+	},
+	luminosity: "luminosity",
+	multiply: "multiply",
+	normal: "normal",
+	overlay: "overlay",
+	saturation: "saturation",
+	screen: "screen",
+};
+
+export default blend;
+```
+
+</section>

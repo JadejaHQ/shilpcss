@@ -1,0 +1,46 @@
+---
+title: "loop"
+---
+
+# loop
+
+iteration count
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		animate: {
+			loop: {
+				property: "animation-iteration-count: <v><i>;",
+				values: {
+					infinite: "infinite",
+					none: "none",
+					1: 1,
+					2: 2,
+					3: 3,
+					4: 4,
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

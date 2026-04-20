@@ -1,0 +1,18 @@
+{
+	"label": "configuration",
+	"items": [
+		{
+			"name": "index",
+			"label": "overview",
+			"title": "configuration's overview"
+		},
+		"shilp-config-file",
+		"intents",
+		"utilities",
+		"properties",
+		"values",
+		"theme",
+		"mixins",
+		"components"
+	]
+}

@@ -1,0 +1,66 @@
+---
+title: "rotate"
+---
+
+# rotate
+
+rotate element
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		adjust: {
+			rotate: {
+				DEFAULT: {
+					property: "--rtt: rotate(<n><v>, <n><v>)<i>;",
+					themeKey: "angles",
+					values: {},
+				},
+
+				"3d": {
+					property: "--rtt: rotate3d(<n><v>, <n><v>, <n><v>)<i>;",
+					themeKey: "angles",
+					values: {},
+				},
+
+				x: {
+					property: "--rtt-x: rotateX(<n><v>)<i>;",
+					themeKey: "angles",
+					values: {},
+				},
+
+				y: {
+					property: "--rtt-y: rotateY(<n><v>)<i>;",
+					themeKey: "angles",
+					values: {},
+				},
+
+				z: {
+					property: "--rtt-z: rotateZ(<n><v>)<i>;",
+					themeKey: "angles",
+					values: {},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

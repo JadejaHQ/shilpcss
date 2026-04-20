@@ -1,0 +1,88 @@
+/* ================================================================================================
+	DEFAULT ALERT STYLES  (.alert class)
+================================================================================================ */
+
+.alert {
+	@position is-relative;
+	@layout is-grid;
+	@grid items-start;
+	@size w-full;
+	@border thick rounded-lg;
+	@space px-4 py-3 gap-y-4 my-12;
+	@bg color-base-100;
+	@text color-base-900;
+
+	grid-template-columns: 0 1fr;
+
+	/* except default, make all variants description text black */
+	&[class*="alert--"] .alert__description {
+		@text color-black;
+	}
+
+	/* fix overflow issue due to `grid`, default `min-width: auto;` */
+	@childs direct {
+		@size min-w-0;
+	}
+}
+
+/* ================================================================================================
+	ALERT WITH ICON
+================================================================================================ */
+
+.alert.has-icon {
+	@space gap-x-3;
+	grid-template-columns: 1rem 1fr;
+
+	svg {
+		@size is-4;
+		@adjust preset move-y-1;
+		@text color-current;
+	}
+}
+
+/* ================================================================================================
+	ALERT TITLE & DESCRIPTION
+================================================================================================ */
+
+.alert__title {
+	@grid col-start-2;
+	@size min-h-4;
+	@text thick-600 gap-lg case-upper family-display;
+}
+
+/* ============================================================================================= */
+
+.alert__description {
+	@text size-base h-md;
+	@grid col-start-2;
+}
+
+/* ================================================================================================
+	ALERT VARIANTS
+================================================================================================ */
+
+.alert--success {
+	@bg color-success-100;
+	@text color-success-700;
+}
+
+/* ============================================================================================= */
+
+.alert--info {
+	@bg color-info-100;
+	@text color-info-700;
+}
+
+/* ============================================================================================= */
+
+.alert--warning {
+	@bg color-warning-100;
+	@text color-warning-700;
+}
+
+/* ============================================================================================= */
+
+.alert--danger {
+	@bg color-danger-100;
+	@text color-danger-700;
+}

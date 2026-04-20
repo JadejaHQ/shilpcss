@@ -1,0 +1,51 @@
+---
+title: "@aria Mixin"
+---
+
+# @aria Mixin
+
+apply styles based on `aria-*`
+
+<Alert variant="info">
+
+This page contains only the **mixins configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	target: "react",
+
+	mixins: {
+		aria: {
+			variants: {
+				// busy: `&[aria-busy]`,
+				// checked: `&[aria-checked]`,
+				// disabled: `&[aria-disabled]`,
+				// expanded: `&[aria-expanded]`,
+				// hidden: `&[aria-hidden]`,
+				// invalid: `&[aria-invalid]`,
+				// pressed: `&[aria-pressed]`,
+				// "read-only": `&[aria-readonly]`,
+				// required: `&[aria-required]`,
+				// selected: `&[aria-selected]`,
+
+				/* functions */
+				// @aria is("disabled=false"); --> &[aria-disabled=false]
+				is: "&[aria-<1>]",
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

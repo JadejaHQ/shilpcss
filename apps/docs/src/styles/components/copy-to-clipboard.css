@@ -1,0 +1,15 @@
+.copy-to-clipboard {
+	@flex shrink-0;
+	@border rounded-lg;
+
+	@data is("copied=true") {
+		@motion safe {
+			@bg color-success;
+			@text color-success-fg;
+		}
+	}
+
+	svg {
+		@size is-4;
+	}
+}

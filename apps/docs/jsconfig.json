@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"paths": {
+			"@icons": ["./src/components/assets/icons.jsx"],
+			"@/*": ["./src/*"]
+		}
+	},
+	"include": ["./src"],
+	"exclude": ["./node_modules"]
+}

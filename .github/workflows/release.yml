@@ -1,0 +1,72 @@
+# Purpose: Create release PR automatically
+# Trigger: workflow_run (CI), pull_request (merged to main)
+
+name: RELEASE
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+    paths:
+      - "packages/shilpcss/package.json"
+
+permissions:
+  id-token: write # authenticate with OIDC for secure deployments
+  contents: write # create commits, tags, releases
+  pull-requests: write # create release PR
+
+jobs:
+  release:
+    if: >
+      github.repository_owner == 'JadejaHQ' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.pull_request.merged == true
+    name: Create a PR for release workflow
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      # 2. Setup PNPM (to provide access to setup-node `cache: pnpm`)
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v5
+        with:
+          version: 10.x.x
+          run_install: false
+          cache: true
+
+      # 3. Setup Node.js
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+
+      # 4. Install dependencies (prevent when lockfile is out of sync)
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      # 5. Create Release PR or Publish to NPM
+      - name: Create Release PR or Publish to NPM
+        uses: changesets/action@v1.7
+        with:
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
+          version: pnpm changeset version
+          setupGitUser: false
+          publish: pnpm publish-it --filter=shilpcss
+          createGithubReleases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.SHILPCSS_GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.SHILPCSS_NPM_TOKEN }}
+          NODE_ENV: production

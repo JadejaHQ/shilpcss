@@ -1,0 +1,25 @@
+{
+	"label": "components",
+	"items": [
+		{
+			"name": "index",
+			"label": "Overview",
+			"title": "components overview"
+		},
+		{
+			"name": "container",
+			"label": ".container",
+			"title": "container component"
+		},
+		{
+			"name": "limit-lines",
+			"label": ".limit-lines",
+			"title": "limit lines component"
+		},
+		{
+			"name": "screen-reader",
+			"label": ".screen-reader",
+			"title": "screen reader component"
+		}
+	]
+}

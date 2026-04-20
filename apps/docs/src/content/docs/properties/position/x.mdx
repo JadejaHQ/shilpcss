@@ -1,0 +1,44 @@
+---
+title: "x"
+---
+
+# x
+
+positioned element's horizontal sides distance from the parent
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		position: {
+			x: {
+				property: `
+          left: <n><v><i>;
+          right: <n><v><i>;
+        `,
+				resolve: "spacing",
+				themeKey: "spacing",
+				values: {},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>

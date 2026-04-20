@@ -1,0 +1,48 @@
+---
+title: "flow"
+---
+
+# flow
+
+flex items flow direction
+
+<Alert variant="info">
+
+This page contains only the **property configuration reference**. Complete
+documentation and usage examples will be added progressively in future updates.
+
+</Alert>
+
+---
+
+<section>
+
+## Reference
+
+```js title="shilp.config.js"
+const shilpConfig = {
+	source: "react",
+
+	properties: {
+		flex: {
+			flow: {
+				property: "flex-direction: <v><i>;",
+				values: {
+					row: {
+						DEFAULT: "row",
+						reverse: "row-reverse",
+					},
+					col: {
+						DEFAULT: "column",
+						reverse: "column-reverse",
+					},
+				},
+			},
+		},
+	},
+};
+
+export default shilpConfig;
+```
+
+</section>
