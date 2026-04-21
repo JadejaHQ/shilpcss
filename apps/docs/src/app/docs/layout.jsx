@@ -12,7 +12,7 @@ const content = new Content("src/content", "docs");
 /* ============================================================================================= */
 
 export const metadata = {
-	alternate: {
+	alternates: {
 		canonical: "/docs",
 		types: {
 			"text/plain": `${SITE_URL}/llms.txt`,

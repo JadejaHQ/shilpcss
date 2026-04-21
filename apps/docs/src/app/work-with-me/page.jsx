@@ -13,7 +13,7 @@ export const metadata = {
 	description:
 		"Work with the creator of Shilp CSS, an open-source CSS engine and framework. He is available for frontend engineering, architecture, consulting, product collaboration, and sponsorship for Shilp CSS.",
 
-	alternate: {
+	alternates: {
 		canonical: "/work-with-me",
 	},
 };
