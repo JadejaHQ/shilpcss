@@ -1,0 +1,9 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "shilpcss-docs": "1.0.0-alpha.0",
+    "shilpcss": "1.0.0-alpha.0"
+  },
+  "changesets": []
+}
