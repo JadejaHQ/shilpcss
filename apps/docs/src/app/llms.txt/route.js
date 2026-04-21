@@ -69,9 +69,7 @@ understanding.
 
 ## Source Content (MDX)
 
-If deeper context or raw content is required, the documentation source files are available at:
-
-https://github.com/JadejaHQ/shilpcss/blob/main/apps/docs/src/content/docs/**/*.mdx
+If deeper context or raw content is required, the documentation source files are available at: https://raw.githubusercontent.com/JadejaHQ/shilpcss/refs/heads/main/apps/docs/src/content/docs/**/*.mdx
 
 ---
 

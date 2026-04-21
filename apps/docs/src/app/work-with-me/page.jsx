@@ -4,12 +4,18 @@ import Separator from "@/components/separator";
 /* ============================================================================================= */
 
 export const metadata = {
+	//
 	title: {
 		absolute:
 			"Work With the Creator of Shilp CSS, Frontend Engineer | Pradipsinh Jadeja",
 	},
+
 	description:
 		"Work with the creator of Shilp CSS, an open-source CSS engine and framework. He is available for frontend engineering, architecture, consulting, product collaboration, and sponsorship for Shilp CSS.",
+
+	alternate: {
+		canonical: "/work-with-me",
+	},
 };
 
 /* ============================================================================================= */
@@ -43,7 +49,6 @@ const WorkWithMe = () => (
 
 const HeroSection = () => (
 	<>
-		{" "}
 		<h1>Work With Me</h1>
 		<p>
 			Hi, my name is <strong>Pradipsinh Jadeja</strong>.<br />

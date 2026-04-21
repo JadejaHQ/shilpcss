@@ -26,6 +26,15 @@ export const metadata = {
 
 	description: "an Intent-first, CSS-centric, styling engine and framework",
 
+	alternates: {
+		canonical: "/",
+		types: {
+			"application/rss+xml": `${SITE_URL}/rss.xml`,
+			"text/x-sitemap+xml": `${SITE_URL}/sitemap.xml`,
+			"text/plain": `${SITE_URL}/llms.txt`,
+		},
+	},
+
 	openGraph: {
 		type: "website",
 		siteName: "Shilp CSS",

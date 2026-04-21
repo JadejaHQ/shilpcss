@@ -28,7 +28,7 @@ export const generateMetadata = async ({ params }) => {
 	//
 	const { slugs = [] } = await params;
 
-	const { metadata, meta } = await loadDocsModule({
+	const { metadata, meta, filePath } = await loadDocsModule({
 		content,
 		slugs,
 	});
@@ -39,6 +39,9 @@ export const generateMetadata = async ({ params }) => {
 
 		alternates: {
 			canonical: meta.url,
+			types: {
+				"text/markdown": `https://raw.githubusercontent.com/JadejaHQ/shilpcss/refs/heads/main/apps/docs/src/content/docs/${filePath}`,
+			},
 		},
 
 		openGraph: {
