@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0-alpha.1
+
+### Patch Changes
+
+- docs: fix typos and docs link styles, improve content
+  - Fix docs active link styles affected by
+  - Fix few typos in content
+  - Improve intro line of [ Work With Me ] page
+
 ## 1.0.0-alpha.0
 
 शुभारम्भः
