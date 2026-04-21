@@ -1,0 +1,25 @@
+# CODEOWNERS — default maintainers for automatic review requests
+
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Org hosting this repo: @JadejaHQ
+
+# Repo admin / individual contributor: @jadeja97
+
+# Global owners (fallback)
+
+- @JadejaHQ @jadeja97
+
+# Docs
+
+/apps/docs/ @JadejaHQ @jadeja97
+
+# Primary package
+
+/packages/shilpcss/ @JadejaHQ @jadeja97
+
+# GitHub configuration and workflows
+
+/.github/ @JadejaHQ @jadeja97
+
+# Add more granular owners as needed (e.g., teams or individual usernames)
