@@ -1,14 +1,9 @@
-# Purpose: Create release PR automatically
-# Trigger: workflow_run (CI), pull_request (merged to main)
+# Purpose: Publish to NPM
+# Trigger: pull_request (merged to main from changeset-release branch)
 
 name: RELEASE
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
-
   pull_request:
     branches:
       - main
@@ -20,21 +15,37 @@ on:
 permissions:
   id-token: write # authenticate with OIDC for secure deployments
   contents: write # create commits, tags, releases
-  pull-requests: write # create release PR
+  pull-requests: read # only read access needed for publish workflow
 
 jobs:
   release:
     if: >
-      github.repository_owner == 'JadejaHQ' &&
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.head_branch == 'main' &&
-      github.event.pull_request.merged == true
-    name: Create a PR for release workflow
+      github.repository_owner == 'JadejaHQ' && github.event_name ==
+      'pull_request' && github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'main' &&
+      startsWith(github.event.pull_request.head.ref, 'changeset-release')
+    name: Publish ShilpCSS to NPM
     runs-on: ubuntu-latest
     steps:
       # 1. Checkout the repository
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          ref:
+            ${{ github.event.workflow_run.head_sha ||
+            github.event.pull_request.head.sha }}
+
+      # 2. Check for pending changesets
+      - name: Check for pending changesets
+        id: changesets
+        run: |
+          if ls .changeset/*.md 1> /dev/null 2>&1; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "Changesets detected"
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+            echo "No changesets found — stopping job"
+            exit 0
 
       # 2. Setup PNPM (to provide access to setup-node `cache: pnpm`)
       - name: Setup PNPM
@@ -56,15 +67,11 @@ jobs:
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
 
-      # 5. Create Release PR or Publish to NPM
-      - name: Create Release PR or Publish to NPM
+      # 5. Publish to NPM
+      - name: Publish
         uses: changesets/action@v1.7
         with:
-          commit: "chore(release): version packages"
-          title: "chore(release): version packages"
-          version: pnpm changeset version
-          setupGitUser: false
-          publish: pnpm publish-it --filter=shilpcss
+          publish: "pnpm publish-it --filter=shilpcss"
           createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.SHILPCSS_GITHUB_TOKEN }}
