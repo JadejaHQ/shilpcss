@@ -1,3 +1,6 @@
+import Script from "next/script";
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 import "@/styles/main.css";
 
 import ThemeProvider from "@/components/theme/provider";
@@ -25,6 +28,15 @@ export const metadata = {
 	},
 
 	description: "an Intent-first, CSS-centric, styling engine and framework",
+
+	alternates: {
+		canonical: "/",
+		types: {
+			"application/rss+xml": `${SITE_URL}/rss.xml`,
+			"text/x-sitemap+xml": `${SITE_URL}/sitemap.xml`,
+			"text/plain": `${SITE_URL}/llms.txt`,
+		},
+	},
 
 	openGraph: {
 		type: "website",
@@ -66,6 +78,14 @@ const RootLayout = ({ children }) => (
 			{/* adds `data-root` attr to html on initial load (before dom paint) */}
 			<InitialLoad />
 
+			{/* Google Analytics (GA4) */}
+			{/* Added after the `body` */}
+
+			{/* Microsoft Clarity */}
+			<Script id="clarity" strategy="afterInteractive">
+				{`(function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, "clarity", "script", "wf6b8hbm1j");`}
+			</Script>
+
 			<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{
@@ -98,6 +118,9 @@ const RootLayout = ({ children }) => (
 				</div>
 			</ThemeProvider>
 		</body>
+
+		{/* Google Analytics (GA4) */}
+		<GoogleAnalytics gaId="G-QFX24FX5X6" />
 	</html>
 );
 

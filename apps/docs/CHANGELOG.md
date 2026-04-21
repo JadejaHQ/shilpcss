@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.0-alpha.2
+
+### Minor Changes
+
+- Basic Search Engine Indexing & Analytics
+  - Add canonical urls with mime-types including llms.txt and text/markdown for
+    ai
+  - Add GA4 and MS Clarity for tracking
+  - Add rss.xml
+
 ## 1.0.0-alpha.1
 
 ### Patch Changes

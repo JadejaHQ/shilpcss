@@ -69,14 +69,19 @@ understanding.
 
 ## Source Content (MDX)
 
-If deeper context or raw content is required, the documentation source files are available at:
+If deeper context or raw content is required, the documentation source files are available at: https://raw.githubusercontent.com/JadejaHQ/shilpcss/refs/heads/main/apps/docs/src/content/docs/**/*.mdx
 
-https://github.com/JadejaHQ/shilpcss/blob/main/apps/docs/src/content/docs/**/*.mdx
+**Note:** The path or slug derived from a documentation URL may not always match the exact \`.mdx\` filename in the repository. If the \`.mdx\` file cannot be located using the derived path or slug, retrieve the metadata from the corresponding public documentation page instead (for example, \`https://shilpcss.com/docs/colors\`). The page \`<head>\` contains a \`<meta>\` tag with \`type="text/markdown"\` whose \`href\` attribute points to the URL where the actual MDX content is hosted.
 
 ---
 
 ## Sitemap
 ${SITE_URL}/sitemap.xml
+
+---
+
+## RSS Feed
+${SITE_URL}/rss.xml
 
 ---
 
