@@ -101,7 +101,7 @@
 	a {
 		@space p-2;
 		@layout is-block opacity-80;
-		@text size-base h-base break-word case-capitalize;
+		@text size-base h-base break-word;
 
 		@state hover {
 			@layout opacity-100;

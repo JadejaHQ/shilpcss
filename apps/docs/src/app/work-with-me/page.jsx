@@ -46,9 +46,8 @@ const HeroSection = () => (
 		{" "}
 		<h1>Work With Me</h1>
 		<p>
-			Hi, My name is <strong>Pradipsinh Jadeja</strong>. <br /> a{" "}
-			<strong>Frontend Engineer and the creator of Shilp CSS</strong>, an
-			open-source CSS engine and framework.
+			Hi, my name is <strong>Pradipsinh Jadeja</strong>.<br />
+			<strong>Creator of Shilp CSS and Senior Frontend Engineer</strong>.
 		</p>
 		<p>
 			I am open to working with teams that value strong engineering fundamentals
@@ -136,7 +135,7 @@ const CurrentFocus = () => (
 		</List>
 
 		<p>
-			<em>Shilp CSS is just an tip of the ice-berge.</em>
+			<em>Shilp CSS is just the tip of the ice-berge.</em>
 		</p>
 	</section>
 );

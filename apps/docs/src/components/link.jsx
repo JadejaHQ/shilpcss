@@ -28,7 +28,12 @@ const Link = ({ href, navLink, ...rest }) => {
 		//
 		if (rest["data-active"]) return;
 
-		let isActive = pathname === href;
+		// trailing slash added for github pages,
+		// so we need to remove it for active link check
+		const isTrailingSlash = pathname.endsWith("/");
+
+		let isActive =
+			(isTrailingSlash ? pathname.slice(0, -1) : pathname) === href;
 
 		if (navLink) isActive = pathname.includes(href);
 

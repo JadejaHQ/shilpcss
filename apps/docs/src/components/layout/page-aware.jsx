@@ -13,7 +13,14 @@ const addDataAttrToHTML = (pathname) => {
 
 	const html = document.documentElement;
 
-	html.setAttribute("data-path", path || "/");
+	// trailing slash added for github pages,
+	// so we need to remove it for normal path
+	const isTrailingSlash = path.endsWith("/");
+
+	html.setAttribute(
+		"data-path",
+		(isTrailingSlash ? path.slice(0, -1) : path) || "/",
+	);
 	html.setAttribute("data-root", path.split("/")[1] || "home");
 	//
 };

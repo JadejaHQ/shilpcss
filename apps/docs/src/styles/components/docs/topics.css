@@ -19,6 +19,10 @@
 		}
 	}
 
+	a {
+		@text case-capitalize;
+	}
+
 	/*
 		case for every link is lowercase. but, with styles it's converted to capitalize.
 		for below folders, the styles will change to lowercase
