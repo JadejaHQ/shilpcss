@@ -1,7 +1,7 @@
 name: "Feature Request"
 description: Suggest a new feature or improvement for ShilpCSS
 title: "[feat]: "
-labels: ["area: request"]
+labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
@@ -19,7 +19,7 @@ body:
         - [Ideas Discussion](https://github.com/JadejaHQ/shilpcss/discussions/new?category=ideas)
 
   - type: textarea
-    id: desctiption
+    id: description
     attributes:
       label: Feature description
       description: Tell us about your feature request
@@ -41,7 +41,7 @@ body:
     attributes:
       label: Alternatives Considered
       description: Any other approaches you considered?
-    validation:
+    validations:
       required: true
 
   - type: textarea
@@ -49,7 +49,7 @@ body:
     attributes:
       label: Additional Context
       description: Links, references, or examples
-    validation:
+    validations:
       required: true
 
   - type: checkboxes
