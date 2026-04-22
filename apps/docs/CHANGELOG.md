@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0-alpha.3
+
+### Patch Changes
+
+- Fix rss.xml content
+  - remove home page duplicate
+  - refactor `guid`
+  - remove duplicate slash (`...com//...`) in `url`
+- Fix typo in content link
+- Refactor analytics
+  - Create component and add it at the end of body
+  - Fix MS Clarity script
+  - Render only for production environment
+
 ## 1.0.0-alpha.2
 
 ### Minor Changes
