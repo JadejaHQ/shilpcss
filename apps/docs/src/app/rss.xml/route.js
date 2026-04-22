@@ -24,15 +24,11 @@ export const GET = () => {
 
 	const pages = [
 		{
-			title: "Shilp CSS",
-			description: "an Intent-first, CSS-centric, styling engine and framework",
-			url: `${SITE_URL}/`,
-		},
-		{
 			title: "Work With Me",
 			description:
 				"Work with the creator of Shilp CSS, an open-source CSS engine and framework. He is available for frontend engineering, architecture, consulting, product collaboration, and sponsorship for Shilp CSS.",
 			url: `${SITE_URL}/work-with-me/`,
+			guid: "work-with-me",
 		},
 	];
 
@@ -43,7 +39,8 @@ export const GET = () => {
 
 		return createRSSItem({
 			title: meta.title,
-			url: `${SITE_URL}/${meta.url}/`,
+			url: `${SITE_URL}${meta.url}/`,
+			guid: slugs.join(""),
 		});
 	});
 
@@ -65,14 +62,14 @@ export const GET = () => {
 
 /* ============================================================================================= */
 
-const createRSSItem = ({ title, description, url }) => {
+const createRSSItem = ({ title, description, url, guid }) => {
 	//
 	return `
   <item>
     <title>${escapeXML(title)}</title>
     <description>${escapeXML(description ?? `content for ${title}`)}</description>
     <link>${escapeXML(url)}</link>
-    <guid>${escapeXML(url)}</guid>
+    <guid>${escapeXML(guid || url)}</guid>
     <pubDate>${new Date().toUTCString()}</pubDate>
   </item>`;
 };

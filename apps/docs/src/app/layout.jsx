@@ -1,10 +1,8 @@
-import Script from "next/script";
-import { GoogleAnalytics } from "@next/third-parties/google";
-
 import "@/styles/main.css";
 
 import ThemeProvider from "@/components/theme/provider";
 
+import { MSClarity, GA4 } from "@/components/layout/analytics";
 import { InitialLoad, Routing } from "@/components/layout/page-aware";
 import Banner from "@/components/layout/banner";
 import Header from "@/components/layout/header";
@@ -54,11 +52,6 @@ export const metadata = {
 		card: "summary_large_image",
 		images: ["/og.png"],
 	},
-
-	robots: {
-		index: true,
-		follow: true,
-	},
 };
 
 /* ============================================================================================= */
@@ -78,13 +71,7 @@ const RootLayout = ({ children }) => (
 			{/* adds `data-root` attr to html on initial load (before dom paint) */}
 			<InitialLoad />
 
-			{/* Google Analytics (GA4) */}
-			{/* Added after the `body` */}
-
-			{/* Microsoft Clarity */}
-			<Script id="clarity" strategy="afterInteractive">
-				{`(function(c,l,a,r,i,t,y){ c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)}; t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i; y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y); })(window, document, "clarity", "script", "wf6b8hbm1j");`}
-			</Script>
+			{/* analytics scripts added at the end of body */}
 
 			<script
 				type="application/ld+json"
@@ -117,10 +104,12 @@ const RootLayout = ({ children }) => (
 					{/*  */}
 				</div>
 			</ThemeProvider>
-		</body>
 
-		{/* Google Analytics (GA4) */}
-		<GoogleAnalytics gaId="G-QFX24FX5X6" />
+			{/* Google Analytics (GA4) */}
+			<GA4 />
+			{/* Microsoft Clarity */}
+			<MSClarity />
+		</body>
 	</html>
 );
 
