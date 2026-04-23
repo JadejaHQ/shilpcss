@@ -1,87 +1,124 @@
 # Purpose: Deploy docs to GitHub Pages
-# Trigger: pull_request (merged to main), workflow_run (CI), workflow_dispatch
+# Trigger: workflow_call (CI), workflow_dispatch (manual)
 
 name: DOCS
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
+  # trigger 1
+  workflow_call:
+    # this will have the caller workflow's `github` context (full)
 
+  # trigger 2
   workflow_dispatch:
     inputs:
       commit_sha:
         description: "Commit SHA to deploy (leave empty for latest)"
         required: false
 
+# permission for the `workflow_call` will be granted from the caller workflow
+# persmission for the `workflow_dispatch` granted here
 permissions:
   id-token: write # authenticate with OIDC for secure deployments
   contents: read # checkout code
   pages: write # deploy to GitHub Pages
 
+#
 jobs:
-  deploy:
-    # Main guard:
-    # - Always allow manual dispatch
-    # - Otherwise require:
-    #     CI success
-    #     event from pull_request
-    #     PR merged
-    #     base branch is main
+  #
+  #
+  #
+  check_version:
+    # if repository owner is `JadejaHQ`
+    # |-- if `workflow_dispatch` (manuall trigger)
+    # `-- if `workflow_call` (from `CI`)
+    #     - base branch is `main`
+    #     - `pull_request` is merged
     if: >
       github.repository_owner == 'JadejaHQ' && (
         github.event_name == 'workflow_dispatch' ||
         (
-          github.event_name == 'workflow_run' &&
-          github.event.workflow_run.conclusion == 'success' &&
-          github.event.workflow_run.event == 'pull_request' &&
-          github.event.workflow_run.pull_requests[0].merged == true &&
-          github.event.workflow_run.pull_requests[0].base.ref == 'main'
+          github.base_ref == 'main' &&
+          github.event_name == 'pull_request' &&
+          github.event.action == 'closed' &&
+          github.event.pull_request.merged == true
         )
       )
+
     runs-on: ubuntu-latest
+
+    # share data with dependent jobs
+    outputs:
+      version_changed: ${{ steps.docs_changed.outputs.version_changed }}
+      sha: ${{ inputs.commit_sha || github.event.pull_request.head.sha }}
+
+    steps:
+      # 1
+      - name: Checkout the repository
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v6
+        with:
+          # fetch commits history from the base branch
+          # `n`: no. of commits
+          # `n = 0`: full history
+          fetch-depth: 97 # if more than 97 commits, then this need to be bumped
+
+          # `workflow_dispatch` (manual trigger)
+          # |- use base branch SHA (latest)
+          # `- use user input SHA for rollback
+          #
+          # `pull_request`
+          # `- use head branch SHA
+          ref: ${{ inputs.commit_sha || github.event.pull_request.head.sha }}
+
+      # 2. skip if not triggered by `pull_request`
+      - name: Check docs version change
+        id: docs_changed
+        if: github.event_name == 'pull_request'
+        run: |
+          # Compare commits
+          CHANGED_FILES=$(git diff --name-only \
+            ${{ github.event.pull_request.base.sha }} \
+            ${{ github.event.pull_request.head.sha }})
+          if echo "$CHANGED_FILES" | grep -q "^apps/docs/package.json$"; then
+            echo "version_changed=true" >> $GITHUB_OUTPUT
+            echo "Proceeding with deployment."
+          else
+            echo "version_changed=false" >> $GITHUB_OUTPUT
+            echo "Skipping deployment."
+          fi
+
+  #
+  #
+  #
+  deploy:
+    # runs after `check_version` job
+    needs: check_version
+
+    # `check_version` job must succeed
+    # docs version must be chagned
+    if: >
+      needs.check_version.result == 'success' && (
+        github.event_name == 'workflow_dispatch' || (
+          needs.check_version.outputs.version_changed == 'true'
+        )
+      )
+
+    name: Deploy docs to github pages
+
+    runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      # 1. Checkout the repository
-      - name: Checkout
+      # 1
+      - name: Checkout the repository
         uses: actions/checkout@v6
         with:
-          # Manual → use provided SHA or latest
-          # workflow_run → use CI head SHA
-          ref: ${{ inputs.commit_sha || github.event.workflow_run.head_sha }}
+          ref: ${{ needs.check_version.outputs.sha }}
 
-      # 2. Check if docs version changed (skip if not triggered by workflow_run)
-      - name: Check docs version change
-        id: docs_changed
-        if: github.event_name == 'workflow_run'
-        run: |
-          # Compare latest commit with its parent
-          CHANGED_FILES=$(git diff --name-only \
-            ${{ github.event.workflow_run.head_sha }} \
-            ${{ github.event.workflow_run.head_sha }}^)
-
-          if echo "$CHANGED_FILES" | grep -q "^apps/docs/package.json$"; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "Docs version change detected"
-          else
-            echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No docs version change"
-          fi
-
-      # 3. Stop deployment if docs not changed (except manual)
-      - name: Stop if docs not changed
-        if: >
-          github.event_name == 'workflow_run' &&
-          steps.docs_changed.outputs.changed != 'true'
-        run: |
-          echo "Docs package.json not changed — skipping deployment"
-          exit 0
-
-      # 4. Setup PNPM (to provide access to setup-node `cache: pnpm`)
+      # 2. to provide access to setup-node's `cache: pnpm`
       - name: Setup PNPM
         uses: pnpm/action-setup@v5
         with:
@@ -89,33 +126,33 @@ jobs:
           run_install: false
           cache: true
 
-      # 5. Setup Node.js
+      # 3
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: 24.x
-          registry-url: https://registry.npmjs.org
           cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml # root lockfile
 
-      # 6. Install dependencies (prevent when lockfile is out of sync)
+      # 4. prevent when lockfile is out of sync
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
 
-      # 7. Build docs
+      # 5
       - name: Build docs
         run: pnpm build --filter=shilpcss-docs
 
-      # 8. Setup Pages
+      # 6
       - name: Setup Pages
         uses: actions/configure-pages@v6
 
-      # 9. Upload artifact
+      # 7
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
           path: apps/docs/dist
 
-      # 10. Deploy to GitHub Pages
-      - name: Deploy
-        id: deployment # required so `environment.url` can read page_url
+      # 8
+      - name: Deploy to GitHub Pages
+        id: deployment # required so `environment.url` can read `page_url`
         uses: actions/deploy-pages@v5

@@ -1,9 +1,10 @@
 # Purpose: Verify repository builds
-# Trigger: pull_request (not from 'changeset-release')
+# Trigger: pull_request (not from 'changeset-release/*')
 
 name: CI
 
 on:
+  # trigger
   pull_request:
     branches:
       - dev
@@ -13,21 +14,39 @@ on:
       - closed
       - synchronize
 
+#
 permissions:
   contents: read # for actions/checkout
 
+#
 jobs:
-  build:
-    # Guard against changeset-release PRs
+  #
+  #
+  #
+  check_build:
+    # skip if the head branch starts with "changeset-release"
+    # skip if closed PR is "closed without merging (dismissed)"
     if: >
-      !startsWith(github.head_ref, 'changeset-release')
-    runs-on: ubuntu-latest
-    steps:
-      # 1. Checkout the repository
-      - name: Checkout
-        uses: actions/checkout@v6
+      !startsWith(github.head_ref, 'changeset-release') && (
+        github.event.action != 'closed' ||
+        (
+          github.event.action == 'closed' &&
+          github.event.pull_request.merged == true
+        )
+      )
 
-      # 2. Setup PNPM (to provide access to setup-node `cache: pnpm`)
+    name: Check if build is succeeding
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1
+      - name: Checkout the repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      # 2. to provide access to setup-node's `cache: pnpm`
       - name: Setup PNPM
         uses: pnpm/action-setup@v5
         with:
@@ -35,18 +54,71 @@ jobs:
           run_install: false
           cache: true
 
-      # 3. Setup Node.js
+      # 3
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: 24.x
-          registry-url: https://registry.npmjs.org
           cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml # root lockfile
 
-      # 4. Install dependencies (prevent when lockfile is out of sync)
+      # 4. prevent when lockfile is out of sync
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
 
-      # 5. Build packages
+      # 5
       - name: Build all packages
         run: pnpm build
+
+  #
+  #
+  #
+  docs:
+    # runs after `check_build` job
+    needs: check_build
+
+    # `check_build` job must succeed
+    # base branch is "main"
+    # PR is merged
+    if: >
+      needs.check_build.result == 'success' && (
+        github.base_ref == 'main' &&
+        github.event.pull_request.merged == true
+      )
+
+    # call the `docs` workflow
+    # this is not individual workflow call
+    # this will run as a job of this workflow
+    uses: ./.github/workflows/docs.yml
+
+    # permissions for the workflow need to be granted here as it is running as a job
+    permissions: # provide permission to `docs.yml`
+      id-token: write # authenticate with OIDC for secure deployments
+      contents: read # checkout code
+      pages: write # deploy to GitHub Pages
+
+  #
+  #
+  #
+  package:
+    # runs after `check_build` job
+    needs: check_build
+
+    # `check_build` job must succeed
+    # base branch is "main"
+    # PR is merged
+    if: >
+      needs.check_build.result == 'success' && (
+        github.base_ref == 'main' &&
+        github.event.pull_request.merged == true
+      )
+
+    # call the `create-release-pr` workflow
+    # this is not individual workflow call
+    # this will run as a job of this workflow
+    uses: ./.github/workflows/create-release-pr.yml
+
+    # permissions for the workflow need to be granted here as it is running as a job
+    permissions: # provide permission to `create-release-pr.yml`
+      contents: write # checkout code
+      pull-requests: write # create release PR

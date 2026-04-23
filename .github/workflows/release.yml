@@ -1,79 +1,124 @@
 # Purpose: Publish to NPM
-# Trigger: pull_request (merged to main from changeset-release branch)
+# Trigger: pull_request (from changeset-release/main)
 
 name: RELEASE
 
 on:
+  # trigger
   pull_request:
     branches:
       - main
     types:
       - closed
-    paths:
+    paths: # runs only if this file's content is changed
       - "packages/shilpcss/package.json"
 
+#
 permissions:
   id-token: write # authenticate with OIDC for secure deployments
   contents: write # create commits, tags, releases
   pull-requests: read # only read access needed for publish workflow
 
+#
 jobs:
-  release:
+  #
+  #
+  #
+  #
+  check_pending_changesets:
+    # if repository owner is `JadejaHQ`
+    # - head branch is `changeset-release/main`
+    # - base branch is `main`
+    # - `pull_request` is merged
     if: >
-      github.repository_owner == 'JadejaHQ' && github.event_name ==
-      'pull_request' && github.event.pull_request.merged == true &&
-      github.event.pull_request.base.ref == 'main' &&
-      startsWith(github.event.pull_request.head.ref, 'changeset-release')
-    name: Publish ShilpCSS to NPM
+      github.repository_owner == 'JadejaHQ' && (
+        github.head_ref == 'changeset-release/main' &&
+        github.base_ref == 'main' &&
+        github.event_name == 'pull_request' &&
+        github.event.action == 'closed' &&
+        github.event.pull_request.merged == true
+      )
+
+    name: Check pending changesets
+
     runs-on: ubuntu-latest
+
+    # share data with dependent jobs
+    outputs:
+      changesets_exist: ${{ steps.pending_changesets.outputs.changesets_exist }}
+
     steps:
-      # 1. Checkout the repository
-      - name: Checkout
+      # 1
+      - name: Checkout the repository
         uses: actions/checkout@v6
         with:
-          ref:
-            ${{ github.event.workflow_run.head_sha ||
-            github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
 
-      # 2. Check for pending changesets
+      # 2
       - name: Check for pending changesets
-        id: changesets
+        id: pending_changesets
         run: |
-          if ls .changeset/*.md 1> /dev/null 2>&1; then
-            echo "found=true" >> $GITHUB_OUTPUT
-            echo "Changesets detected"
+          # Count .md files excluding README.md
+          count=$(find .changeset -maxdepth 1 -name "*.md" ! -name "README.md" | wc -l)
+          if [ "$count" -gt 0 ]; then
+            echo "changesets_exist=true" >> $GITHUB_OUTPUT
+            echo "Proceeding with publish."
           else
-            echo "found=false" >> $GITHUB_OUTPUT
-            echo "No changesets found — stopping job"
-            exit 0
+            echo "changesets_exist=false" >> $GITHUB_OUTPUT
+            echo "Skipping publish."
+          fi
 
-      # 2. Setup PNPM (to provide access to setup-node `cache: pnpm`)
+  #
+  #
+  #
+  publish:
+    # runs after `check_pending_changesets` job
+    needs: check_pending_changesets
+
+    # `check_pending_changesets` job must succeed
+    # changesets must not exist
+    if: >
+      needs.check_pending_changesets.result == 'success' && (
+        needs.check_pending_changesets.outputs.changesets_exist == 'true'
+      )
+
+    name: Publish package to NPM
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1
+      - name: Checkout the repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      # 2. to provide access to setup-node's `cache: pnpm`
       - name: Setup PNPM
         uses: pnpm/action-setup@v5
         with:
           version: 10.x.x
           run_install: false
-          cache: true
 
-      # 3. Setup Node.js
+      # 3
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: 24.x
           registry-url: https://registry.npmjs.org
           cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml # root lockfile
 
-      # 4. Install dependencies (prevent when lockfile is out of sync)
+      # 4. prevent when lockfile is out of sync
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
 
-      # 5. Publish to NPM
+      # 5
       - name: Publish
-        uses: changesets/action@v1.7
+        uses: changesets/action@v1
+        env:
+          NODE_ENV: production
+          GITHUB_TOKEN: ${{ secrets.SHILPCSS_GITHUB_TOKEN }}
         with:
           publish: "pnpm publish-it --filter=shilpcss"
           createGithubReleases: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.SHILPCSS_GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.SHILPCSS_NPM_TOKEN }}
-          NODE_ENV: production

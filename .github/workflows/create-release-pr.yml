@@ -1,36 +1,95 @@
 # Purpose: Create release PR
-# Trigger: workflow_run (CI) and pull_request (merged to main)
+# Trigger: workflow_call (CI)
 
 name: CREATE_RELEASE_PR
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
+  # trigger
+  workflow_call:
+    # this will have the caller workflow's `github` context (full)
 
+# permission for the `workflow_call` will be granted from the caller workflow
 permissions:
   contents: write # create commits, tags, releases
   pull-requests: write # create release PR
 
+#
 jobs:
-  create-release-pr:
+  #
+  #
+  #
+  check_pending_changesets:
+    # if repository owner is `JadejaHQ`
+    # `-- if `workflow_call` (from `CI`)
+    #     - base branch is `main`
+    #     - `pull_request` is merged
     if: >
-      github.repository_owner == 'JadejaHQ' && github.event_name ==
-      'workflow_run' && github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.pull_requests[0].merged == true &&
-      github.event.workflow_run.pull_requests[0].base.ref == 'main'
-    name: Create a release PR
-    runs-on: ubuntu-latest
+      github.repository_owner == 'JadejaHQ' && (
+        github.base_ref == 'main' &&
+        github.event_name == 'pull_request' &&
+        github.event.action == 'closed' &&
+        github.event.pull_request.merged == true
+      )
+
+    name: Check pending changesets
+
+    runs-on:
+      ubuntu-latest
+
+      # share data with dependent jobs
+    outputs:
+      changesets_exist: ${{ steps.pending_changesets.outputs.changesets_exist }}
+
     steps:
-      # 1. Checkout the repository
-      - name: Checkout
+      # 1
+      - name: Checkout the repository
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
 
-      # 2. Setup PNPM (to provide access to setup-node `cache: pnpm`)
+      # 2
+      - name: Check for pending changesets
+        id: pending_changesets
+        run: |
+          # Count .md files excluding README.md
+          count=$(find .changeset -maxdepth 1 -name "*.md" ! -name "README.md" | wc -l)
+          if [ "$count" -gt 0 ]; then
+            echo "changesets_exist=true" >> $GITHUB_OUTPUT
+            echo "Proceeding with release PR."
+          else
+            echo "changesets_exist=false" >> $GITHUB_OUTPUT
+            echo "Skipping release PR."
+          fi
+
+  #
+  #
+  #
+  create_release_pr:
+    # runs after `check_pending_changesets` job
+    needs: check_pending_changesets
+
+    # `check_pending_changesets` job must succeed
+    # changesets must exist
+    if: >
+      needs.check_pending_changesets.result == 'success' && (
+        needs.check_pending_changesets.outputs.changesets_exist == 'true'
+      )
+
+    name: Create release PR
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1
+      - name: Checkout the repository
+        uses: actions/checkout@v6
+        with:
+          # fetch commits history from the base branch
+          # `n`: no. of commits
+          # `n = 0`: full history
+          fetch-depth: 97 # if more than 97 commits, then this need to be bumped
+
+      # 2. to provide access to setup-node's `cache: pnpm`
       - name: Setup PNPM
         uses: pnpm/action-setup@v5
         with:
@@ -38,27 +97,27 @@ jobs:
           run_install: false
           cache: true
 
-      # 3. Setup Node.js
+      # 3
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: 24.x
-          registry-url: https://registry.npmjs.org
           cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml # root lockfile
 
-      # 4. Install dependencies (prevent when lockfile is out of sync)
+      # 4. prevent when lockfile is out of sync
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
 
-      # 5. Create Release PR or Publish to NPM
-      - name: Create Release PR or Publish to NPM
-        uses: changesets/action@v1.7
-        with:
-          commit: "chore(release): version packages"
-          title: "chore(release): version packages"
-          version: true
-          setupGitUser: false
-          publish: false # important: do NOT publish here
+      # 6
+      - name: Bump package version and create release PR
+        uses: changesets/action@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.SHILPCSS_GITHUB_TOKEN }}
           NODE_ENV: production
+          GITHUB_TOKEN: ${{ secrets.SHILPCSS_GITHUB_TOKEN }}
+        with:
+          commit: "chore: bump shilpcss version"
+          title: "chore: bump shilpcss version"
+          version: pnpm changeset version
+          setupGitUser: true
+          publish: false # important: do NOT publish here
