@@ -6,8 +6,7 @@ import Separator from "@/components/separator";
 export const metadata = {
 	//
 	title: {
-		absolute:
-			"Work With the Creator of Shilp CSS, Frontend Engineer | Pradipsinh Jadeja",
+		absolute: "Work With Shilp CSS Creator - Pradipsinh Jadeja",
 	},
 
 	description:
