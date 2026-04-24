@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.0-alpha.4
+
+## Patch Changes
+
+- Improve frontmatter data for docs pages
+  - Add description
+  - Add keywords
+  - Improve title
+- Fix duplicate `h1`
+- Fix wrong pathnames
+- Reduce title length of "/work-with-me" page
+
 ## 1.0.0-alpha.3
 
 ### Patch Changes
