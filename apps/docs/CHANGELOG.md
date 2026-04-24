@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0-alpha.4
+
+## Patch Changes
+
+- Improve frontmatter data for docs pages
+  - Add description
+  - Add keywords
+  - Improve title
+
 ## 1.0.0-alpha.3
 
 ### Patch Changes
