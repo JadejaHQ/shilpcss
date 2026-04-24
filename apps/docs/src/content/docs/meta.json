@@ -39,6 +39,10 @@
 		{
 			"type": "folder",
 			"name": "best-practices"
+		},
+		{
+			"type": "folder",
+			"name": "changelog"
 		}
 	]
 }
