@@ -22,3 +22,5 @@ files
 
 		unlinkSync(filePath);
 	});
+
+console.log(`::::::: DOCS CLEANUP COMPLETED :::::::`);

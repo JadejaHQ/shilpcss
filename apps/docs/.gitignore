@@ -12,6 +12,7 @@
 /.next/
 /out/
 /dist/
+/cache/
 
 # search index
 /public/search-index-*

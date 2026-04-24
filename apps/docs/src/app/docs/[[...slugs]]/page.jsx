@@ -33,9 +33,13 @@ export const generateMetadata = async ({ params }) => {
 		slugs,
 	});
 
+	const title = metadata.title || meta.title;
+	const description = metadata.description || meta.description || "";
+
 	return {
-		title: metadata.title || meta.title,
-		description: metadata.description || meta.description || "",
+		title,
+		description,
+		keywords: metadata.keywords || meta.keywords || [],
 
 		alternates: {
 			canonical: meta.url,
@@ -45,10 +49,31 @@ export const generateMetadata = async ({ params }) => {
 		},
 
 		openGraph: {
-			title: metadata.title || meta.title,
-			description: metadata.description || meta.description || "",
+			title,
+			description,
 			url: meta.url,
 			type: "article",
+			siteName: "Shilp CSS",
+			locale: "en_US",
+			author: metadata.author || "Pradipsinh Jadeja",
+			images: [
+				{
+					url: "/og.png",
+					width: 1200,
+					height: 630,
+				},
+			],
+		},
+
+		twitter: {
+			title,
+			description,
+			card: "summary_large_image",
+			images: ["/og.png"],
+			site: "@shilpcss",
+			siteId: "2030301913112285184",
+			creator: "@jadeja97_",
+			creatorId: "1951893079608160256",
 		},
 	};
 };

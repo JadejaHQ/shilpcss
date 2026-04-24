@@ -16,16 +16,28 @@ import { SITE_URL } from "@/lib/constants";
 
 /* ============================================================================================= */
 
+const title = "Shilp CSS";
+const description =
+	"an Intent-first, CSS-centric, styling engine and framework";
+
 export const metadata = {
 	//
 	metadataBase: new URL(SITE_URL),
 
 	title: {
-		default: "Shilp CSS",
+		default: title,
 		template: "%s | Shilp CSS",
 	},
 
-	description: "an Intent-first, CSS-centric, styling engine and framework",
+	description,
+	keywords: [
+		"shilp css",
+		"framework",
+		"library",
+		"styling engine",
+		"intent-first css",
+		"css-centric styling",
+	],
 
 	alternates: {
 		canonical: "/",
@@ -37,8 +49,13 @@ export const metadata = {
 	},
 
 	openGraph: {
+		title,
+		description,
+		url: SITE_URL,
 		type: "website",
 		siteName: "Shilp CSS",
+		locale: "en_US",
+		author: "Pradipsinh Jadeja",
 		images: [
 			{
 				url: "/og.png",
@@ -49,8 +66,14 @@ export const metadata = {
 	},
 
 	twitter: {
+		title,
+		description,
 		card: "summary_large_image",
 		images: ["/og.png"],
+		site: "@shilpcss",
+		siteId: "2030301913112285184",
+		creator: "@jadeja97_",
+		creatorId: "1951893079608160256",
 	},
 };
 
