@@ -1,46 +1,98 @@
 import List from "@/components/list";
 import Separator from "@/components/separator";
+import Headings from "@/markdown/components/heading";
+
+import { SITE_URL } from "@/lib/constants";
 
 /* ============================================================================================= */
+
+const title = "Work With Shilp CSS Creator - Pradipsinh Jadeja";
+const description =
+	"Work with the creator of Shilp CSS, an open-source CSS engine and framework. He is available for frontend engineering, architecture, consulting, product collaboration, and sponsorship for Shilp CSS.";
 
 export const metadata = {
 	//
 	title: {
-		absolute: "Work With Shilp CSS Creator - Pradipsinh Jadeja",
+		absolute: title,
 	},
 
-	description:
-		"Work with the creator of Shilp CSS, an open-source CSS engine and framework. He is available for frontend engineering, architecture, consulting, product collaboration, and sponsorship for Shilp CSS.",
+	description,
+
+	keywords: [
+		"work with me",
+		"pradipsinh jadeja",
+		"shilp css creator",
+		"frontend engineer",
+		"product collaboration",
+		"consulting",
+		"sponsorship",
+	],
 
 	alternates: {
 		canonical: "/work-with-me",
+		types: {
+			"text/markdown":
+				"https://raw.githubusercontent.com/jadeja97/jadeja97/refs/heads/main/README.md",
+		},
+	},
+
+	openGraph: {
+		title,
+		description,
+		url: `${SITE_URL}/work-with-me`,
+		type: "article",
+		siteName: "Shilp CSS",
+		locale: "en_US",
+		author: "Pradipsinh Jadeja",
+		images: [
+			{
+				url: "/og.png",
+				width: 1200,
+				height: 630,
+			},
+		],
+	},
+
+	twitter: {
+		title,
+		description,
+		card: "summary_large_image",
+		images: ["/og.png"],
+		site: "@shilpcss",
+		siteId: "2030301913112285184",
+		creator: "@jadeja97_",
+		creatorId: "1951893079608160256",
 	},
 };
 
 /* ============================================================================================= */
 
 const WorkWithMe = () => (
-	<main id="work-with-me" className="container page-layout typography">
-		{/*  */}
+	<main id="work-with-me" className="container page-layout">
+		<article className="typography">
+			{/*  */}
 
-		<HeroSection />
+			<HeroSection />
 
-		<Strength />
+			<OpenTo />
 
-		<CurrentFocus />
+			<Strength />
 
-		<WorkTogether />
+			<CurrentFocus />
 
-		<Contact />
+			<WorkTogether />
 
-		<br />
-		<br />
+			<Contact />
 
-		<Separator />
+			<br />
+			<br />
 
-		<p>Thank you for your time 🙂</p>
+			<Separator />
 
-		{/*  */}
+			<p>Thank you for your time 🙂</p>
+
+			{/*  */}
+		</article>
 	</main>
 );
 
@@ -48,7 +100,9 @@ const WorkWithMe = () => (
 
 const HeroSection = () => (
 	<>
-		<h1>Work With Me</h1>
+		<Headings as="h1" id="work-with-me">
+			Work With Me
+		</Headings>
 		<p>
 			Hi, my name is <strong>Pradipsinh Jadeja</strong>.<br />
 			<strong>Creator of Shilp CSS and Senior Frontend Engineer</strong>.
@@ -57,9 +111,17 @@ const HeroSection = () => (
 			I am open to working with teams that value strong engineering fundamentals
 			and product thinking.
 		</p>
-		<p>
-			<strong>Open to</strong>:
-		</p>
+	</>
+);
+
+/* ============================================================================================= */
+
+const OpenTo = () => (
+	<section>
+		<Headings as="h2" id="open-to">
+			Open To
+		</Headings>
+
 		<List>
 			<li>Frontend Engineer role</li>
 			<li>Product-focused startups and engineering teams</li>
@@ -71,14 +133,15 @@ const HeroSection = () => (
 			I prefer remote work and collaborate effectively with distributed teams,
 			and I am open to discussing what works best for the team.
 		</p>
-	</>
+	</section>
 );
-
 /* ============================================================================================= */
 
 const Strength = () => (
 	<section>
-		<h2>What I Bring To The Table</h2>
+		<Headings as="h2" id="what-i-bring-to-the-table">
+			What I Bring To The Table
+		</Headings>
 
 		<p>
 			My core strength is quickly understanding how systems work, identifying
@@ -117,7 +180,9 @@ const Strength = () => (
 
 const CurrentFocus = () => (
 	<section>
-		<h2>Current Focus</h2>
+		<Headings as="h2" id="current-focus">
+			Current Focus
+		</Headings>
 
 		<p>
 			I am actively investing my time in building the development of Shilp CSS.
@@ -148,7 +213,9 @@ const CurrentFocus = () => (
 
 const WorkTogether = () => (
 	<section>
-		<h2>How We Can Work Together</h2>
+		<Headings as="h2" id="how-we-can-work-together">
+			How We Can Work Together
+		</Headings>
 
 		<p>Reach out if you are:</p>
 		<List>
@@ -170,7 +237,9 @@ const WorkTogether = () => (
 
 const Contact = () => (
 	<section>
-		<h2>Contact</h2>
+		<Headings as="h2" id="contact">
+			Contact
+		</Headings>
 
 		<p>
 			Work Email: <br /> <code>pajadeja117@gmail.com</code>
