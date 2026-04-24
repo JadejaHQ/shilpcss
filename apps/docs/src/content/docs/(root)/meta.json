@@ -17,6 +17,7 @@
 		{
 			"name": "setup",
 			"label": "setup shilp CSS"
-		}
+		},
+		"changelog"
 	]
 }

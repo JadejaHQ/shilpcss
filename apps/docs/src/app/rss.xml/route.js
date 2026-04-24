@@ -1,6 +1,7 @@
 import { SITE_URL } from "@/lib/constants";
 
 import Content from "@/lib/content";
+import loadDocsModule from "@/lib/load-docs-module";
 
 /* ============================================================================================= */
 
@@ -18,39 +19,25 @@ export const revalidate = false;
 /**
  * Generates RSS feed for documentation updates
  */
-export const GET = () => {
-	//
-	const slugs = content.getAllSlugs();
+export const GET = async () => {
+	// RSS items from changelog pages
+	const items = [];
 
-	const pages = [
-		{
-			title: "Work With Me",
-			description:
-				"Work with the creator of Shilp CSS, an open-source CSS engine and framework. He is available for frontend engineering, architecture, consulting, product collaboration, and sponsorship for Shilp CSS.",
-			url: `${SITE_URL}/work-with-me/`,
-			guid: "work-with-me",
-		},
-	];
+	// changelog slugs
+	const changelogSlugs = content
+		.getAllSlugs()
+		.filter(({ slugs }) => slugs[0] === "changelog" && slugs.length > 1);
 
-	// Build RSS items from all doc pages
-	const items = slugs.map(({ slugs }) => {
-		//
-		const { meta } = content.getFileInfo(slugs);
+	for (const _slugs of changelogSlugs) {
+		const item = await getRSSItemsMeta(_slugs.slugs);
+		items.push(item);
+	}
 
-		return createRSSItem({
-			title: meta.title,
-			url: `${SITE_URL}${meta.url}/`,
-			guid: slugs.join(""),
-		});
-	});
+	// changelogs sorted by descending date
+	const sortedItems = items.sort((a, b) => +b.date - +a.date);
 
 	// Generate RSS XML
-	const rss = generateRSSFeed(
-		pages
-			.map((page) => createRSSItem(page))
-			.concat(items)
-			.join("\n"),
-	);
+	const rss = generateRSSFeed(sortedItems.map(createRSSItem).join("\n"));
 
 	return new Response(rss, {
 		headers: {
@@ -62,16 +49,35 @@ export const GET = () => {
 
 /* ============================================================================================= */
 
-const createRSSItem = ({ title, description, url, guid }) => {
+const getRSSItemsMeta = async (slugs) => {
+	//
+	const { metadata, meta } = await loadDocsModule({
+		content,
+		slugs,
+	});
+
+	return {
+		title: metadata.title || meta.title,
+		description: metadata.description || meta.description,
+		url: `${SITE_URL}${meta.url}/`,
+		guid: slugs.join(""),
+		date: metadata.date ? new Date(metadata.date) : new Date(),
+	};
+};
+
+/* ============================================================================================= */
+
+const createRSSItem = ({ title, description, url, guid, date }) => {
 	//
 	return `
-  <item>
-    <title>${escapeXML(title)}</title>
-    <description>${escapeXML(description ?? `content for ${title}`)}</description>
-    <link>${escapeXML(url)}</link>
-    <guid>${escapeXML(guid || url)}</guid>
-    <pubDate>${new Date().toUTCString()}</pubDate>
-  </item>`;
+		<item>
+			<title>${escapeXML(title || "Untitled")}</title>
+			<description>${escapeXML(description ?? `content for ${title}`)}</description>
+			<link>${escapeXML(url)}</link>
+			<guid>${escapeXML(guid || url)}</guid>
+			<pubDate>${date.toUTCString()}</pubDate>
+		</item>
+	`;
 };
 
 /* ============================================================================================= */
@@ -84,17 +90,16 @@ const generateRSSFeed = (items) => {
 	const feedDate = new Date().toUTCString();
 
 	return `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>Shilp CSS</title>
-		<link>${SITE_URL}</link>
-		<description>an Intent-first, CSS-centric, styling engine and framework</description>
+		<title>Shilp CSS Changelog</title>
+		<link>${SITE_URL}/docs/changelog/</link>
+		<description>Latest updates and announcements for Shilp CSS</description>
 		<language>en-us</language>
+		<atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
 		<lastBuildDate>${feedDate}</lastBuildDate>
 		<ttl>3600</ttl>
-
     ${items}
-
 	</channel>
 </rss>`;
 };

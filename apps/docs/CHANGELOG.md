@@ -1,13 +1,32 @@
 # Changelog
 
+## 1.0.0-alpha.5
+
+### Minor Changes
+
+- Add new **changelog** docs pages
+- Refactor `rss.xml` to include only **changelog** pages
+- Disable nextjs telemetry
+- Updated metadata for better SEO and user experience
+- Added keywords to layout and work-with-me pages
+
+### Patch Changes
+
+- From `rss.xml`, remove 1:1 mapping with sitemap
+- Made minor adjustments to the work-with-me page for better structure and
+  readability
+
 ## 1.0.0-alpha.4
 
-## Patch Changes
+### Minor Changes
 
 - Improve frontmatter data for docs pages
   - Add description
   - Add keywords
   - Improve title
+
+### Patch Changes
+
 - Fix duplicate `h1`
 - Fix wrong pathnames
 - Reduce title length of "/work-with-me" page
