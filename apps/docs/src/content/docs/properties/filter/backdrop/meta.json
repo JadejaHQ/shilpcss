@@ -1,0 +1,52 @@
+{
+	"page": true,
+	"name": "index",
+	"label": "backdrop",
+	"title": "backdrop filter",
+	"items": [
+		{
+			"name": "blur",
+			"title": "backdrop blur"
+		},
+		{
+			"name": "bright",
+			"label": "brightness",
+			"title": "backdrop brightness"
+		},
+		{
+			"name": "contrast",
+			"title": "backdrop contrast"
+		},
+		{
+			"name": "gray",
+			"label": "grayscale",
+			"title": "backdrop grayscale"
+		},
+		{
+			"name": "hue",
+			"label": "hue rotate",
+			"title": "backdrop hue rotate"
+		},
+		{
+			"name": "invert",
+			"title": "backdrop invert"
+		},
+		{
+			"name": "opacity",
+			"title": "backdrop opacity"
+		},
+		{
+			"name": "saturate",
+			"label": "saturation",
+			"title": "backdrop saturation"
+		},
+		{
+			"name": "sepia",
+			"title": "backdrop sepia"
+		},
+		{
+			"name": "shadow",
+			"title": "backdrop shadow"
+		}
+	]
+}

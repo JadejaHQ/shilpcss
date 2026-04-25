@@ -51,14 +51,14 @@
 [data-folder-page] ul {
 	@space pl-5;
 
-	li {
+	a {
 		@position is-relative;
 
 		@self before {
 			content: "-";
 
 			@position is-absolute top-1/2;
-			@adjust preset -move-y-1/2 -move-x-2.5;
+			@adjust preset -move-y-1/2 -move-x-5;
 		}
 	}
 }

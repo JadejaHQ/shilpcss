@@ -33,34 +33,10 @@
 		"sepia",
 		"shadow",
 		"preset",
-		"backdrop",
-		"backdrop-blur",
 
 		{
-			"name": "backdrop-bright",
-			"label": "backdrop brightness"
-		},
-
-		"backdrop-contrast",
-
-		{
-			"name": "backdrop-gray",
-			"label": "backdrop grayscale"
-		},
-		{
-			"name": "backdrop-hue",
-			"label": "backdrop hue rotate"
-		},
-
-		"backdrop-invert",
-		"backdrop-opacity",
-
-		{
-			"name": "backdrop-saturate",
-			"label": "backdrop saturation"
-		},
-
-		"backdrop-sepia",
-		"backdrop-shadow"
+			"type": "folder",
+			"name": "backdrop"
+		}
 	]
 }
