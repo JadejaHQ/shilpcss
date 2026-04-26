@@ -31,7 +31,8 @@
 			[data-folder="components"],
 			[data-folder="properties"],
 			[data-folder="mixins"],
-			[data-folder="default styles"]
+			[data-folder="default styles"],
+			[data-folder="changelog"]
 		)
 		a {
 		@text case-inherit;

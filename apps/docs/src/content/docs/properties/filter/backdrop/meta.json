@@ -10,7 +10,6 @@
 		},
 		{
 			"name": "bright",
-			"label": "brightness",
 			"title": "backdrop brightness"
 		},
 		{
@@ -19,12 +18,10 @@
 		},
 		{
 			"name": "gray",
-			"label": "grayscale",
 			"title": "backdrop grayscale"
 		},
 		{
 			"name": "hue",
-			"label": "hue rotate",
 			"title": "backdrop hue rotate"
 		},
 		{
@@ -37,7 +34,6 @@
 		},
 		{
 			"name": "saturate",
-			"label": "saturation",
 			"title": "backdrop saturation"
 		},
 		{

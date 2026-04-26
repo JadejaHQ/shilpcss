@@ -5,35 +5,16 @@
 	"title": "filter intent",
 	"items": [
 		"blur",
-
-		{
-			"name": "bright",
-			"label": "brightness"
-		},
-
+		"bright",
 		"contrast",
-
-		{
-			"name": "gray",
-			"label": "grayscale"
-		},
-		{
-			"name": "hue",
-			"label": "hue rotate"
-		},
-
+		"gray",
+		"hue",
 		"invert",
 		"opacity",
-
-		{
-			"name": "saturate",
-			"label": "saturation"
-		},
-
+		"saturate",
 		"sepia",
 		"shadow",
 		"preset",
-
 		{
 			"type": "folder",
 			"name": "backdrop"

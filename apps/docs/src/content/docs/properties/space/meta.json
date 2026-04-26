@@ -3,5 +3,5 @@
 	"name": "index",
 	"label": "@space",
 	"title": "space intent",
-	"items": ["gap", "margin", "padding"]
+	"items": ["gap", "m", "p"]
 }

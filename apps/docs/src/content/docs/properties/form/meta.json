@@ -3,12 +3,5 @@
 	"name": "index",
 	"label": "@form",
 	"title": "form intent",
-	"items": [
-		{
-			"name": "accent",
-			"label": "accent color"
-		},
-		"resize",
-		"skin"
-	]
+	"items": ["accent", "resize", "skin"]
 }

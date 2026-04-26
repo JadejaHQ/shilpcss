@@ -1,9 +1,8 @@
 {
-	"label": "Changelog",
+	"label": "changelog",
 	"items": [
 		{
 			"name": "alpha.0",
-			"label": "alpha 0",
 			"title": "Shilp CSS - alpha.0 release"
 		}
 	]
