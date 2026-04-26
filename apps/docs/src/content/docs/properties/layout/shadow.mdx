@@ -1,12 +1,20 @@
 ---
-title: "Drop Shadow | @layout"
-description: "Add drop shadow effects to elements."
-keywords: ["layout", "shadow", "depth", "effect", "css"]
+title: "Box Shadow | @layout"
+description: "Add box shadow effects to elements."
+keywords: ["layout", "shadow", "depth", "effect"]
 ---
 
-# shadow
+# Box Shadow
 
-adds shadow to an element
+Add shadow (box) effects to elements.
+
+Usage:
+
+- `@layout shadow;`
+- `@layout shadow-*;`
+- `@layout shadow-inset;`
+- `@layout shadow-inset-*;`
+- `@layout shadow-color-*;`
 
 <Alert variant="info">
 
@@ -33,41 +41,41 @@ const shilpConfig = {
 					special: true,
 					values: {
 						none: `
-					box-shadow: 0 0 #0000<i>;
-					--b-sdw: initial<i>;
-				`,
+							box-shadow: 0 0 #0000<i>;
+							--b-sdw: initial<i>;
+						`,
 						"2xs": `
-					box-shadow: var(--bx-sdw)<i>;
-					--b-sdw: var(--b-sdw-2xs)<i>;
-				`,
+							box-shadow: var(--bx-sdw)<i>;
+							--b-sdw: var(--b-sdw-2xs)<i>;
+						`,
 						xs: `
-					box-shadow: var(--bx-sdw)<i>;
-					--b-sdw: var(--b-sdw-xs)<i>;
-				`,
+							box-shadow: var(--bx-sdw)<i>;
+							--b-sdw: var(--b-sdw-xs)<i>;
+						`,
 						sm: `
-					box-shadow: var(--bx-sdw)<i>;
-					--b-sdw: var(--b-sdw-sm)<i>;
-				`,
+							box-shadow: var(--bx-sdw)<i>;
+							--b-sdw: var(--b-sdw-sm)<i>;
+						`,
 						DEFAULT: `
-					box-shadow: var(--bx-sdw)<i>;
-					--b-sdw: var(--b-sdw-sm)<i>;
-				`,
+							box-shadow: var(--bx-sdw)<i>;
+							--b-sdw: var(--b-sdw-sm)<i>;
+						`,
 						md: `
-					box-shadow: var(--bx-sdw)<i>;
-					--b-sdw: var(--b-sdw-md)<i>;
-				`,
+							box-shadow: var(--bx-sdw)<i>;
+							--b-sdw: var(--b-sdw-md)<i>;
+						`,
 						lg: `
-					box-shadow: var(--bx-sdw)<i>;
-					--b-sdw: var(--b-sdw-lg)<i>;
-				`,
+							box-shadow: var(--bx-sdw)<i>;
+							--b-sdw: var(--b-sdw-lg)<i>;
+						`,
 						xl: `
-					box-shadow: var(--bx-sdw)<i>;
-					--b-sdw: var(--b-sdw-xl)<i>;
-				`,
+							box-shadow: var(--bx-sdw)<i>;
+							--b-sdw: var(--b-sdw-xl)<i>;
+						`,
 						"2xl": `
-					box-shadow: var(--bx-sdw)<i>;
-					--b-sdw: var(--b-sdw-2xl)<i>;
-				`,
+							box-shadow: var(--bx-sdw)<i>;
+							--b-sdw: var(--b-sdw-2xl)<i>;
+						`,
 					},
 				},
 

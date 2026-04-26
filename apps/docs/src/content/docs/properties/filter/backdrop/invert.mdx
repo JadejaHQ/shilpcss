@@ -1,12 +1,16 @@
 ---
-title: "Backdrop Contrast Filter | @filter"
-description: "Control backdrop contrast filter effect."
-keywords: ["filter", "backdrop", "contrast", "effect", "css"]
+title: "Backdrop Invert Filter | @filter"
+description: "Invert backdrop colors with filter effect."
+keywords: ["filter", "backdrop", "invert", "color"]
 ---
 
-# backdrop contrast
+# Backdrop Invert Filter
 
-contrast backdrop filter
+Invert backdrop colors with filter effect.
+
+Usage:
+
+- `@filter backdrop-invert-*;`
 
 <Alert variant="info">
 
@@ -27,11 +31,13 @@ const shilpConfig = {
 
 	properties: {
 		filter: {
-			contrast: {
-				contrast: {
-					property: "backdrop-filter: contrast(<v>)<i>;",
-					themeKey: "fractions",
-					values: {},
+			backdrop: {
+				invert: {
+					property: "backdrop-filter: invert(<v>)<i>;",
+					values: {
+						DEFAULT: 1,
+						none: 0,
+					},
 				},
 			},
 		},

@@ -1,12 +1,28 @@
 ---
-title: "Scroll Margin | @live"
-description: "Set scroll margin spacing around elements."
-keywords: ["live", "scroll", "margin", "spacing", "css"]
+title: "Scroll Padding | @live"
+description: "Set spacing inside element (padding) for snapping or scrolling."
+keywords: ["live", "scroll", "padding", "spacing"]
 ---
 
-# scroll margin
+# Scroll Padding
 
-margin around element for snapping or scrolling
+Set spacing inside element (padding) for snapping or scrolling.
+
+Usage:
+
+- `@live scroll-p-*;`
+- `@live scroll-pt-*;`
+- `@live scroll-pb-*;`
+- `@live scroll-pl-*;`
+- `@live scroll-pr-*;`
+- `@live scroll-px-*;`
+- `@live scroll-py-*;`
+- `@live scroll-pbl-*;`
+- `@live scroll-pbls-*;`
+- `@live scroll-pble-*;`
+- `@live scroll-pi-*;`
+- `@live scroll-pis-*;`
+- `@live scroll-pie-*;`
 
 <Alert variant="info">
 
@@ -28,86 +44,86 @@ const shilpConfig = {
 	properties: {
 		live: {
 			scroll: {
-				m: {
-					property: "scroll-margin: <n><v><i>;",
+				p: {
+					property: "scroll-padding: <n><v><i>;",
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				mt: {
-					property: "scroll-margin-top: <n><v><i>;",
+				pt: {
+					property: "scroll-padding-top: <n><v><i>;",
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				mr: {
-					property: "scroll-margin-right: <n><v><i>;",
+				pr: {
+					property: "scroll-padding-right: <n><v><i>;",
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				mb: {
-					property: "scroll-margin-bottom: <n><v><i>;",
+				pb: {
+					property: "scroll-padding-bottom: <n><v><i>;",
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				ml: {
-					property: "scroll-margin-left: <n><v><i>;",
+				pl: {
+					property: "scroll-padding-left: <n><v><i>;",
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				mx: {
+				px: {
 					property: `
-						scroll-margin-left: <n><v><i>;
-            scroll-margin-right: <n><v><i>;
+						scroll-padding-left: <n><v><i>;
+            scroll-padding-right: <n><v><i>;
           `,
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				my: {
+				py: {
 					property: `
-            scroll-margin-top: <n><v><i>;
-            scroll-margin-bottom: <n><v><i>;
+						scroll-padding-top: <n><v><i>;
+            scroll-padding-bottom: <n><v><i>;
           `,
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				mbl: {
-					property: "scroll-margin-block: <n><v><i>",
+				pbl: {
+					property: "scroll-padding-block: <n><v><i>",
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				mbls: {
-					property: "scroll-margin-block-start: <n><v><i>;",
+				pbls: {
+					property: "scroll-padding-block-start: <n><v><i>;",
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				mble: {
-					property: "scroll-margin-block-end: <n><v><i>;",
+				pble: {
+					property: "scroll-padding-block-end: <n><v><i>;",
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				mi: {
-					property: "scroll-margin-inline: <n><v><i>",
+				pi: {
+					property: "scroll-padding-inline: <n><v><i>",
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				mis: {
-					property: "scroll-margin-inline-start: <n><v><i>;",
+				pis: {
+					property: "scroll-padding-inline-start: <n><v><i>;",
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},
 				},
-				mie: {
-					property: "scroll-margin-inline-end: <n><v><i>;",
+				pie: {
+					property: "scroll-padding-inline-end: <n><v><i>;",
 					resolve: "spacing",
 					themeKey: "spacingPixels",
 					values: {},

@@ -1,12 +1,16 @@
 ---
-title: "Backdrop Opacity Filter | @filter"
-description: "Control backdrop opacity filter effect."
-keywords: ["filter", "backdrop", "opacity", "transparency", "css"]
+title: "Backdrop Saturation Filter | @filter"
+description: "Adjust backdrop saturation filter values."
+keywords: ["filter", "backdrop", "saturate", "color"]
 ---
 
-# backdrop opacity
+# Backdrop Saturation Filter
 
-opacity backdrop filter
+Adjust backdrop saturation filter values.
+
+Usage:
+
+- `@filter backdrop-saturate-*;`
 
 <Alert variant="info">
 
@@ -28,8 +32,8 @@ const shilpConfig = {
 	properties: {
 		filter: {
 			backdrop: {
-				opacity: {
-					property: "backdrop-filter: opacity(<v>)<i>;",
+				saturate: {
+					property: "backdrop-filter: saturate(<v>)<i>;",
 					themeKey: "fractions",
 					values: {},
 				},

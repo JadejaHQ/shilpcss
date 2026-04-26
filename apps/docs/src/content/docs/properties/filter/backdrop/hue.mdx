@@ -1,12 +1,16 @@
 ---
-title: "Backdrop Invert Filter | @filter"
-description: "Invert backdrop colors with filter effect."
-keywords: ["filter", "backdrop", "invert", "color", "css"]
+title: "Backdrop Hue Rotate Filter | @filter"
+description: "Adjust backdrop hue rotation filter effects."
+keywords: ["filter", "backdrop", "hue", "color"]
 ---
 
-# backdrop invert
+# Backdrop Hue Rotate Filter
 
-invert backdrop filter
+Adjust backdrop hue rotation filter effects.
+
+Usage:
+
+- `@filter backdrop-hue-*;`
 
 <Alert variant="info">
 
@@ -28,12 +32,10 @@ const shilpConfig = {
 	properties: {
 		filter: {
 			backdrop: {
-				invert: {
-					property: "backdrop-filter: invert(<v>)<i>;",
-					values: {
-						DEFAULT: 1,
-						none: 0,
-					},
+				hue: {
+					property: "backdrop-filter: hue-rotate(<v>)<i>;",
+					themeKey: "angles",
+					values: {},
 				},
 			},
 		},

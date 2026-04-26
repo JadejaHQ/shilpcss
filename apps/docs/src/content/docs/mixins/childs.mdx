@@ -1,12 +1,24 @@
 ---
 title: "@childs Mixin - Child Element Selector"
-description: "Use @childs mixin to style direct child elements in Shilp CSS."
+description: "Use @childs mixin to style child elements in Shilp CSS."
 keywords: ["@childs", "child selector", "child elements", "structural selector"]
 ---
 
 # @childs Mixin
 
-target child elements
+Use `@childs` mixin to style child elements.
+
+Usage:
+
+```css
+.any-class {
+	/* direct */
+	@childs <variant> { ... }
+
+	/* functions */
+	@childs <variant>("<arguments>") { ... }
+}
+```
 
 <Alert variant="info">
 

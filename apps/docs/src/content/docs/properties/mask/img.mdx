@@ -1,12 +1,25 @@
 ---
 title: "Mask Image | @mask"
-description: "Set mask images from URLs."
-keywords: ["mask", "image", "mask-image", "url", "css"]
+description: "Specifies an image to use as a mask."
+keywords: ["mask", "image", "mask-image", "url"]
 ---
 
-# img
+# Mask Image
 
-specifies an image to use as a mask
+Specifies an image to use as a mask.
+
+Usage:
+
+- `@mask img-*;`
+
+<Alert variant="danger">
+
+Gradient color mask uses `mask-image` property.
+
+So, if you are using `@mask gradient-*;` then conflict will be created. You need
+to choose a stratagey to work with both.
+
+</Alert>
 
 <Alert variant="info">
 

@@ -1,12 +1,18 @@
 ---
-title: "Width and Height | @size"
-description: "Define sizing method type."
-keywords: ["size", "method", "dimension", "unit", "css"]
+title: "Size (Width & Height) | @size"
+description: "Set elements size (width & height) including block and inline."
+keywords: ["size", "method", "dimension", "unit"]
 ---
 
-# is
+# Size
 
-element’s height & width
+Set elements size (width & height) including block and inline.
+
+Usage:
+
+- `@size is-*;`
+- `@size is-block-*;`
+- `@size is-inline-*;`
 
 <Alert variant="info">
 
@@ -30,9 +36,9 @@ const shilpConfig = {
 			is: {
 				DEFAULT: {
 					property: `
-				width: <v><i>;
-				height: <v><i>;
-			`,
+						width: <v><i>;
+						height: <v><i>;
+					`,
 					resolve: "spacing",
 					themeKey: "spacing",
 					values: {

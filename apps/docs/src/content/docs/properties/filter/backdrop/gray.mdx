@@ -1,12 +1,16 @@
 ---
-title: "Backdrop Hue Rotation Filter | @filter"
-description: "Adjust backdrop hue rotation filter values."
-keywords: ["filter", "backdrop", "hue", "color", "css"]
+title: "Backdrop Grayscale Filter | @filter"
+description: "Apply backdrop grayscale filter to elements."
+keywords: ["filter", "backdrop", "grayscale", "effect"]
 ---
 
-# backdrop hue
+# Backdrop Grayscale Filter
 
-rotate hue backdrop filter
+Apply backdrop grayscale filter to elements.
+
+Usage:
+
+- `@filter backdrop-gray-*;`
 
 <Alert variant="info">
 
@@ -28,9 +32,9 @@ const shilpConfig = {
 	properties: {
 		filter: {
 			backdrop: {
-				hue: {
-					property: "backdrop-filter: hue-rotate(<v>)<i>;",
-					themeKey: "angles",
+				gray: {
+					property: "backdrop-filter: grayscale(<v>)<i>;",
+					themeKey: "fractions",
 					values: {},
 				},
 			},

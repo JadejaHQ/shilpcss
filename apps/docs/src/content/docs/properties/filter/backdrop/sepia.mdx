@@ -1,12 +1,16 @@
 ---
-title: "Line Height | @text"
-description: "Set line height for text spacing."
-keywords: ["text", "line-height", "spacing", "typography", "css"]
+title: "Backdrop Sepia Filter | @filter"
+description: "Apply backdrop sepia tone filter effect."
+keywords: ["filter", "backdrop", "sepia", "tone"]
 ---
 
-# line height
+# Backdrop Sepia Filter
 
-controls text column sizing algorithm
+Apply backdrop sepia tone filter effect.
+
+Usage:
+
+- `@filter backdrop-sepia-*;`
 
 <Alert variant="info">
 
@@ -26,17 +30,12 @@ const shilpConfig = {
 	source: "react",
 
 	properties: {
-		text: {
-			h: {
-				property: "line-height: <v><i>;",
-				values: {
-					normal: 1,
-					xs: 1.25,
-					sm: 1.375,
-					base: 1.5,
-					md: 1.625,
-					lg: 1.75,
-					xl: 2,
+		filter: {
+			backdrop: {
+				sepia: {
+					property: "backdrop-filter: sepia(<v>)<i>;",
+					themeKey: "fractions",
+					values: {},
 				},
 			},
 		},

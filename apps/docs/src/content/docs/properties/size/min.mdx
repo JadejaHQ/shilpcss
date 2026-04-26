@@ -1,12 +1,20 @@
 ---
 title: "Minimum Size | @size"
-description: "Set minimum dimensions for elements."
-keywords: ["size", "minimum", "min", "constraint", "css"]
+description: "Set maximum dimensions for elements including block and inline."
+keywords: ["size", "minimum", "min", "constraint"]
 ---
 
-# minimum
+# Minimum Size
 
-controls min points when scrolling a container
+Set maximum dimensions for elements including block and inline.
+
+Usage:
+
+- `@size min-*;`
+- `@size min-w-*;`
+- `@size min-h-*;`
+- `@size min-block-*;`
+- `@size min-inline-*;`
 
 <Alert variant="info">
 
@@ -30,9 +38,9 @@ const shilpConfig = {
 			min: {
 				DEFAULT: {
 					property: `
-				min-width: <v><i>;
-				min-height: <v><i>;
-			`,
+						min-width: <v><i>;
+						min-height: <v><i>;
+					`,
 					resolve: "spacing",
 					themeKey: "spacing",
 					values: {

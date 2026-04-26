@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.0.0-alpha.6
+
+### Minor Changes
+
+- feat: add basic usage example for properties and mixins
+
+### Patch Changes
+
+- refactor: separate **backdrop filter** from **filter**
+  - create a new folder in content and moved backdrop related filters
+  - move indent indicator from `li` to `li a` for `data-folder-page`
+- fix: add correct description for text intent's utilites
+- refactor: add correct titles, descriptions for all docs pages
+- refactor: docs topics navigation label
+  - make properties labels match utility's first token
+    - links url and text changed accordingly
+    - for `scroll-m` and `scroll-p`, an additional label was required
+  - exlude `/docs/changelog` from `uppercase` styles
+  - removed files and folder `title` to be inherited from `label`
+
 ## 1.0.0-alpha.5
 
 ### Minor Changes

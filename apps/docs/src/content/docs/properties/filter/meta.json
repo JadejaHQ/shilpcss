@@ -5,62 +5,19 @@
 	"title": "filter intent",
 	"items": [
 		"blur",
-
-		{
-			"name": "bright",
-			"label": "brightness"
-		},
-
+		"bright",
 		"contrast",
-
-		{
-			"name": "gray",
-			"label": "grayscale"
-		},
-		{
-			"name": "hue",
-			"label": "hue rotate"
-		},
-
+		"gray",
+		"hue",
 		"invert",
 		"opacity",
-
-		{
-			"name": "saturate",
-			"label": "saturation"
-		},
-
+		"saturate",
 		"sepia",
 		"shadow",
 		"preset",
-		"backdrop",
-		"backdrop-blur",
-
 		{
-			"name": "backdrop-bright",
-			"label": "backdrop brightness"
-		},
-
-		"backdrop-contrast",
-
-		{
-			"name": "backdrop-gray",
-			"label": "backdrop grayscale"
-		},
-		{
-			"name": "backdrop-hue",
-			"label": "backdrop hue rotate"
-		},
-
-		"backdrop-invert",
-		"backdrop-opacity",
-
-		{
-			"name": "backdrop-saturate",
-			"label": "backdrop saturation"
-		},
-
-		"backdrop-sepia",
-		"backdrop-shadow"
+			"type": "folder",
+			"name": "backdrop"
+		}
 	]
 }

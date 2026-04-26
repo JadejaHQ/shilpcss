@@ -1,12 +1,16 @@
 ---
-title: "Backdrop Blur Filter | @filter"
-description: "Apply backdrop blur filter effect to elements."
-keywords: ["filter", "backdrop", "blur", "effect", "css"]
+title: "Line Height | @text"
+description: "Set line height."
+keywords: ["text", "line-height", "spacing", "typography"]
 ---
 
-# backdrop blur
+# Line Height
 
-blur backdrop filter
+Set line height.
+
+Usage:
+
+- `@text h-*;`
 
 <Alert variant="info">
 
@@ -26,13 +30,17 @@ const shilpConfig = {
 	source: "react",
 
 	properties: {
-		filter: {
-			backdrop: {
-				blur: {
-					property: "backdrop-filter: blur(<v>)<i>;",
-					resolve: "spacing",
-					themeKey: "blur",
-					values: {},
+		text: {
+			h: {
+				property: "line-height: <v><i>;",
+				values: {
+					normal: 1,
+					xs: 1.25,
+					sm: 1.375,
+					base: 1.5,
+					md: 1.625,
+					lg: 1.75,
+					xl: 2,
 				},
 			},
 		},

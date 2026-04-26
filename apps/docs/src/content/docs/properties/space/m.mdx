@@ -1,12 +1,28 @@
 ---
-title: "Padding | @space"
-description: "Apply padding spacing inside elements."
-keywords: ["space", "padding", "spacing", "distance", "css"]
+title: "Margin | @space"
+description: "Apply spacing around elements (margin)."
+keywords: ["space", "margin", "spacing", "distance"]
 ---
 
-# padding
+# Margin
 
-space inside an element
+Apply spacing around elements (margin).
+
+Usage:
+
+- `@space m-*;`
+- `@space mt-*;`
+- `@space mb-*;`
+- `@space ml-*;`
+- `@space mr-*;`
+- `@space mx-*;`
+- `@space my-*;`
+- `@space mbl-*;`
+- `@space mbls-*;`
+- `@space mble-*;`
+- `@space mi-*;`
+- `@space mis-*;`
+- `@space mie-*;`
 
 <Alert variant="info">
 
@@ -27,86 +43,86 @@ const shilpConfig = {
 
 	properties: {
 		space: {
-			p: {
-				property: "padding: <n><v><i>;",
+			m: {
+				property: "margin: <n><v><i>;",
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			pt: {
-				property: "padding-top: <n><v><i>;",
+			mt: {
+				property: "margin-top: <n><v><i>;",
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			pr: {
-				property: "padding-right: <n><v><i>;",
+			mr: {
+				property: "margin-right: <n><v><i>;",
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			pb: {
-				property: "padding-bottom: <n><v><i>;",
+			mb: {
+				property: "margin-bottom: <n><v><i>;",
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			pl: {
-				property: "padding-left: <n><v><i>;",
+			ml: {
+				property: "margin-left: <n><v><i>;",
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			px: {
+			mx: {
 				property: `
-					padding-left: <n><v><i>;
-          padding-right: <n><v><i>;
+					margin-left: <n><v><i>;
+          margin-right: <n><v><i>;
         `,
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			py: {
+			my: {
 				property: `
-					padding-top: <n><v><i>;
-          padding-bottom: <n><v><i>;
+					margin-top: <n><v><i>;
+          margin-bottom: <n><v><i>;
         `,
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			pbl: {
-				property: "padding-block: <n><v><i>",
+			mbl: {
+				property: "margin-block: <n><v><i>",
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			pbls: {
-				property: "padding-block-start: <n><v><i>;",
+			mbls: {
+				property: "margin-block-start: <n><v><i>;",
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			pble: {
-				property: "padding-block-end: <n><v><i>;",
+			mble: {
+				property: "margin-block-end: <n><v><i>;",
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			pi: {
-				property: "padding-inline: <n><v><i>",
+			mi: {
+				property: "margin-inline: <n><v><i>",
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			pis: {
-				property: "padding-inline-start: <n><v><i>;",
+			mis: {
+				property: "margin-inline-start: <n><v><i>;",
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},
 			},
-			pie: {
-				property: "padding-inline-end: <n><v><i>;",
+			mie: {
+				property: "margin-inline-end: <n><v><i>;",
 				resolve: "spacing",
 				themeKey: "spacingPixels",
 				values: {},

@@ -1,12 +1,16 @@
 ---
-title: "Backdrop Grayscale Filter | @filter"
-description: "Apply backdrop grayscale filter to elements."
-keywords: ["filter", "backdrop", "grayscale", "effect", "css"]
+title: "Backdrop Blur Filter | @filter"
+description: "Apply backdrop blur filter effect to elements."
+keywords: ["filter", "backdrop", "blur", "effect"]
 ---
 
-# backdrop gray
+# Backdrop Blur Filter
 
-grayscale backdrop filter
+Apply backdrop blur filter effect to elements.
+
+Usage:
+
+- `@filter backdrop-blur-*;`
 
 <Alert variant="info">
 
@@ -28,9 +32,10 @@ const shilpConfig = {
 	properties: {
 		filter: {
 			backdrop: {
-				gray: {
-					property: "backdrop-filter: grayscale(<v>)<i>;",
-					themeKey: "fractions",
+				blur: {
+					property: "backdrop-filter: blur(<v>)<i>;",
+					resolve: "spacing",
+					themeKey: "blur",
 					values: {},
 				},
 			},

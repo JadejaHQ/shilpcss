@@ -1,13 +1,26 @@
 ---
 title: "@aria Mixin for Accessibility"
-description:
-  "Use @aria mixin for ARIA attribute selectors in Shilp CSS styling."
+description: "Use @aria mixin for ARIA attribute selectors in Shilp CSS."
 keywords: ["@aria", "ARIA", "accessibility mixin", "attribute selector"]
 ---
 
 # @aria Mixin
 
-apply styles based on `aria-*`
+Use `@aria` mixin for ARIA attribute (`aria-*`) selectors.
+
+Usage:
+
+Usage:
+
+```css
+.any-class {
+	/* normal */
+	@aria <variant> { ... }
+
+	/* functions */
+	@childs <variant>("<arguments>") { ... }
+}
+```
 
 <Alert variant="info">
 

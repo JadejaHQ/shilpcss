@@ -1,12 +1,20 @@
 ---
 title: "Maximum Size | @size"
-description: "Set maximum dimensions for elements."
-keywords: ["size", "maximum", "max", "constraint", "css"]
+description: "Set maximum dimensions for elements including block and inline."
+keywords: ["size", "maximum", "max", "constraint"]
 ---
 
-# maximum
+# Maximum Size
 
-element’s maximum height and width
+Set maximum dimensions for elements including block and inline.
+
+Usage:
+
+- `@size max-*;`
+- `@size max-w-*;`
+- `@size max-h-*;`
+- `@size max-block-*;`
+- `@size max-inline-*;`
 
 <Alert variant="info">
 
@@ -30,9 +38,9 @@ const shilpConfig = {
 			max: {
 				DEFAULT: {
 					property: `
-				max-width: <v><i>;
-				max-height: <v><i>;
-			`,
+						max-width: <v><i>;
+						max-height: <v><i>;
+					`,
 					resolve: "spacing",
 					themeKey: "spacing",
 					values: {

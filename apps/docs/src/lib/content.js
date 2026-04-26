@@ -175,7 +175,7 @@ class Content {
 		}
 
 		const label = file.label || slug.replace(/-/g, " ");
-		const title = file.title || label;
+		const title = file.title;
 
 		const fileMeta = {
 			type: "file",
@@ -208,7 +208,7 @@ class Content {
 		const isPage = childMeta.page;
 		const slug = childMeta.slug || folderName; // will be ignored if virtual
 		const label = childMeta.label || slug.replace(/-/g, " ");
-		const title = childMeta.title || label;
+		const title = childMeta.title;
 
 		let slugs = parentSlugs;
 

@@ -4,17 +4,25 @@
 	"label": "@live",
 	"title": "live intent",
 	"items": [
-		{
-			"name": "caret",
-			"label": "caret color"
-		},
+		"caret",
 		"cursor",
 		"events",
 		"outline",
 		"scroll",
-		"scroll-margin",
-		"scroll-padding",
-		"scroll-snap",
+		{
+			"name": "scroll-m",
+			"label": "scroll-m",
+			"title": "scroll margin"
+		},
+		{
+			"name": "scroll-p",
+			"label": "scroll-p",
+			"title": "scroll padding"
+		},
+		{
+			"name": "scroll-snap",
+			"label": "scroll-snap"
+		},
 		"select",
 		"touch"
 	]

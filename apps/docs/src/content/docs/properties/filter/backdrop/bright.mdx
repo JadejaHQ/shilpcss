@@ -1,12 +1,16 @@
 ---
-title: "Backdrop Saturate Filter | @filter"
-description: "Adjust backdrop saturation filter values."
-keywords: ["filter", "backdrop", "saturate", "color", "css"]
+title: "Backdrop Brightness Filter | @filter"
+description: "Adjust backdrop brightness filter effects."
+keywords: ["filter", "backdrop", "brightness", "effect"]
 ---
 
-# backdrop saturate
+# Backdrop Brightness Filter
 
-saturatation backdrop filter
+Adjust backdrop brightness filter effects.
+
+Usage:
+
+- `@filter backdrop-bright-*;`
 
 <Alert variant="info">
 
@@ -28,8 +32,8 @@ const shilpConfig = {
 	properties: {
 		filter: {
 			backdrop: {
-				saturate: {
-					property: "backdrop-filter: saturate(<v>)<i>;",
+				bright: {
+					property: "backdrop-filter: brightness(<v>)<i>;",
 					themeKey: "fractions",
 					values: {},
 				},

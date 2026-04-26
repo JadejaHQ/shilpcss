@@ -7,7 +7,19 @@ keywords: ["@self", "self selector", "element selector", "conditional styling"]
 
 # @self Mixin
 
-arget the current element
+Use `@self` mixin to apply styles to the element itself with conditions.
+
+Usage:
+
+```css
+.any-class {
+	/* direct */
+	@self <variant> { ... }
+
+	/* functions */
+	@self <variant>("<arguments>") { ... }
+}
+```
 
 <Alert variant="info">
 
