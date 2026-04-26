@@ -1,12 +1,16 @@
 ---
-title: "Text Break and Wrap | @text"
+title: "Text Break | @text"
 description: "Control text breaking and word wrapping."
-keywords: ["text", "break", "wrap", "overflow", "css"]
+keywords: ["text", "break", "wrap", "overflow"]
 ---
 
-# break
+# Text Break
 
-where text breaks
+Control text breaking and word wrapping.
+
+Usage:
+
+- `@text break-*;`
 
 <Alert variant="info">
 
@@ -61,13 +65,13 @@ const shilpConfig = {
 					special: true,
 					values: {
 						DEFAULT: `
-					overflow-wrap: normal<i>;
-					word-break: normal<i>;
-				`,
+							overflow-wrap: normal<i>;
+							word-break: normal<i>;
+						`,
 						unset: `
-					overflow-wrap: unset<i>;
-					word-break: unset<i>;
-				`,
+							overflow-wrap: unset<i>;
+							word-break: unset<i>;
+						`,
 					},
 				},
 

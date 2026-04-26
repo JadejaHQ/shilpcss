@@ -1,12 +1,28 @@
 ---
-title: "Gradient Mask | @mask"
-description: "Apply gradient masks to elements."
-keywords: ["mask", "gradient", "linear", "radial", "css"]
+title: "Gradient Color Mask | @mask"
+description: "Apply gradient as a mask to elements."
+keywords: ["mask", "gradient", "linear", "radial"]
 ---
 
-# gradient
+# Gradient Color Mask
 
-applies a gradient as a mask to an element
+Apply gradient as a mask to elements.
+
+Usage:
+
+- `@mask gradient-*;`
+- `@mask gradient-linear-*;`
+- `@mask gradient-radial-*;`
+- `@mask gradient-conic-*;`
+
+<Alert variant="danger">
+
+Gradient color mask uses `mask-image` property.
+
+So, if you are using `@mask img-*;` then conflict will be created. You need to
+choose a stratagey to work with both.
+
+</Alert>
 
 <Alert variant="info">
 

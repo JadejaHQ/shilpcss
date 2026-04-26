@@ -1,12 +1,30 @@
 ---
 title: "Background Image | @bg"
-description: "Set background images from URLs or data URIs."
-keywords: ["background", "image", "background-image", "url", "css"]
+description:
+  "Set background images with position, size, origin and other styles."
+keywords: ["background", "image", "background-image", "url"]
 ---
 
-# image
+# Background Image
 
-background image, origin, position, repeat and size
+Set background images with position, size, origin and other styles.
+
+Usage:
+
+- `@bg img-*;`
+- `@bg img-origin-*;`
+- `@bg img-position-*;`
+- `@bg img-repeat-*;`
+- `@bg img-size-*;`
+
+<Alert variant="danger">
+
+Gradient color also uses `background-image` property.
+
+So, if you are using `@bg gradient-*;` then conflict will be created. You need
+to choose a stratagey to work with both.
+
+</Alert>
 
 <Alert variant="info">
 

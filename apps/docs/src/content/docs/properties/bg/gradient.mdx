@@ -1,12 +1,28 @@
 ---
-title: "Background Gradient | @bg"
+title: "Background Gradient Colors | @bg"
 description: "Apply gradient backgrounds with linear or radial patterns."
-keywords: ["background", "gradient", "linear", "radial", "css"]
+keywords: ["background", "gradient", "linear", "radial"]
 ---
 
-# gradient
+# Background Gradient Colors
 
-linear, radial, conic gradients
+Apply gradient backgrounds with linear, radial and other patterns.
+
+Usage:
+
+- `@bg gradient-*;`
+- `@bg gradient-linear-*;`
+- `@bg gradient-radial-*;`
+- `@bg gradient-conic-*;`
+
+<Alert variant="danger">
+
+Gradient color uses `background-image` property.
+
+So, if you are using `@bg img-*;` then conflict will be created. You need to
+choose a stratagey to work with both.
+
+</Alert>
 
 <Alert variant="info">
 

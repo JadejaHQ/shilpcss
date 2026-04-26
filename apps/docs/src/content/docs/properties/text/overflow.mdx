@@ -1,12 +1,18 @@
 ---
 title: "Text Overflow | @text"
-description: "Handle text overflow with ellipsis."
-keywords: ["text", "overflow", "ellipsis", "truncate", "css"]
+description: "Handle overflowing text."
+keywords: ["text", "overflow", "ellipsis", "truncate"]
 ---
 
-# overflow
+# Text Overflow
 
-handling of overflowing text
+Handle overflowing text.
+
+Usage:
+
+- `@text overflow-*;`
+- `@text overflow-truncate;`
+- `@text overflow-truncate-unset;`
 
 <Alert variant="info">
 
@@ -41,15 +47,15 @@ const shilpConfig = {
 					special: true,
 					values: {
 						DEFAULT: `
-					overflow: hidden<i>;
-					text-overflow: ellipsis<i>;
-					white-space: nowrap<i>;
-				`,
+							overflow: hidden<i>;
+							text-overflow: ellipsis<i>;
+							white-space: nowrap<i>;
+						`,
 						unset: `
-					overflow: unset<i>;
-					text-overflow: unset<i>;
-					white-space: unset<i>;
-				`,
+							overflow: unset<i>;
+							text-overflow: unset<i>;
+							white-space: unset<i>;
+						`,
 					},
 				},
 			},

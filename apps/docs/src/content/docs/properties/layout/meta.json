@@ -15,7 +15,10 @@
 		"opacity",
 		"overflow",
 		"ratio",
-		"shadow",
+		{
+			"name": "shadow",
+			"title": "box shadow"
+		},
 		"show",
 		"theme"
 	]
